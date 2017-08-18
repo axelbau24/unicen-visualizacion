@@ -1,0 +1,18 @@
+body{
+  background-color: #333333;
+  color: white;
+  margin-top: 3%;
+}
+.card{
+  background-color: #505050;
+}
+.img-thumbnail{
+  background-color: grey;
+  border-color: grey;
+}
+.btn{
+   white-space: normal;
+}
+.color-filter{
+  margin-top: 4px;
+}

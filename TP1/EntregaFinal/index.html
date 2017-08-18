@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <label class="btn btn-info">
+              Seleccionar imagen... <input id="imageUpload" type="file" style="display: none" accept="image/*" />
+            </label>
+
+            <h5 class="card-title">Imagen seleccionada</h5>
+            <!-- <img src="https://wallpaperscraft.com/image/earth_sun_planet_surface_stars_99478_1920x1080.jpg" alt="Imágen seleccionada" class="img-thumbnail"> -->
+            <img src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail">
+            <!--
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>-->
+          </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-body text-center">
+
+            <h4 class="card-title"><strong>Filtro de colores:</strong></h4>
+
+            <button type="button" class="btn btn-primary color-filter">Negativo</button>
+            <button type="button" class="btn btn-primary color-filter">Brillo</button>
+            <button type="button" class="btn btn-primary color-filter">Binarización</button>
+            <button type="button" class="btn btn-primary color-filter">Sepia</button>
+
+            <br><br><button type="button" class="btn btn-success">Guardar imagen</button>
+
+          </div>
+        </div>
+
+        <br>
+      </div>
+
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-body text-center">
+            <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" />
+            <!-- <img src="https://wallpaperscraft.com/image/earth_sun_planet_surface_stars_99478_1920x1080.jpg" alt="..." > -->
+          </div>
+        </div>
+      </div>
+    </div>
+    	<script type="text/javascript" src="js/canvas.js"> </script>
+  </body>
+  </html>
