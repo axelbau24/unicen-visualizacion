@@ -8,6 +8,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
   <div class="container-fluid">
@@ -21,25 +22,27 @@
             </label>
 
             <h5 class="card-title">Imagen seleccionada</h5>
-            <!-- <img src="https://wallpaperscraft.com/image/earth_sun_planet_surface_stars_99478_1920x1080.jpg" alt="Imágen seleccionada" class="img-thumbnail"> -->
             <img src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail">
-            <!--
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>-->
+
           </div>
         </div>
         <br>
         <div class="card">
           <div class="card-body text-center">
-
             <h4 class="card-title"><strong>Filtro de colores:</strong></h4>
 
-            <button type="button" class="btn btn-primary color-filter">Negativo</button>
-            <button type="button" class="btn btn-primary color-filter">Brillo</button>
-            <button type="button" class="btn btn-primary color-filter">Binarización</button>
-            <button type="button" class="btn btn-primary color-filter">Sepia</button>
-            <button type="button" class="btn btn-primary color-filter">Escala de grises</button>
+            <div class="card" id="sliderContainer">
+              <div class="card-body text-center level-filter-container">
+                <label><strong>Nivel del filtro</strong></label>
+                <div id="slider"></div>
+              </div>
+            </div>
+
+            <button id="negative" type="button" class="btn btn-primary color-filter">Negativo</button>
+            <button id="brightness" type="button" class="btn btn-primary color-filter">Brillo</button>
+            <button id="binary" type="button" class="btn btn-primary color-filter">Binarización</button>
+            <button id="sepia" type="button" class="btn btn-primary color-filter">Sepia</button>
+            <button id="greyscale" type="button" class="btn btn-primary color-filter">Escala de grises</button>
             <br><br><button type="button" class="btn btn-success">Guardar imagen</button>
 
           </div>
@@ -52,11 +55,13 @@
         <div class="card">
           <div class="card-body text-center">
             <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" />
-            <!-- <img src="https://wallpaperscraft.com/image/earth_sun_planet_surface_stars_99478_1920x1080.jpg" alt="..." > -->
           </div>
         </div>
       </div>
     </div>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     	<script type="text/javascript" src="js/canvas.js"> </script>
+      <script type="text/javascript" src="js/btnEvents.js"> </script>
   </body>
   </html>

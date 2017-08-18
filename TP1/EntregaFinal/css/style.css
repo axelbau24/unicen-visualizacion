@@ -16,3 +16,12 @@ body{
 .color-filter{
   margin-top: 4px;
 }
+.level-filter-container{
+  padding: 1px 20px 10px 20px;
+  background-color: #464646;
+}
+#slider .ui-slider-handle {
+      border-radius: 50%;
+      border: none;
+      background-color: #17a2b8;
+}
