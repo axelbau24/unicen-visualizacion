@@ -1,32 +1,86 @@
 let canvas = document.getElementById("canvas");
-
 let ctx = canvas.getContext("2d");
 
-let imageData;
+
 let image = new Image();
 image.src = "image.jpg";
-image.onload = function() {
 
+image.onload = function() {
   canvas.width = this.width;
   canvas.height = this.height;
+
   ctx.drawImage(this, 0, 0);
-  imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-  for (let x = 0; x < canvas.width; x++) {
-    for (let y = 0; y < canvas.height; y++) {
+  let imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-      let index = (x + y * imageData.width) * 4;
-      let total = 0;
-      for (var i = 0; i < 3; i++) {
-        total += imageData.data[index+i];
+  let filter = new Negative(imageData, canvas);
+ // filter = new GrayScale(imageData, canvas);
+  filter.fillCanvas();
+
+  ctx.putImageData(imageData, 0,0);
+}
+
+
+/**
+ * Clase abstracta Filter encargada de rellenar el canvas dependiendo
+ * del filtro utilizado.
+ */
+class Filter {
+
+  constructor(imageData, canvas) {
+    if (new.target === Filter) {
+      throw new TypeError("No es posible instanciar una clase abstracta");
+    }
+    this.imageData = imageData;
+    this.canvas = canvas;
+  }
+
+  fillCanvas() {
+    for (let x = 0; x < this.canvas.width; x++) {
+      for (let y = 0; y < this.canvas.height; y++) {
+
+        let index = this.getRGBIndex(x, y);
+        this.applyFilter(index);
+
       }
-
-      for (var i = 0; i < 3; i++) {
-        imageData.data[index+i] = total/ 3;
-      }
-
     }
   }
 
-  ctx.putImageData(imageData, 0,0);
+  getRGBIndex(x, y) {
+    return (x + y * this.imageData.width) * 4;
+  }
+
+  applyFilter(rgbIndex) {} // Metodo "Abstracto"
+}
+
+// Filtro de color "Negativo"
+class Negative extends Filter {
+    constructor(imageData, canvas) {
+      super(imageData, canvas);
+    }
+
+    applyFilter(rgbIndex) {
+      for (var i = 0; i < 3; i++) {
+        let currentValue = this.imageData.data[rgbIndex+i];
+        this.imageData.data[rgbIndex+i] = 255 - currentValue;
+      }
+    }
+}
+
+// Filtro de color "Escala de grises"
+class GrayScale extends Filter {
+    constructor(imageData, canvas) {
+      super(imageData, canvas);
+    }
+
+    applyFilter(rgbIndex) {
+      let total = 0;
+      for (var i = 0; i < 3; i++) {
+        total += this.imageData.data[rgbIndex+i];
+      }
+
+      for (var i = 0; i < 3; i++) {
+        this.imageData.data[rgbIndex+i] = total/ 3;
+      }
+    }
 }
