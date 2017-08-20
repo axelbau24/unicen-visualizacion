@@ -47,7 +47,6 @@ class Filter {
   }
 
   fillCanvas(imageData) {
-
     for (let x = 0; x < canvas.width; x++) {
       for (let y = 0; y < canvas.height; y++) {
 
@@ -69,7 +68,6 @@ class Filter {
 
   applyFilter(rgbIndex, imageData, x ,y) {} // Metodo "Abstracto"
 }
-
 
 
 /**
@@ -95,7 +93,6 @@ class ConvolutionFilter extends Filter {
     for (var z = 0; z < 4; z++) {
       this.customImageData.data[rgbIndex+z] = pixelData[z] / this.kernelTotal;
     }
-
   }
 
   getKernelTotal(){
@@ -129,6 +126,49 @@ class ConvolutionFilter extends Filter {
   }
 
 }
+
+
+class Blur extends ConvolutionFilter {
+  constructor(kernel) {
+    super(kernel);
+    this.maxBlurLevels = 10;
+    this.blurLevels = [];
+    this.level = -1;
+  }
+
+  setLevel(level){
+    this.level = Math.round(level / 10);
+  }
+
+
+  fillCanvas(imageData){
+    if(this.level == -1){
+      this.level = 0;
+      super.fillCanvas(imageData);
+      this.blurLevels.push(imageData);
+      for (var i = 0; i < this.maxBlurLevels - 1; i++) {
+        super.fillCanvas(this.customImageData);
+        super.putImageData(this.customImageData);
+        this.blurLevels.push(this.customImageData);
+      }
+    }
+    else this.putImageData(null);
+
+  }
+
+  putImageData(imageData){
+    if(this.level > 0){
+      ctx.putImageData(this.blurLevels[this.level - 1], 0,0);
+    }
+  }
+}
+
+
+
+
+
+
+
 
 /**
 * Filtro de color "Negativo"

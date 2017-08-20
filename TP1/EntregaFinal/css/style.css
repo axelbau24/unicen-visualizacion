@@ -25,3 +25,29 @@ body{
       border: none;
       background-color: #17a2b8;
 }
+
+.loading{
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-image: url("../icons/glyphicons-82-refresh.png");
+  animation-name: spin;
+  animation-duration: 750ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.hidden{
+  display: none;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
