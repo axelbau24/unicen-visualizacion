@@ -6,38 +6,135 @@ let image = new Image();
 image.src = "image.jpg";
 
 image.onload = function() {
-  canvas.width = this.width;
+  canvas.width = this.width ;
   canvas.height = this.height;
 
   ctx.drawImage(this, 0, 0);
 }
 
 function updateCurrentImage(filter) {
+
   ctx.drawImage(image, 0, 0);
-  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  let imageData = ctx.getImageData(0, 0, canvas.width , canvas.height);
+
   filter.fillCanvas(imageData);
-  ctx.putImageData(imageData, 0,0);
+  filter.putImageData(imageData);
+
 }
 
 
-// Negativo
-// greyscale
-// Sepia
-// binarizacion
-// brillo
+// Negativo ✔
+// greyscale ✔
+// Sepia ✔
+// binarizacion ✔
+// brillo ✔
 // saturacion
 // suavizado
-// deteccion border
-// blur
+// deteccion border✔
+// blur✔
 
+
+/**
+* Clase abstracta Filter encargada de rellenar el canvas dependiendo
+* del filtro utilizado.
+*/
+class Filter {
+
+  constructor() {
+    if (new.target === Filter) {
+      throw new TypeError("No es posible instanciar una clase abstracta");
+    }
+  }
+
+  fillCanvas(imageData) {
+
+    for (let x = 0; x < canvas.width; x++) {
+      for (let y = 0; y < canvas.height; y++) {
+
+        let index = this.getRGBIndex(x, y, imageData);
+        this.applyFilter(index, imageData, x, y);
+
+      }
+    }
+  }
+
+
+  putImageData(imageData){
+    ctx.putImageData(imageData, 0,0);
+  }
+
+  getRGBIndex(x, y, imageData) {
+    return (x + y * imageData.width) * 4;
+  }
+
+  applyFilter(rgbIndex, imageData, x ,y) {} // Metodo "Abstracto"
+}
+
+
+
+/**
+* Filtro de color "Convolucion", utilizado para filtros complejos.
+* este utiliza una matriz 3x3 llamada "kernel" que definen la forma de imagen.
+*/
+class ConvolutionFilter extends Filter {
+  constructor(kernel) {
+    super();
+    this.customImageData = null;
+    this.kernel = kernel;
+    this.kernelTotal = this.getKernelTotal();
+  }
+
+  applyFilter(rgbIndex, imageData, x, y) {
+    if(x == 0 && y == 0) this.customImageData = ctx.createImageData(canvas.width, canvas.height);
+
+    let R = this.multiply(this.getColorData(imageData, x, y, 0));
+    let G = this.multiply(this.getColorData(imageData, x, y, 1));
+    let B = this.multiply(this.getColorData(imageData, x, y, 2));
+
+    let pixelData = [R, G, B, 255];
+    for (var z = 0; z < 4; z++) {
+      this.customImageData.data[rgbIndex+z] = pixelData[z] / this.kernelTotal;
+    }
+
+  }
+
+  getKernelTotal(){
+    let total = 0;
+    for (let i = 0; i < this.kernel.length; i++) {
+      total += this.kernel[i];
+    }
+    return total == 0 ? 1 : total;
+  }
+
+  putImageData(imageData){
+    ctx.putImageData(this.customImageData, 0,0);
+  }
+
+  multiply(a) {
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) {
+      if(a[i] != undefined) sum += a[i] * this.kernel[i];
+    }
+
+    return sum;
+  }
+
+  getColorData(imageData, x, y, color){
+    var colorData = [
+      imageData.data[this.getRGBIndex(x - 1, y - 1, imageData) + color], imageData.data[this.getRGBIndex(x, y - 1, imageData) + color], imageData.data[this.getRGBIndex(x + 1, y - 1, imageData) + color],
+      imageData.data[this.getRGBIndex(x - 1, y + 0, imageData) + color], imageData.data[this.getRGBIndex(x, y + 0, imageData) + color], imageData.data[this.getRGBIndex(x + 1, y + 0, imageData) + color],
+      imageData.data[this.getRGBIndex(x - 1, y + 1, imageData) + color], imageData.data[this.getRGBIndex(x, y + 1, imageData) + color], imageData.data[this.getRGBIndex(x + 1, y + 1, imageData) + color]
+    ];
+    return colorData;
+  }
+
+}
 
 /**
 * Filtro de color "Negativo"
 */
 class Negative extends Filter {
-  constructor(canvas) {
-    super(canvas);
-  }
+  constructor() { super(); }
 
   applyFilter(rgbIndex, imageData) {
     for (var i = 0; i < 3; i++) {
@@ -51,14 +148,15 @@ class Negative extends Filter {
 * Filtro de color "Brillo"
 */
 class Brightness extends Filter {
-  constructor(canvas, level) {
-    super(canvas);
+  constructor(level) {
+    super();
     this.level = level;
   }
 
   applyFilter(rgbIndex, imageData) {
     for (var i = 0; i < 3; i++) {
-      imageData.data[rgbIndex+i] += this.level;
+      let level = this.level / 10;
+      if(level > 0) imageData.data[rgbIndex+i] *= level;
     }
   }
   setLevel(level){
@@ -74,8 +172,8 @@ class Brightness extends Filter {
 * y luego se calcula el color dependiendo del nivel elegido.
 */
 class Binary extends Filter {
-  constructor(canvas, level) {
-    super(canvas);
+  constructor(level) {
+    super();
     this.level = level;
     this.gray = new GrayScale(canvas);
   }
@@ -100,8 +198,8 @@ class Binary extends Filter {
 * Filtro de color "Sepia"
 */
 class Sepia extends Filter {
-  constructor(canvas, level) {
-    super(canvas);
+  constructor(level) {
+    super();
     this.level = level;
   }
 
@@ -131,9 +229,7 @@ class Sepia extends Filter {
 * Filtro de color "Escala de grises"
 */
 class GrayScale extends Filter {
-  constructor(canvas) {
-    super(canvas);
-  }
+  constructor() { super(); }
 
   applyFilter(rgbIndex, imageData) {
     let avgColor = this.getTotal(rgbIndex, imageData)/ 3;
@@ -149,35 +245,4 @@ class GrayScale extends Filter {
     }
     return total;
   }
-}
-
-/**
-* Clase abstracta Filter encargada de rellenar el canvas dependiendo
-* del filtro utilizado.
-*/
-class Filter {
-
-  constructor(canvas) {
-    if (new.target === Filter) {
-      throw new TypeError("No es posible instanciar una clase abstracta");
-    }
-    this.canvas = canvas;
-  }
-
-  fillCanvas(imageData) {
-    for (let x = 0; x < this.canvas.width; x++) {
-      for (let y = 0; y < this.canvas.height; y++) {
-
-        let index = this.getRGBIndex(x, y, imageData);
-        this.applyFilter(index, imageData);
-
-      }
-    }
-  }
-
-  getRGBIndex(x, y, imageData) {
-    return (x + y * imageData.width) * 4;
-  }
-
-  applyFilter(rgbIndex, imageData) {} // Metodo "Abstracto"
 }
