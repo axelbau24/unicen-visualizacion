@@ -13,10 +13,10 @@ $('#imageUpload').on('change',function(){
 });
 
 
-function getFileName(filePath) {
-  let pathData = filePath.split("\\");
-  let fileName = pathData[pathData.length - 1];
-
-  return fileName;
+function getDownloadData() {
+  return canvas.toDataURL('image/png');
 
 }
+$("#saveImage").click(function() {
+  $(this).attr("href", getDownloadData());
+});

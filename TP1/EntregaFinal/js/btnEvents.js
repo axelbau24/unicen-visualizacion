@@ -9,6 +9,7 @@ function bindFilters() {
   bindBtn("negative", new Negative());
   bindBtn("saturacion", new Saturation(0), true);
   bindBtn("border-detection", new ConvolutionFilter([-1, -1, -1, -1,  8,  -1, -1, -1, -1]));
+  bindBtn("sharpen", new ConvolutionFilter([0, -1, 0, -1,  5,  -1, 0, -1, 0]));
   bindBtn("desenfoque", new Blur([1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9]), true);
   bindBtn("brightness", new Brightness(100), true);
   bindBtn("binary", new Binary(128), true);
@@ -23,7 +24,6 @@ function bindBtn(btnId, filter, canChangeLevels) {
   btn = btn.parentNode.replaceChild(newBtn, btn);
 
   newBtn.addEventListener('click', function() {
-    console.log("call");
     btnEvent(filter, canChangeLevels);
   });
 
@@ -35,7 +35,7 @@ function btnEvent(filter, canChangeLevels) {
   if(canChangeLevels) {
     $(SLIDER_CONTAINER_ID).show("slow");
     resetSlider();
-    updateFilterLevel(filter);
+    updateFilterLevel(filter, 50);
   }
   else $(SLIDER_CONTAINER_ID).hide("slow");
 
@@ -57,11 +57,11 @@ slider.slider({
   slide: function(event, ui) {
     updateFilterLevel(selectedFilter, ui.value);
     updateCurrentImage(selectedFilter);
-  }
+  },
 });
 
-function updateFilterLevel(filter) {
-  filter.setLevel(slider.slider("value"));
+function updateFilterLevel(filter, level) {
+  filter.setLevel(level);
 }
 
 function resetSlider() {
