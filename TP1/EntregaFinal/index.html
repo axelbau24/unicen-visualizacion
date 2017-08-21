@@ -22,7 +22,9 @@
             </label>
 
             <h5 class="card-title">Imagen seleccionada</h5>
-            <img src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail">
+
+              <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail">
+  
 
           </div>
         </div>
@@ -33,7 +35,7 @@
 
             <div class="card" id="sliderContainer">
               <div class="card-body text-center level-filter-container">
-                <label><strong>Nivel del filtro</strong></label>
+                <label><strong>Intensidad</strong></label>
                 <div id="slider"></div>
               </div>
             </div>
@@ -45,7 +47,7 @@
             <button id="greyscale" type="button" class="btn btn-primary color-filter">Escala de grises</button>
             <button id="border-detection" type="button" class="btn btn-primary color-filter">Detección de bordes</button>
             <button id="desenfoque" type="button" class="btn btn-primary color-filter">Desenfoque</button>
-            <button id="suavizado" type="button" class="btn btn-primary color-filter">Suavizado</button>
+            <button id="saturacion" type="button" class="btn btn-primary color-filter">Saturacion</button>
             <br><br><button type="button" class="btn btn-success">Guardar imagen</button>
 
           </div>
@@ -66,5 +68,6 @@
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     	<script type="text/javascript" src="js/canvas.js"> </script>
       <script type="text/javascript" src="js/btnEvents.js"> </script>
+      <script type="text/javascript" src="js/fileUpload.js"> </script>
   </body>
   </html>

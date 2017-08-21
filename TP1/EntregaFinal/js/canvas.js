@@ -127,7 +127,9 @@ class ConvolutionFilter extends Filter {
 
 }
 
-
+/**
+* Filtro de color "Desenfoque o blur" (lento)
+*/
 class Blur extends ConvolutionFilter {
   constructor(kernel) {
     super(kernel);
@@ -140,9 +142,8 @@ class Blur extends ConvolutionFilter {
     this.level = Math.round(level / 10);
   }
 
-
   fillCanvas(imageData){
-    if(this.level == -1){
+    if(this.blurLevels.length == 0){
       this.level = 0;
       super.fillCanvas(imageData);
       this.blurLevels.push(imageData);
@@ -163,11 +164,105 @@ class Blur extends ConvolutionFilter {
   }
 }
 
+/**
+ * Conversor de color HSL a RGB y viceversa.
+ */
 
+class HSLConverter {
+  constructor() { }
 
+    static hueTorgb(p, q, t){
+      if(t < 0) t += 1;
+      if(t > 1) t -= 1;
+      if(t < 1/6) return p + (q - p) * 6 * t;
+      if(t < 1/2) return q;
+      if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    }
 
+    static getHue(hsl){
+      return hsl[0];
+    }
+    static getSaturation(hsl){
+      return hsl[1];
+    }
+    static getLightness(hsl){
+      return hsl[2];
+    }
 
+    static hslToRGB(hsl){
+      let r, g, b;
+      let h = HSLConverter.getHue(hsl);
+      let s = HSLConverter.getSaturation(hsl);
+      let l = HSLConverter.getLightness(hsl);
 
+      if(s == 0) r = g = b = l;
+      else {
+        let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        let p = 2 * l - q;
+        r = this.hueTorgb(p, q, h + 1/3);
+        g = this.hueTorgb(p, q, h);
+        b = this.hueTorgb(p, q, h - 1/3);
+      }
+
+      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
+
+    static getHSL(rgbIndex, imageData){
+      let R = imageData.data[rgbIndex] / 255;
+      let G = imageData.data[rgbIndex + 1] / 255;
+      let B = imageData.data[rgbIndex + 2] / 255;
+
+      let min = Math.min(R, G, B);
+      let max = Math.max(R, G, B);
+
+      let hue = 0;
+      let saturation = 0;
+      let luminance = (min + max) / 2;
+
+      if(min != max) {
+        if(luminance <= 0.5) saturation = (max-min)/(max+min);
+        else saturation = (max-min)/(2.0-max-min);
+      }
+      switch (max) {
+        case R: hue = (G-B)/(max-min);
+        break;
+        case G: hue = 2 + (B-R)/(max-min);
+        break;
+        case B: hue = 4 + (R-G)/(max-min)
+        break;
+      }
+      hue *= 60;
+      if(hue < 0) hue += 360;
+
+      return [hue, saturation, luminance];
+    }
+}
+
+/**
+* Filtro de color "Saturacion"
+*/
+class Saturation extends Filter {
+  constructor(level) {
+    super();
+    this.level = level;
+  }
+
+  applyFilter(rgbIndex, imageData) {
+    let hsl = HSLConverter.getHSL(rgbIndex, imageData);
+    let saturation = HSLConverter.getSaturation(hsl);
+    let saturationLevel = this.level / 100;
+    let newRgb = HSLConverter.hslToRGB([HSLConverter.getHue(hsl) / 360, saturation + saturationLevel , HSLConverter.getLightness(hsl)]);
+
+    for (var i = 0; i < 3; i++) {
+      imageData.data[rgbIndex+i] = newRgb[i];
+    }
+  }
+
+  setLevel(level){
+    this.level = level;
+  }
+}
 
 
 /**
@@ -228,7 +323,7 @@ class Binary extends Filter {
     }
   }
   setLevel(level){
-    this.level = level;
+    this.level = level * 2;
   }
 
 }
