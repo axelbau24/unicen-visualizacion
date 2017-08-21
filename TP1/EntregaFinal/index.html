@@ -13,62 +13,72 @@
 <body>
   <div class="container-fluid">
 
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto">
         <div class="card">
-          <div class="card-body text-center">
-            <label class="btn btn-info">
-              Seleccionar imagen... <input id="imageUpload" type="file" style="display: none" accept="image/*" />
-            </label>
-
-            <h5 class="card-title">Imagen seleccionada</h5>
-
-              <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail">
-
-
-          </div>
-        </div>
-        <br>
-        <div class="card">
-          <div class="card-body text-center">
-            <h4 class="card-title"><strong>Filtro de colores: <div class="loading hidden"></div></strong></h4>
-
-            <div class="card" id="sliderContainer">
-              <div class="card-body text-center level-filter-container">
-                <label><strong>Intensidad</strong></label>
-                <div id="slider"></div>
-              </div>
-            </div>
-
-            <button id="negative" type="button" class="btn btn-primary color-filter">Negativo</button>
-            <button id="brightness" type="button" class="btn btn-primary color-filter">Brillo</button>
-            <button id="binary" type="button" class="btn btn-primary color-filter">Binarización</button>
-            <button id="sepia" type="button" class="btn btn-primary color-filter">Sepia</button>
-            <button id="greyscale" type="button" class="btn btn-primary color-filter">Escala de grises</button>
-            <button id="border-detection" type="button" class="btn btn-primary color-filter">Detección de bordes</button>
-            <button id="desenfoque" type="button" class="btn btn-primary color-filter">Desenfoque</button>
-            <button id="saturacion" type="button" class="btn btn-primary color-filter">Saturacion</button>
-            <button id="sharpen" type="button" class="btn btn-primary color-filter">Realce</button>
-            <br><br><a id="saveImage" class="btn btn-success" download="imagenConFiltro.png">Guardar imagen</a>
-
-          </div>
-        </div>
-
-        <br>
-      </div>
-
-      <div class="col-md-9">
-        <div class="card">
-          <div class="card-body text-center">
-            <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" />
+          <div class="card-body text-center filter-container">
+            <button id="negative" type="button" class="btn btn-light color-filter">Negativo</button>
+            <button id="brightness" type="button" class="btn btn-light color-filter">Brillo</button>
+            <button id="binary" type="button" class="btn btn-light color-filter">Binarización</button>
+            <button id="sepia" type="button" class="btn btn-light color-filter">Sepia</button>
+            <button id="greyscale" type="button" class="btn btn-light color-filter">Blanco y negro</button>
+            <button id="border-detection" type="button" class="btn btn-light color-filter">Detección de bordes</button>
+            <button id="desenfoque" type="button" class="btn btn-light color-filter">Desenfoque</button>
+            <button id="saturacion" type="button" class="btn btn-light color-filter">Saturacion</button>
+            <button id="sharpen" type="button" class="btn btn-light color-filter">Realce</button>
           </div>
         </div>
       </div>
     </div>
-      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    	<script type="text/javascript" src="js/canvas.js"> </script>
-      <script type="text/javascript" src="js/btnEvents.js"> </script>
-      <script type="text/javascript" src="js/fileUpload.js"> </script>
+    <br>
+    <div class="row">
+
+      <div class="col-md-8">
+
+        <div class="card">
+          <div class="card-body text-center">
+            <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" /></canvas>
+            <div class="canvas-background hidden"><div class="canvas-text">
+              <span class="loading"> </span> Aplicando filtro...
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card" id="sliderContainer">
+          <div class="card-body text-center">
+            <div class="card">
+              <div class="card-body text-center level-filter-container">
+                <label><strong>Intensidad del filtro</strong></label>
+                <div id="slider"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body text-center">
+            <label class="btn btn-info">
+              Subir imagen <input id="imageUpload" type="file" style="display: none" accept="image/*" />
+            </label>
+
+            <h5 class="card-title">Imagen seleccionada</h5>
+
+            <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail"><br><br>
+            <a id="saveImage" class="btn btn-success" download="imagenConFiltro.png">Guardar imagen</a>
+
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/canvas.js"> </script>
+    <script type="text/javascript" src="js/btnEvents.js"> </script>
+    <script type="text/javascript" src="js/fileUpload.js"> </script>
   </body>
   </html>

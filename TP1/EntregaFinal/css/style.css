@@ -1,7 +1,7 @@
 body{
   background-color: #333333;
   color: white;
-  margin-top: 3%;
+  margin-top: 1%;
 }
 .card{
   background-color: #505050;
@@ -15,6 +15,7 @@ body{
 }
 .color-filter{
   margin-top: 4px;
+
 }
 .level-filter-container{
   padding: 1px 20px 10px 20px;
@@ -32,7 +33,7 @@ body{
   height: 26px;
   margin: 0;
   padding: 0;
-  display: block;
+  display: inline-block;
   background-image: url("../icons/glyphicons-82-refresh.png");
   animation-name: spin;
   animation-duration: 750ms;
@@ -50,4 +51,29 @@ body{
     to {
         transform:rotate(360deg);
     }
+}
+.filter-container{
+  padding: 5px 10px 10px 10px;
+}
+
+.canvas-background, .canvas-text{
+    position: absolute;
+    width: 100%;
+}
+
+.canvas-background{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(80, 80, 80, 0.5);
+
+}
+.canvas-text{
+  font-weight: bold;
+  font-style: italic;
+  top: 50%;
+}
+#sliderContainer{
+    margin-bottom: 1.5%;
 }

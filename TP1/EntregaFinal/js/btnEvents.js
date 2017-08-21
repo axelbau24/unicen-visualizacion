@@ -31,7 +31,7 @@ function bindBtn(btnId, filter, canChangeLevels) {
 
 
 function btnEvent(filter, canChangeLevels) {
-  $(".loading").removeClass("hidden");
+  $(".canvas-background").removeClass("hidden");
   if(canChangeLevels) {
     $(SLIDER_CONTAINER_ID).show("slow");
     resetSlider();
@@ -41,7 +41,7 @@ function btnEvent(filter, canChangeLevels) {
 
   setTimeout(() => {
     updateCurrentImage(filter);
-    $(".loading").addClass("hidden");
+    $(".canvas-background").addClass("hidden");
   }, 25);
 
   selectedFilter = filter;

@@ -22,18 +22,6 @@ function updateCurrentImage(filter) {
 
 }
 
-
-// Negativo ✔
-// greyscale ✔
-// Sepia ✔
-// binarizacion ✔
-// brillo ✔
-// saturacion
-// suavizado
-// deteccion border✔
-// blur✔
-
-
 /**
 * Clase abstracta Filter encargada de rellenar el canvas dependiendo
 * del filtro utilizado.
