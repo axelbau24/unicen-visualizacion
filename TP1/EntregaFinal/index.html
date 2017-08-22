@@ -31,50 +31,59 @@
       </div>
     </div>
     <br>
-    <div class="row">
 
-      <div class="col-md-8">
-
-        <div class="card">
-          <div class="card-body text-center">
-            <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" /></canvas>
-            <div class="canvas-background hidden"><div class="canvas-text">
-              <span class="loading"> </span> Aplicando filtro...
-            </div></div>
+    <div class="row justify-content-md-center home-container">
+      <div class="col-md-auto">
+          <div class="text-center ">
+            <h3>Filtro de imágenes</h3>
+            <strong>Suba una imagen desde su computadora para aplicarle el filtro deseado</strong><br><br>
+            <label class="btn btn-info">
+              Subir imagen <input id="firstUpload" type="file" style="display: none" accept="image/*" />
+            </label>
           </div>
-        </div>
       </div>
+    </div>
 
-      <div class="col-md-4">
-        <div class="card" id="sliderContainer">
-          <div class="card-body text-center">
-            <div class="card">
-              <div class="card-body text-center level-filter-container">
-                <label><strong>Intensidad del filtro</strong></label>
-                <div id="slider"></div>
-              </div>
+    <div class="hidden main-container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card hidden image-container">
+            <div class="card-body text-center">
+              <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" /></canvas>
+              <div class="canvas-background hidden"><div class="canvas-text">
+                <span class="loading"> </span> Aplicando filtro...
+              </div></div>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-body text-center">
-            <label class="btn btn-info">
-              Subir imagen <input id="imageUpload" type="file" style="display: none" accept="image/*" />
-            </label>
+        <div class="col-md-4">
+          <div class="card" id="sliderContainer">
+            <div class="card-body text-center">
+              <div class="card">
+                <div class="card-body text-center level-filter-container">
+                  <label><strong>Intensidad del filtro</strong></label>
+                  <div id="slider"></div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <h5 class="card-title">Imagen seleccionada</h5>
-
-            <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail"><br><br>
-            <a id="saveImage" class="btn btn-success" download="imagenConFiltro.png">Guardar imagen</a>
-
+          <div class="card">
+            <div class="card-body text-center">
+              <label class="btn btn-info">
+                Subir otra imagen <input id="imageUpload" type="file" style="display: none" accept="image/*" />
+              </label>
+              <h5 class="card-title">Imagen seleccionada</h5>
+              <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail"><br><br>
+              <a id="saveImage" class="btn btn-success" download="imagenConFiltro.png">Guardar imagen</a>
+            </div>
           </div>
         </div>
-        <br>
-        <br>
-      </div>
 
+      </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="js/canvas.js"> </script>
