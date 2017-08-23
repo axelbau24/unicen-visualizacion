@@ -14,7 +14,7 @@ image.onload = function() {
 
 function updateCurrentImage(filter) {
 
-  ctx.drawImage(image, 0, 0);
+  //  ctx.drawImage(image, 0, 0);
   let imageData = ctx.getImageData(0, 0, canvas.width , canvas.height);
 
   filter.fillCanvas(imageData);
@@ -118,113 +118,164 @@ class ConvolutionFilter extends Filter {
 /**
 * Filtro de color "Desenfoque o blur" (lento)
 */
-class Blur extends ConvolutionFilter {
-  constructor(kernel) {
-    super(kernel);
-    this.maxBlurLevels = 10;
-    this.blurLevels = [];
+class Blur extends Filter {
+  constructor(g) {
+    super();
     this.level = -1;
+    this.direction = false;
+    this.avgR = 0;
+    this.avgG = 0;
+    this.avgB = 0;
+    this.pixelR = [];
+    this.pixelG = [];
+    this.pixelB = [];
   }
 
   setLevel(level){
     this.level = Math.round(level / 10);
   }
 
+  applyFilter(rgbIndex, imageData, x, y) {
+
+    let lv = 2;
+    if(x <= lv && this.direction || y <= lv && !this.direction){
+      this.pixelR = this.getColorData(imageData, x, y, 0);
+      this.pixelG = this.getColorData(imageData, x, y, 1);
+      this.pixelB = this.getColorData(imageData, x, y, 2);
+      this.avgR = this.sum(this.pixelR);
+      this.avgG = this.sum(this.pixelG);
+      this.avgB = this.sum(this.pixelB);
+    }
+    else {
+      this.avgR -= this.pixelR[0];
+      this.pixelR = this.getColorData(imageData, x, y, 0);
+      this.avgR += this.pixelR[this.pixelR.length - 1];
+      this.avgG -= this.pixelG[0];
+      this.pixelG = this.getColorData(imageData, x, y, 1);
+      this.avgG += this.pixelG[this.pixelG.length - 1];
+      this.avgB -= this.pixelB[0];
+      this.pixelB = this.getColorData(imageData, x, y, 2);
+      this.avgB += this.pixelB[this.pixelB.length - 1];
+    }
+
+    let pixelData = [this.avgR, this.avgG, this.avgB, 255];
+
+    for (var z = 0; z < 3; z++) {
+      imageData.data[rgbIndex+z] = ( pixelData[z] / (lv * 2 + 1));
+    }
+    imageData.data[rgbIndex+3] = 255;
+
+  }
+
+  sum(a) {
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) {
+      if(a[i]) sum += a[i];
+    }
+    return sum;
+  }
+
   fillCanvas(imageData){
-    if(this.blurLevels.length == 0){
-      this.level = 0;
-      super.fillCanvas(imageData);
-      this.blurLevels.push(imageData);
-      for (var i = 0; i < this.maxBlurLevels - 1; i++) {
-        super.fillCanvas(this.customImageData);
-        super.putImageData(this.customImageData);
-        this.blurLevels.push(this.customImageData);
+    super.fillCanvas(imageData);
+    this.direction = true;
+  //  super.fillCanvas(imageData);
+  //  this.direction = false;
+  }
+
+  getColorData(imageData, x, y, color){
+    let data = [];
+    let level = 2;
+    if(this.direction) {
+
+      for (var i = -level; i <= level; i++) {
+        let pixel = imageData.data[this.getRGBIndex(x + i, y, imageData) + color];
+        data.push(pixel);
       }
     }
-    else this.putImageData(null);
-
-  }
-
-  putImageData(imageData){
-    if(this.level > 0){
-      ctx.putImageData(this.blurLevels[this.level - 1], 0,0);
+    else {
+      for (var i = -level; i <= level; i++) {
+        let pixel = imageData.data[this.getRGBIndex(x, y + i, imageData) + color];
+        data.push(pixel);
+      }
     }
+    return data;
   }
+
 }
 
 /**
- * Conversor de color HSL a RGB y viceversa.
- */
+* Conversor de color HSL a RGB y viceversa.
+*/
 
 class HSLConverter {
   constructor() { }
 
-    static hueTorgb(p, q, t){
-      if(t < 0) t += 1;
-      if(t > 1) t -= 1;
-      if(t < 1/6) return p + (q - p) * 6 * t;
-      if(t < 1/2) return q;
-      if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-      return p;
+  static hueTorgb(p, q, t){
+    if(t < 0) t += 1;
+    if(t > 1) t -= 1;
+    if(t < 1/6) return p + (q - p) * 6 * t;
+    if(t < 1/2) return q;
+    if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+    return p;
+  }
+
+  static getHue(hsl){
+    return hsl[0];
+  }
+  static getSaturation(hsl){
+    return hsl[1];
+  }
+  static getLightness(hsl){
+    return hsl[2];
+  }
+
+  static hslToRGB(hsl){
+    let r, g, b;
+    let h = HSLConverter.getHue(hsl);
+    let s = HSLConverter.getSaturation(hsl);
+    let l = HSLConverter.getLightness(hsl);
+
+    if(s == 0) r = g = b = l;
+    else {
+      let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      let p = 2 * l - q;
+      r = this.hueTorgb(p, q, h + 1/3);
+      g = this.hueTorgb(p, q, h);
+      b = this.hueTorgb(p, q, h - 1/3);
     }
 
-    static getHue(hsl){
-      return hsl[0];
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  }
+
+  static getHSL(rgbIndex, imageData){
+    let R = imageData.data[rgbIndex] / 255;
+    let G = imageData.data[rgbIndex + 1] / 255;
+    let B = imageData.data[rgbIndex + 2] / 255;
+
+    let min = Math.min(R, G, B);
+    let max = Math.max(R, G, B);
+
+    let hue = 0;
+    let saturation = 0;
+    let luminance = (min + max) / 2;
+
+    if(min != max) {
+      if(luminance <= 0.5) saturation = (max-min)/(max+min);
+      else saturation = (max-min)/(2.0-max-min);
     }
-    static getSaturation(hsl){
-      return hsl[1];
+    switch (max) {
+      case R: hue = (G-B)/(max-min);
+      break;
+      case G: hue = 2 + (B-R)/(max-min);
+      break;
+      case B: hue = 4 + (R-G)/(max-min)
+      break;
     }
-    static getLightness(hsl){
-      return hsl[2];
-    }
+    hue *= 60;
+    if(hue < 0) hue += 360;
 
-    static hslToRGB(hsl){
-      let r, g, b;
-      let h = HSLConverter.getHue(hsl);
-      let s = HSLConverter.getSaturation(hsl);
-      let l = HSLConverter.getLightness(hsl);
-
-      if(s == 0) r = g = b = l;
-      else {
-        let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        let p = 2 * l - q;
-        r = this.hueTorgb(p, q, h + 1/3);
-        g = this.hueTorgb(p, q, h);
-        b = this.hueTorgb(p, q, h - 1/3);
-      }
-
-      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-    }
-
-    static getHSL(rgbIndex, imageData){
-      let R = imageData.data[rgbIndex] / 255;
-      let G = imageData.data[rgbIndex + 1] / 255;
-      let B = imageData.data[rgbIndex + 2] / 255;
-
-      let min = Math.min(R, G, B);
-      let max = Math.max(R, G, B);
-
-      let hue = 0;
-      let saturation = 0;
-      let luminance = (min + max) / 2;
-
-      if(min != max) {
-        if(luminance <= 0.5) saturation = (max-min)/(max+min);
-        else saturation = (max-min)/(2.0-max-min);
-      }
-      switch (max) {
-        case R: hue = (G-B)/(max-min);
-        break;
-        case G: hue = 2 + (B-R)/(max-min);
-        break;
-        case B: hue = 4 + (R-G)/(max-min)
-        break;
-      }
-      hue *= 60;
-      if(hue < 0) hue += 360;
-
-      return [hue, saturation, luminance];
-    }
+    return [hue, saturation, luminance];
+  }
 }
 
 /**
