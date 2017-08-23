@@ -14,7 +14,7 @@ image.onload = function() {
 
 function updateCurrentImage(filter) {
 
-  //  ctx.drawImage(image, 0, 0);
+  ctx.drawImage(image, 0, 0);
   let imageData = ctx.getImageData(0, 0, canvas.width , canvas.height);
 
   filter.fillCanvas(imageData);
@@ -35,8 +35,8 @@ class Filter {
   }
 
   fillCanvas(imageData) {
-    for (let x = 0; x < canvas.width; x++) {
-      for (let y = 0; y < canvas.height; y++) {
+    for (let y = 0; y < canvas.height; y++) {
+      for (let x = 0; x < canvas.width; x++) {
 
         let index = this.getRGBIndex(x, y, imageData);
         this.applyFilter(index, imageData, x, y);
@@ -116,19 +116,17 @@ class ConvolutionFilter extends Filter {
 }
 
 /**
-* Filtro de color "Desenfoque o blur" (lento)
+* Filtro de color "Desenfoque o blur"
+* Para la implementacion de este filtro se utiliza Box Blur,
+* Al momento de aplicar el filtro, se obtiene el promedio de los colores vecinos de cada pixel
+* de forma vertical y horizontal, para obtener una mejor eficiencia.
 */
 class Blur extends Filter {
-  constructor(g) {
+  constructor() {
     super();
-    this.level = -1;
-    this.direction = false;
-    this.avgR = 0;
-    this.avgG = 0;
-    this.avgB = 0;
-    this.pixelR = [];
-    this.pixelG = [];
-    this.pixelB = [];
+    this.level = 4; // Intensidad, cantidad de vecinos que se agregan al promedio (intensidad * 2 + 1)
+    this.fillingRow = false;
+    this.averagePixel = [255,255,255];
   }
 
   setLevel(level){
@@ -136,69 +134,83 @@ class Blur extends Filter {
   }
 
   applyFilter(rgbIndex, imageData, x, y) {
-
-    let lv = 2;
-    if(x <= lv && this.direction || y <= lv && !this.direction){
-      this.pixelR = this.getColorData(imageData, x, y, 0);
-      this.pixelG = this.getColorData(imageData, x, y, 1);
-      this.pixelB = this.getColorData(imageData, x, y, 2);
-      this.avgR = this.sum(this.pixelR);
-      this.avgG = this.sum(this.pixelG);
-      this.avgB = this.sum(this.pixelB);
-    }
-    else {
-      this.avgR -= this.pixelR[0];
-      this.pixelR = this.getColorData(imageData, x, y, 0);
-      this.avgR += this.pixelR[this.pixelR.length - 1];
-      this.avgG -= this.pixelG[0];
-      this.pixelG = this.getColorData(imageData, x, y, 1);
-      this.avgG += this.pixelG[this.pixelG.length - 1];
-      this.avgB -= this.pixelB[0];
-      this.pixelB = this.getColorData(imageData, x, y, 2);
-      this.avgB += this.pixelB[this.pixelB.length - 1];
-    }
-
-    let pixelData = [this.avgR, this.avgG, this.avgB, 255];
-
-    for (var z = 0; z < 3; z++) {
-      imageData.data[rgbIndex+z] = ( pixelData[z] / (lv * 2 + 1));
-    }
-    imageData.data[rgbIndex+3] = 255;
-
-  }
-
-  sum(a) {
-    let sum = 0;
-    for (let i = 0; i < a.length; i++) {
-      if(a[i]) sum += a[i];
-    }
-    return sum;
-  }
-
-  fillCanvas(imageData){
-    super.fillCanvas(imageData);
-    this.direction = true;
-  //  super.fillCanvas(imageData);
-  //  this.direction = false;
-  }
-
-  getColorData(imageData, x, y, color){
-    let data = [];
-    let level = 2;
-    if(this.direction) {
-
-      for (var i = -level; i <= level; i++) {
-        let pixel = imageData.data[this.getRGBIndex(x + i, y, imageData) + color];
-        data.push(pixel);
+    if(x <= this.level && this.direction || y <= this.level && !this.direction){
+      for (var i = 0; i < 3; i++) {
+        this.averagePixel[i] = this.getAverageInRadius(imageData, x, y, i);
       }
     }
     else {
-      for (var i = -level; i <= level; i++) {
-        let pixel = imageData.data[this.getRGBIndex(x, y + i, imageData) + color];
-        data.push(pixel);
+      let substractionPos = this.getValidAxis(x, y) - this.level - 1;
+      let additionPos = this.getValidAxis(x, y) + this.level;
+
+      for (var i = 0; i < this.averagePixel.length; i++) {
+        if(this.fillingRow) {
+          this.averagePixel[i] -= this.getValueInPosition(substractionPos, y, imageData, i);
+          this.averagePixel[i] += this.getValueInPosition(additionPos, y, imageData, i);
+        }
+        else{
+          this.averagePixel[i] -= this.getValueInPosition(x, substractionPos, imageData, i);
+          this.averagePixel[i] += this.getValueInPosition(x, additionPos, imageData, i);
+        }
       }
     }
-    return data;
+
+    this.setPixelValues(rgbIndex, imageData);
+  }
+
+  setPixelValues(rgbIndex, imageData){
+    for (var i = 0; i < 3; i++) {
+      imageData.data[rgbIndex+i] = this.averagePixel[i] / (this.level * 2 + 1);
+    }
+  }
+
+  getValidAxis(x, y){
+    if(this.fillingRow) return x;
+    return y;
+  }
+
+  getValueInPosition(x, y, imageData, color){
+    let index = this.getRGBIndex(x, y, imageData);
+    let value = imageData.data[index + color];
+    if(!value) value = 0;
+    return value;
+  }
+
+  fillCanvas(imageData) {
+    // Se realizan 2 pasadas para obtener un buen efecto Blur
+    for (var i = 0; i < 2; i++) {
+      // Se aplica el filtro de manera vertical
+      for (let x = 0; x < canvas.width; x++) {
+        for (let y = 0; y < canvas.height; y++) {
+          this.applyPixel(imageData, x, y);
+        }
+      }
+
+      this.fillingRow = true;
+      // Se aplica el filtro de manera horizontal
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          this.applyPixel(imageData, x, y);
+        }
+      }
+      this.fillingRow = false;
+    }
+  }
+
+  applyPixel(imageData, x, y){
+    let index = this.getRGBIndex(x, y, imageData);
+    this.applyFilter(index, imageData, x, y);
+  }
+
+  getAverageInRadius(imageData, x, y, color){
+    let average = 0;
+
+    for (var i = -this.level; i <= this.level; i++) {
+      if(this.fillingRow) average += this.getValueInPosition(x + i, y, imageData, color);
+      else average += this.getValueInPosition(x, y + i, imageData, color);
+    }
+
+    return average;
   }
 
 }
