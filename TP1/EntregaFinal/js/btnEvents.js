@@ -10,7 +10,7 @@ function bindFilters() {
   bindBtn("saturacion", new Saturation(0), true);
   bindBtn("border-detection", new ConvolutionFilter([-1, -1, -1, -1,  8,  -1, -1, -1, -1]));
   bindBtn("sharpen", new ConvolutionFilter([0, -1, 0, -1,  5,  -1, 0, -1, 0]));
-  bindBtn("desenfoque", new Blur([1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9]), true);
+  bindBtn("desenfoque", new Blur(), true);
   bindBtn("brightness", new Brightness(100), true);
   bindBtn("binary", new Binary(128), true);
   bindBtn("sepia", new Sepia(100), true);
