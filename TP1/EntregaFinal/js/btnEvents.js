@@ -7,6 +7,7 @@ const SLIDER_CONTAINER_ID = "#sliderContainer";
 bindFilters();
 // Se le asigna a cada boton su respectivo filtro
 function bindFilters() {
+  bindBtn("original", new Original());
   bindBtn("negative", new Negative());
   bindBtn("saturacion", new Saturation(100), true);
   bindBtn("border-detection", new ConvolutionFilter([-1, -1, -1, -1,  8,  -1, -1, -1, -1]));
@@ -40,7 +41,6 @@ function btnEvent(filter, canChangeLevels) {
     updateFilterLevel(filter, 50);
   }
   else $(SLIDER_CONTAINER_ID).hide("slow");
-
 
 
   setTimeout(() => {

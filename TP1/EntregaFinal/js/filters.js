@@ -270,7 +270,9 @@ class HSLConverter {
 }
 
 /**
-* Filtro de color "Saturacion"
+* Filtro de color "Saturacion", para lograrlo se convierten los valores
+* RGB de cada pixel a HSL, donde se altera la propiedad S (saturation)
+* y luego se vuelve a pasar a RGB.
 */
 class Saturation extends Filter {
   constructor(level) {
@@ -340,7 +342,7 @@ class Binary extends Filter {
   constructor(level) {
     super();
     this.level = level;
-    this.gray = new GrayScale(canvas);
+    this.gray = new GrayScale();
   }
 
   applyFilter(rgbIndex, imageData) {
@@ -410,4 +412,18 @@ class GrayScale extends Filter {
     }
     return total;
   }
+}
+
+
+/**
+* Filtro de para obtener la imagen original.
+*/
+class Original extends Filter {
+  constructor() { super(); }
+
+
+  fillCanvas(imageData, canvas){
+    drawImage(image);
+  }
+
 }

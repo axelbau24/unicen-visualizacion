@@ -10,8 +10,11 @@ image.onload = function() {
   canvas.width = this.width;
   canvas.height = this.height;
   imagePreview = this;
-  updatePreviews();
-  ctx.drawImage(this, 0, 0);
+  setTimeout(() => { // Esperamos un segundo antes de mostrar las previews, para que las animaciones no se vean mal.
+    updatePreviews();
+  }, 700);
+  drawImage(this);
+
 }
 
 function resizeCanvas(c, image) {
@@ -19,9 +22,13 @@ function resizeCanvas(c, image) {
   c.height = image.height;
 }
 
+function drawImage(image) {
+  ctx.drawImage(image, 0, 0);
+}
+
 function updateCurrentImage(filter) {
 
-  ctx.drawImage(image, 0, 0);
+  drawImage(image);
   let imageData = ctx.getImageData(0, 0, canvas.width , canvas.height);
 
   filter.fillCanvas(imageData, canvas);
@@ -43,13 +50,16 @@ function updatePreviews() {
     imagePreviewsFilters[i].putImageData(imageData, previewContext);
   }
 
+  showFilterTab(); // activamos la animacion para mostrar los filtros
+
 }
 
 function reScaleImage(previewCanvas) {
-  previewCanvas.height = 100;
-  previewCanvas.width = 100;
+  let defaultSize = 110;
+  previewCanvas.height = defaultSize;
+  previewCanvas.width = defaultSize;
 
   previewCanvas.height = previewCanvas.width * imagePreview.height / imagePreview.width;
-  if(previewCanvas.height > previewCanvas.width) previewCanvas.height = 100;
+  if(previewCanvas.height > previewCanvas.width) previewCanvas.height = defaultSize;
   previewCanvas.width = previewCanvas.height * imagePreview.width / imagePreview.height;
 }

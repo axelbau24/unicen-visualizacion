@@ -14,36 +14,35 @@
 <body>
   <div class="container-fluid">
 
-    <div class="row justify-content-md-center invisible filter-tab">
+    <div class="row justify-content-md-center hidden filter-tab">
       <div class="col-md-auto">
         <div class="card">
           <div class="card-body text-center filter-container">
-
-            <canvas width="0" height="0" id="negative" title="Filtro negativo" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="brightness" title="Filtro de brillo" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="binary" title="Filtro binario" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="sepia" title="Filtro sepia" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="greyscale" title="Filtro de color blanco y negro" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="border-detection" title="Filtro de detección de border" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="blur" title="Filtro de desenfoque" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="saturacion" title="Filtro de saturación" src="" class="filter-thumbnail img-thumbnail"></canvas>
-            <canvas width="0" height="0" id="sharpen" title="Filtro de realce" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="original" title="Imagen original" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="negative" title="Filtro negativo" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="brightness" title="Filtro de brillo" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="binary" title="Filtro binario" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="sepia" title="Filtro sepia" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="greyscale" title="Filtro de color blanco y negro" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="border-detection" title="Filtro de detección de bordes" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="blur" title="Filtro de desenfoque" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="saturacion" title="Filtro de saturación" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas id="sharpen" title="Filtro de realce" src="" class="filter-thumbnail img-thumbnail"></canvas>
 
           </div>
         </div>
       </div>
     </div>
-    <br>
 
     <div class="row justify-content-md-center home-container">
       <div class="col-md-auto">
-          <div class="text-center ">
-            <h3>Filtro de imágenes</h3>
-            <strong>Suba una imagen desde su computadora para aplicarle el filtro deseado</strong><br><br>
-            <label class="btn btn-info">
-              Subir imagen <input id="firstUpload" type="file" style="display: none" accept="image/*" />
-            </label>
-          </div>
+        <div class="text-center ">
+          <h3>Filtro de imágenes</h3>
+          <strong>Suba una imagen desde su computadora para aplicarle el filtro deseado</strong><br><br>
+          <label class="btn btn-info">
+            Subir imagen <input id="firstUpload" type="file" style="display: none" accept="image/*" />
+          </label>
+        </div>
       </div>
     </div>
 
@@ -86,13 +85,20 @@
 
       </div>
     </div>
+    <div class="row">
+      <div class="col text-center margin-bottom"><br>
+        <i>Interfaces de usuario e interacción - 2017 - Bautista Axel</i>
+      </div>
+    </div>
 
-    <script type="text/javascript" src="js/libs/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="js/libs/jquery-ui.js"></script>
+  </div>
+  <script type="text/javascript" src="js/libs/jquery-1.12.4.js"></script>
+  <script type="text/javascript" src="js/libs/jquery-ui.js"></script>
 
-    <script type="text/javascript" src="js/canvas.js"> </script>
-    <script type="text/javascript" src="js/filters.js"> </script>
-    <script type="text/javascript" src="js/btnEvents.js"> </script>
-    <script type="text/javascript" src="js/fileUpload.js"> </script>
-  </body>
-  </html>
+  <script type="text/javascript" src="js/canvas.js"> </script>
+  <script type="text/javascript" src="js/filters.js"> </script>
+  <script type="text/javascript" src="js/btnEvents.js"> </script>
+  <script type="text/javascript" src="js/fileUpload.js"> </script>
+  <script type="text/javascript" src="js/uiAnimations.js"> </script>
+</body>
+</html>
