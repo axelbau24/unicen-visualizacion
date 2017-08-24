@@ -11,20 +11,20 @@ class Filter {
     }
   }
 
-  fillCanvas(imageData) {
+  fillCanvas(imageData, canvas) {
     for (let y = 0; y < canvas.height; y++) {
       for (let x = 0; x < canvas.width; x++) {
 
         let index = this.getRGBIndex(x, y, imageData);
-        this.applyFilter(index, imageData, x, y);
+        this.applyFilter(index, imageData, canvas, x, y);
 
       }
     }
   }
 
 
-  putImageData(imageData){
-    ctx.putImageData(imageData, 0,0);
+  putImageData(imageData, context){
+    context.putImageData(imageData, 0,0);
   }
 
   getRGBIndex(x, y, imageData) {
@@ -47,7 +47,7 @@ class ConvolutionFilter extends Filter {
     this.kernelTotal = this.getKernelTotal();
   }
 
-  applyFilter(rgbIndex, imageData, x, y) {
+  applyFilter(rgbIndex, imageData, canvas, x, y) {
     if(x == 0 && y == 0) this.customImageData = ctx.createImageData(canvas.width, canvas.height);
 
     let R = this.multiply(this.getColorData(imageData, x, y, 0));
@@ -68,8 +68,8 @@ class ConvolutionFilter extends Filter {
     return total == 0 ? 1 : total;
   }
 
-  putImageData(imageData){
-    ctx.putImageData(this.customImageData, 0,0);
+  putImageData(imageData, context){
+    context.putImageData(this.customImageData, 0,0);
   }
 
   multiply(a) {
@@ -112,7 +112,7 @@ class Blur extends Filter {
     this.level = Math.round(level / 10);
   }
 
-  applyFilter(rgbIndex, imageData, x, y) {
+  applyFilter(rgbIndex, imageData, canvas, x, y) {
     if(x <= this.level && this.direction || y <= this.level && !this.direction){
       for (var i = 0; i < 3; i++) {
         this.averagePixel[i] = this.getAverageInRadius(imageData, x, y, i);
@@ -155,13 +155,13 @@ class Blur extends Filter {
     return value;
   }
 
-  fillCanvas(imageData) {
+  fillCanvas(imageData, canvas) {
     // Se realizan 2 pasadas para obtener un buen efecto Blur
     for (var i = 0; i < 2; i++) {
       // Se aplica el filtro de manera vertical
       for (let x = 0; x < canvas.width; x++) {
         for (let y = 0; y < canvas.height; y++) {
-          this.applyPixel(imageData, x, y);
+          this.applyPixel(imageData, canvas, x, y);
         }
       }
 
@@ -169,16 +169,16 @@ class Blur extends Filter {
       // Se aplica el filtro de manera horizontal
       for (let y = 0; y < canvas.height; y++) {
         for (let x = 0; x < canvas.width; x++) {
-          this.applyPixel(imageData, x, y);
+          this.applyPixel(imageData, canvas, x, y);
         }
       }
       this.fillingRow = false;
     }
   }
 
-  applyPixel(imageData, x, y){
+  applyPixel(imageData, canvas, x, y){
     let index = this.getRGBIndex(x, y, imageData);
-    this.applyFilter(index, imageData, x, y);
+    this.applyFilter(index, imageData, canvas, x, y);
   }
 
   getAverageInRadius(imageData, x, y, color){

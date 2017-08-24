@@ -14,19 +14,21 @@
 <body>
   <div class="container-fluid">
 
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center invisible filter-tab">
       <div class="col-md-auto">
         <div class="card">
           <div class="card-body text-center filter-container">
-            <button id="negative" type="button" class="btn btn-light color-filter">Negativo</button>
-            <button id="brightness" type="button" class="btn btn-light color-filter">Brillo</button>
-            <button id="binary" type="button" class="btn btn-light color-filter">Binarización</button>
-            <button id="sepia" type="button" class="btn btn-light color-filter">Sepia</button>
-            <button id="greyscale" type="button" class="btn btn-light color-filter">Blanco y negro</button>
-            <button id="border-detection" type="button" class="btn btn-light color-filter">Detección de bordes</button>
-            <button id="desenfoque" type="button" class="btn btn-light color-filter">Desenfoque</button>
-            <button id="saturacion" type="button" class="btn btn-light color-filter">Saturacion</button>
-            <button id="sharpen" type="button" class="btn btn-light color-filter">Realce</button>
+
+            <canvas width="0" height="0" id="negative" title="Filtro negativo" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="brightness" title="Filtro de brillo" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="binary" title="Filtro binario" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="sepia" title="Filtro sepia" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="greyscale" title="Filtro de color blanco y negro" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="border-detection" title="Filtro de detección de border" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="blur" title="Filtro de desenfoque" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="saturacion" title="Filtro de saturación" src="" class="filter-thumbnail img-thumbnail"></canvas>
+            <canvas width="0" height="0" id="sharpen" title="Filtro de realce" src="" class="filter-thumbnail img-thumbnail"></canvas>
+
           </div>
         </div>
       </div>
@@ -50,7 +52,7 @@
         <div class="col-md-8">
           <div class="card hidden image-container">
             <div class="card-body text-center">
-              <canvas id="canvas" style="border:#000 solid 1px;" class="img-fluid" /></canvas>
+              <canvas id="canvas" class="img-fluid" /></canvas>
               <div class="canvas-background hidden"><div class="canvas-text">
                 <span class="loading"> </span> Aplicando filtro...
               </div></div>
@@ -77,7 +79,7 @@
               </label>
               <h5 class="card-title">Imagen seleccionada</h5>
               <img id="selectedImage"src="image.jpg" alt="Imágen seleccionada" class="img-thumbnail"><br><br>
-              <a id="saveImage" class="btn btn-success" download="imagenConFiltro.png">Guardar imagen</a>
+              <a id="saveImage" class="btn btn-success" download="imagenConFiltro.jpg">Guardar imagen</a>
             </div>
           </div>
         </div>

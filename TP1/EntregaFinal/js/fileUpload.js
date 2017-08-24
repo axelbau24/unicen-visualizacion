@@ -9,12 +9,17 @@ $('#imageUpload').on('change', function () {
 
 $("#firstUpload").on("change", function() {
   loadImage($(this));
-
   let home = $(".home-container").effect( "puff", 500, function() {
     let main = $(".main-container");
     clearElement(main);
     main.show("scale", { percent: 0 }, 500, slideCanvas);
+
+    // $(".filter-tab").show("scale", { percent: 0 }, 5000, function () {
+    //   updatePreviews();
+    // });
+
   });
+
 });
 
 
@@ -22,7 +27,11 @@ function slideCanvas() {
   let imgContainer = $(CANVAS_CONTAINER);
   clearElement(imgContainer);
   imgContainer.show("slide", 500);
-  image.src = $(SELECTED_IMAGE_THUMBNAIL).attr("src");
+  let filterTab = $(".filter-tab");
+  filterTab.removeClass("invisible");
+  filterTab.hide();
+  filterTab.show("clip", 1200);
+
 }
 
 function clearElement(el) {
@@ -36,14 +45,16 @@ function loadImage(fileInput) {
   var reader = new FileReader();
   reader.onload = function(e) {
       $(SELECTED_IMAGE_THUMBNAIL).attr("src", e.target.result);
+      image.src = $(SELECTED_IMAGE_THUMBNAIL).attr("src");
       bindFilters();
+
   };
   reader.readAsDataURL(file);
 }
 
 
 function getDownloadData() {
-  return canvas.toDataURL('image/png');
+  return canvas.toDataURL('image/jpg');
 
 }
 $("#saveImage").click(function() {

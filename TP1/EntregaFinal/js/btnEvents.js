@@ -8,11 +8,11 @@ bindFilters();
 // Se le asigna a cada boton su respectivo filtro
 function bindFilters() {
   bindBtn("negative", new Negative());
-  bindBtn("saturacion", new Saturation(), true);
+  bindBtn("saturacion", new Saturation(100), true);
   bindBtn("border-detection", new ConvolutionFilter([-1, -1, -1, -1,  8,  -1, -1, -1, -1]));
   bindBtn("sharpen", new ConvolutionFilter([0, -1, 0, -1,  5,  -1, 0, -1, 0]));
-  bindBtn("desenfoque", new Blur(), true);
-  bindBtn("brightness", new Brightness(100), true);
+  bindBtn("blur", new Blur(), true);
+  bindBtn("brightness", new Brightness(50), true);
   bindBtn("binary", new Binary(128), true);
   bindBtn("sepia", new Sepia(100), true);
   bindBtn("greyscale", new GrayScale());
@@ -27,7 +27,8 @@ function bindBtn(btnId, filter, canChangeLevels) {
   newBtn.addEventListener('click', function() {
     btnEvent(filter, canChangeLevels);
   });
-
+  imagePreviews.push(btnId);
+  imagePreviewsFilters.push(filter);
 }
 
 
@@ -39,6 +40,8 @@ function btnEvent(filter, canChangeLevels) {
     updateFilterLevel(filter, 50);
   }
   else $(SLIDER_CONTAINER_ID).hide("slow");
+
+
 
   setTimeout(() => {
     updateCurrentImage(filter);
