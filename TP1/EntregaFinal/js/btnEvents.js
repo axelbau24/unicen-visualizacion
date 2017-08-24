@@ -5,9 +5,10 @@ const FILTER_SLIDER_ID = "#slider";
 const SLIDER_CONTAINER_ID = "#sliderContainer";
 
 bindFilters();
+// Se le asigna a cada boton su respectivo filtro
 function bindFilters() {
   bindBtn("negative", new Negative());
-  bindBtn("saturacion", new Saturation(0), true);
+  bindBtn("saturacion", new Saturation(), true);
   bindBtn("border-detection", new ConvolutionFilter([-1, -1, -1, -1,  8,  -1, -1, -1, -1]));
   bindBtn("sharpen", new ConvolutionFilter([0, -1, 0, -1,  5,  -1, 0, -1, 0]));
   bindBtn("desenfoque", new Blur(), true);
