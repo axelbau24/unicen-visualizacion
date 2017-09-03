@@ -1,10 +1,21 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext("2d");
 
-ctx.fillStyle = "#3974a0";
-ctx.fillRect(0,0, canvas.width, canvas.height);
+
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
+
+let drawnShapes = [];
+
+function drawCanvas() {
+  ctx.fillStyle = "#3974a0";
+  ctx.fillRect(0,0, canvas.width, canvas.height);
+
+  for (var i = 0; i < drawnShapes.length; i++) {
+    drawnShapes[i].draw();
+  }
+
+}
 
 class Point {
   constructor(x , y) {
@@ -42,6 +53,9 @@ class Draggable {
       let rect = canvas.getBoundingClientRect();
       let point = new Point(e.clientX - rect.left , e.clientY - rect.top);
       this.setPos(point.X, point.Y);
+      this.clear();
+      drawCanvas();
+
     }
   }
   mouseDown(e){
@@ -54,10 +68,10 @@ class Draggable {
   mouseUp(e){
     this.dragging = false;
   }
-
   clear(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
+
 }
 
 class Circle extends Draggable {
@@ -82,12 +96,10 @@ class Circle extends Draggable {
   }
 
   setPos(x, y){
-    this.clear();
     if(this.x <= x) this.x = x - this.draggingDistance.X;
     else this.x = x + this.draggingDistance.X;
     if(this.y <= y) this.y = y - this.draggingDistance.Y;
     else this.y = y + this.draggingDistance.Y;
-    this.draw();
   }
 
   getImagePattern(){
@@ -127,7 +139,6 @@ class Polygon extends Draggable {
   }
 
   isPointInside(p){
-    let rect = canvas.getBoundingClientRect();
     let inside = false;
 
     for (let i = 0, j = this.polygon.length - 1 ; i < this.polygon.length; j = i++){
@@ -136,11 +147,6 @@ class Polygon extends Draggable {
       }
     }
     return inside;
-  }
-
-  clear(){
-    super.clear();
-    this.polygon = [];
   }
 
 }
@@ -154,6 +160,7 @@ class Triangle extends Polygon {
   }
 
   draw(){
+    this.polygon = [];
     ctx.fillStyle = "red";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
@@ -165,10 +172,8 @@ class Triangle extends Polygon {
 
   }
   setPos(x, y){
-    this.clear();
     this.x = x - this.draggingDistance.X;
     this.y = y + this.draggingDistance.Y;
-    this.draw();
   }
 }
 
@@ -179,6 +184,7 @@ class Square extends Polygon {
   }
 
   draw(){
+    this.polygon = [];
     ctx.fillStyle = "red";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
@@ -192,10 +198,8 @@ class Square extends Polygon {
   }
 
   setPos(x, y){
-    this.clear();
     this.x = x - this.draggingDistance.X;
     this.y = y - this.draggingDistance.Y;
-    this.draw();
   }
 
 }
@@ -208,6 +212,7 @@ class Parallelogram extends Polygon {
   }
 
   draw(){
+    this.polygon = [];
     ctx.fillStyle = "red";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
@@ -221,22 +226,41 @@ class Parallelogram extends Polygon {
   }
 
   setPos(x, y){
-    this.clear();
     this.x = x - this.draggingDistance.X;
     this.y = y - this.draggingDistance.Y;
-    this.draw();
   }
 
 }
 
+
+// Test
+
 let img = new Image();
-let c;
 img.src = "image.jpg"
 img.onload = function () {
 
-//  c = new Circle(200, 300, 75, this);
-//  c.draw();
-  c = new Parallelogram(100, 150, 100, 30);
-  c.draw();
+  drawnShapes.push(new Parallelogram(100, 150, 100, 30));
+  drawnShapes.push(new Triangle(200, 200, 150));
+  drawnShapes.push(new Circle(200, 300, 75, this));
+  drawnShapes.push(new Circle(100, 100, 150, this));
+  drawnShapes.push(new Circle(300, 100, 30, this));
+  drawCanvas();
+
+}
+let img1 = new Image();
+img1.src = "https://i.pinimg.com/736x/a8/0d/a1/a80da10ca53188750464ac3bdb706c06--night-photography-night-landscape-photography.jpg";
+img1.onload = function () {
+
+  drawnShapes.push(new Circle(300, 300, 125, this));
+  drawnShapes.push(new Square(300, 300, 75));
+  drawCanvas();
+
+}
+let img2 = new Image();
+img2.src = "https://cdn.pixabay.com/photo/2015/10/04/17/31/abstract-971439_960_720.jpg";
+img2.onload = function () {
+
+  drawnShapes.push(new Circle(250, 300, 70, this));
+  drawCanvas();
 
 }
