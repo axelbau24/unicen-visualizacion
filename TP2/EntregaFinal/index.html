@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Práctico 2</title>
-  </head>
-  <body>
-    <canvas id="canvas" width="1000" height="1000"></canvas>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Juego rompecabezas</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/libs/bootstrap4.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="https://getbootstrap.com//assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+      Rompecabezas
+    </a>
+  </nav>
+  <div class="container-fluid">
 
-    <script type="text/javascript" src="js/canvas.js"></script>
-  </body>
+    <div class="row">
+
+      <div class="col-md-9">
+        <div class="card text-center">
+
+          <div class="card-body">
+            <canvas id="canvas" width="1152" height="648"  class="img-fluid"></canvas>
+          </div>
+          <!-- <div class="card-footer text-muted">
+            2 days ago
+          </div> -->
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-header">
+            Instrucciones de juego
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <script type="text/javascript" src="js/libs/jquery-1.12.4.js"></script>
+  <script type="text/javascript" src="js/canvas.js"></script>
+</body>
 </html>

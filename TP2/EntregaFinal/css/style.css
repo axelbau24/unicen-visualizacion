@@ -1,0 +1,31 @@
+body{
+  background-color: #505151;
+}
+.card{
+  margin-top: 5px;
+  background-color: #8e8e8e;
+  color: white;
+}
+.card-body{
+  padding: 5px;
+}
+.bg-light {
+    background-color: #3f8fe0 !important;
+}
+.navbar-light .navbar-brand {
+    color: #ffffff;
+}
+.navbar-light .navbar-brand:hover {
+    color: #ffffff;
+}
+.col-md-3, .col-md-9{
+  padding: 5px;
+}
+.card-header{
+  background-color: #676767;
+  font-weight: bold;
+}
+
+.list-group-item{
+  background-color: #8e8e8e;
+}
