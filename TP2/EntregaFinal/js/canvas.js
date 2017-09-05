@@ -8,33 +8,41 @@ canvas.height = canvas.offsetHeight;
 let drawnShapes = [];
 let shapeHoles = [];
 
+
+function checkWin() {
+  let i = 0;
+  while (i < drawnShapes.length && drawnShapes[i].blocked) i++;
+  if(i == shapeHoles.length) alert("Ganaste!");
+}
+
 function drawCanvas() {
   ctx.fillStyle = "#3974a0";
   ctx.fillRect(0,0, canvas.width, canvas.height);
 
   let row = 0;
   let column = 0;
-  let padding = 10;
+  let padding = 30;
+  let defaultWidth = 200;
   shapeHoles = [];
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
 
-    if((row * 160) + padding >= canvas.width) {
+    if((row * defaultWidth + padding * 2) + padding >= canvas.width) {
       row = 0;
       column++;
     }
-    let p = alterPos(shape, new Point((130 * row) + padding, (column * 130) + padding));
+    let p = alterPos(shape, new Point((defaultWidth * row) + padding, (column * defaultWidth) + padding));
     row++;
     shape.draw(false); // Dibujamos la figura en su lugar de encastre
     shapeHoles.push(new ShapeHole(shape));
     restorePos(shape, p);
     shape.draw(true); // Dibujamos la figura en la parte inferior para que luego se puedan encastrar
   }
-
+  checkWin();
 }
 
-function alterPos(shape, pos, shapeOffset) {
+function alterPos(shape, pos) {
   let original = new Point(shape.x, shape.y);
   shape.x = pos.X + shape.offset.X;
   shape.y = pos.Y + shape.offset.Y;
@@ -54,7 +62,7 @@ drawCanvas();
 function drawPlayboard() {
   let row = 5;
   let column = 0;
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 10; i++) {
     drawnShapes.push(getRandomShape(100 * column, 100 * row));
     column++;
   }

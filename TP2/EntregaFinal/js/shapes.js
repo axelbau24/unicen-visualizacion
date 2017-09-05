@@ -16,8 +16,14 @@ class ShapeHole {
   }
 
   inRange(point){
-    let defaultRange = 5;
+    let defaultRange = 20;
     return Math.abs(this.point.X - point.X) <= defaultRange && Math.abs(this.point.Y - point.Y) <= defaultRange;
+  }
+  snap(shape){
+    this.filled = true;
+    shape.x = this.point.X;
+    shape.y = this.point.Y;
+    drawCanvas();
   }
 }
 
@@ -71,15 +77,17 @@ class Draggable {
   mouseUp(e){
     if(this.dragging){
       let mousePos = this.getMousePosition(e);
-      for (var i = 0; i < shapeHoles.length; i++) {
+      let i = 0;
+      while(i < shapeHoles.length && !shapeHoles[i].validHole(this)) i++;
 
-        if(shapeHoles[i].validHole(this)){
-          this.blocked = true;
-        }
+      if(i != shapeHoles.length){
+        this.blocked = true;
+        shapeHoles[i].snap(this);
       }
 
+
+      this.dragging = false;
     }
-    this.dragging = false;
   }
 
   clear(){
@@ -219,6 +227,7 @@ class Square extends Polygon {
   draw(fill){
     this.polygon = [];
     ctx.fillStyle = "red";
+
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
