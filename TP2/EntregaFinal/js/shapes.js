@@ -5,12 +5,30 @@ class Point {
   }
 }
 
+class ShapeHole {
+  constructor(shape) {
+    this.point = new Point(shape.x, shape.y);
+    this.shape = shape;
+  }
+
+  validHole(shape, point){
+    return this.inRange(new Point(shape.x, shape.y)) && this.shape.equals(shape);
+  }
+
+  inRange(point){
+    let defaultRange = 5;
+    return Math.abs(this.point.X - point.X) <= defaultRange && Math.abs(this.point.Y - point.Y) <= defaultRange;
+  }
+}
+
 class Draggable {
   constructor() {
     if (new.target === Draggable) {
       throw new TypeError("No es posible instanciar una clase abstracta");
     }
+    this.filled = false;
     this.dragging = false;
+    this.blocked = false;
     this.draggingDistance = new Point(0,0);
     let obj = this;
 
@@ -26,29 +44,44 @@ class Draggable {
   }
 
   isPointInside(p){} // Metodo abstracto
-  draw(){} // Metodo abstracto
+  draw(fill){} // Metodo abstracto
   setPos(x, y){} // Metodo abstracto
+
+  getMousePosition(e){
+    let rect = canvas.getBoundingClientRect();
+    return new Point(e.clientX - rect.left , e.clientY - rect.top);
+  }
 
   drag(e){
     if(this.dragging){
-      let rect = canvas.getBoundingClientRect();
-      let point = new Point(e.clientX - rect.left , e.clientY - rect.top);
+      let point = this.getMousePosition(e);
       this.setPos(point.X, point.Y);
       this.clear();
       drawCanvas();
-
     }
   }
   mouseDown(e){
-    let rect = canvas.getBoundingClientRect();
-    let p = new Point(e.clientX - rect.left, e.clientY - rect.top);
-    this.draggingDistance = new Point(Math.abs(this.x - p.X), Math.abs(this.y - p.Y));
-    if(this.isPointInside(p)) this.dragging = true;
+    if(!this.blocked){
+      let p = this.getMousePosition(e);
+      this.draggingDistance = new Point(Math.abs(this.x - p.X), Math.abs(this.y - p.Y));
+      if(this.isPointInside(p)) this.dragging = true;
+    }
 
   }
   mouseUp(e){
+    if(this.dragging){
+      let mousePos = this.getMousePosition(e);
+      for (var i = 0; i < shapeHoles.length; i++) {
+
+        if(shapeHoles[i].validHole(this)){
+          this.blocked = true;
+        }
+      }
+
+    }
     this.dragging = false;
   }
+
   clear(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
@@ -65,14 +98,18 @@ class Circle extends Draggable {
     this.image = image;
   }
 
-  draw(){
+  draw(fill){
     ctx.translate(this.x - this.radius, this.y - this.radius);
 
     if(this.image) ctx.fillStyle = this.getImagePattern();
     else ctx.fillStyle = "yellow";
     ctx.beginPath();
     ctx.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2);
-    ctx.fill();
+    if(fill) {
+      this.filled = true;
+      ctx.fill();
+    }
+    ctx.stroke();
     ctx.closePath();
 
     ctx.translate(-(this.x - this.radius), -(this.y - this.radius));
@@ -101,6 +138,10 @@ class Circle extends Draggable {
 
   getDistance(pX, pY, cX, cY){
     return Math.sqrt(Math.pow(pX - cX, 2) + Math.pow(pY - cY, 2));
+  }
+
+  equals(shape){
+    return shape instanceof Circle;
   }
 
 }
@@ -144,7 +185,7 @@ class Triangle extends Polygon {
     this.size = size;
   }
 
-  draw(){
+  draw(fill){
     this.polygon = [];
     ctx.fillStyle = "red";
     ctx.beginPath();
@@ -153,11 +194,19 @@ class Triangle extends Polygon {
     this.addPoint(new Point(this.x + this.size / 2, this.y - this.size));
     this.addPoint(new Point(this.x, this.y));
     ctx.closePath();
+    if(fill) {
+      this.filled = true;
+      ctx.fill();
+    }
     ctx.stroke();
   }
   setPos(x, y){
     this.x = x - this.draggingDistance.X;
     this.y = y + this.draggingDistance.Y;
+  }
+
+  equals(shape){
+    return shape instanceof Triangle;
   }
 }
 
@@ -167,7 +216,7 @@ class Square extends Polygon {
     this.size = size;
   }
 
-  draw(){
+  draw(fill){
     this.polygon = [];
     ctx.fillStyle = "red";
     ctx.beginPath();
@@ -177,13 +226,19 @@ class Square extends Polygon {
     this.addPoint(new Point(this.x, this.y + this.size));
     this.addPoint(new Point(this.x, this.y));
     ctx.closePath();
+    if(fill) {
+      this.filled = true;
+      ctx.fill();
+    }
     ctx.stroke();
-
   }
 
   setPos(x, y){
     this.x = x - this.draggingDistance.X;
     this.y = y - this.draggingDistance.Y;
+  }
+  equals(shape){
+    return shape instanceof Square;
   }
 
 }
@@ -195,9 +250,9 @@ class Parallelogram extends Polygon {
     this.tilt = tilt;
   }
 
-  draw(){
+  draw(fill){
     this.polygon = [];
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "green";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
@@ -205,12 +260,19 @@ class Parallelogram extends Polygon {
     this.addPoint(new Point(this.x + this.tilt , this.y + this.size));
     this.addPoint(new Point(this.x, this.y));
     ctx.closePath();
+    if(fill) {
+      this.filled = true;
+      ctx.fill();
+    }
     ctx.stroke();
   }
 
   setPos(x, y){
     this.x = x - this.draggingDistance.X;
     this.y = y - this.draggingDistance.Y;
+  }
+  equals(shape){
+    return shape instanceof Parallelogram;
   }
 
 }
