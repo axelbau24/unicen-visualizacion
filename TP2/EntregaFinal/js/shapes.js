@@ -16,7 +16,7 @@ class ShapeHole {
   }
 
   inRange(point){
-    let defaultRange = 20;
+    let defaultRange = 25;
     return Math.abs(this.point.X - point.X) <= defaultRange && Math.abs(this.point.Y - point.Y) <= defaultRange;
   }
   snap(shape){
@@ -226,7 +226,7 @@ class Square extends Polygon {
 
   draw(fill){
     this.polygon = [];
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "green";
 
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
@@ -252,22 +252,55 @@ class Square extends Polygon {
 
 }
 
-class Parallelogram extends Polygon {
-  constructor(x, y, size, tilt, offset){
+class Diamond extends Polygon {
+  constructor(x, y, size, offset){
     super(x, y, offset);
     this.size = size;
-    this.tilt = tilt;
   }
 
   draw(fill){
     this.polygon = [];
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "purple";
+    ctx.beginPath();
+    this.addPoint(new Point(this.x, this.y));
+    this.addPoint(new Point(this.x + this.size, this.y + this.size));
+    this.addPoint(new Point(this.x, this.y + this.size * 2));
+    this.addPoint(new Point(this.x - this.size, this.y + this.size));
+    ctx.closePath();
+    if(fill) {
+      this.filled = true;
+      ctx.fill();
+    }
+    ctx.stroke();
+  }
+
+  setPos(x, y){
+    this.x = x + this.draggingDistance.X;
+    this.y = y - this.draggingDistance.Y;
+  }
+  equals(shape){
+    return shape instanceof Diamond;
+  }
+
+}
+
+class Hexagon extends Polygon {
+  constructor(x, y, size, offset){
+    super(x, y, offset);
+    this.size = size;
+  }
+
+  draw(fill){
+    let width = this.size * 0.1;
+    this.polygon = [];
+    ctx.fillStyle = "blue";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
-    this.addPoint(new Point(this.x + this.size + this.tilt, this.y + this.size));
-    this.addPoint(new Point(this.x + this.tilt , this.y + this.size));
-    this.addPoint(new Point(this.x, this.y));
+    this.addPoint(new Point(this.x + this.size + this.size / 2 + width, this.y + this.size));
+    this.addPoint(new Point(this.x + this.size, this.y  + this.size * 2));
+    this.addPoint(new Point(this.x, this.y + this.size * 2));
+    this.addPoint(new Point(this.x - this.size / 2 - width, this.y + this.size ));
     ctx.closePath();
     if(fill) {
       this.filled = true;
@@ -281,7 +314,7 @@ class Parallelogram extends Polygon {
     this.y = y - this.draggingDistance.Y;
   }
   equals(shape){
-    return shape instanceof Parallelogram;
+    return shape instanceof Hexagon;
   }
 
 }
