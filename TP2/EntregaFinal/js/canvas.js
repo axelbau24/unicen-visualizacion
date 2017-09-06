@@ -5,8 +5,8 @@ canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
 var my_gradient = ctx.createLinearGradient(250, 0, canvas.width, 0);
-my_gradient.addColorStop(0,"#1d9de8");
-my_gradient.addColorStop(.05,"#c9b480");
+my_gradient.addColorStop(0,"#ad5c11");
+my_gradient.addColorStop(.03,"#c9b480");
 
 let drawnShapes = [];
 let shapeHoles = [];
@@ -66,7 +66,7 @@ function drawPlayboard() {
   let row = 0;
   let column = 0;
   let padding = 20;
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 8; i++) {
     if(column % 2 == 0 && column != 0) {
       row++;
       column = 0;
