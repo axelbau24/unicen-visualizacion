@@ -13,35 +13,65 @@ function checkWin() {
   if(i == shapeHoles.length) alert("Ganaste!");
 }
 
+class ResponsiveContainer {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.baseWidth = 995;
+    this.baseHeight = 500;
+    this.padding = 15;
+    this.spacing = 15;
+    this.currentRow = 0;
+    this.currentColumn = 0;
+    this.occupiedWidth = 0;
+  }
+
+  addObject(obj){
+    this.reScale(obj);
+    let size = obj.getWidth() + this.spacing;
+    this.occupiedWidth += size;
+    if(this.occupiedWidth >= this.width) {
+      this.currentRow++;
+      this.currentColumn = 0;
+      this.occupiedWidth = size;
+    }
+    obj.x = size * this.currentColumn + obj.offset.X + this.padding + this.x;
+    obj.y = size * this.currentRow + obj.offset.Y + this.padding + this.y;
+    this.currentColumn++;
+  }
+
+
+  reScale(obj){
+    if(canvas.width < this.baseWidth){
+      let scaleFactor = canvas.width / this.baseWidth;
+      obj.scaleShape(scaleFactor);
+    }
+  }
+}
+
+
 function drawCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
+
   ctx.fillStyle = "rgba(117,76,36,0.7)";
   ctx.fillRect(0,0, 260, canvas.height);
   ctx.fillStyle = "rgba(160,160,160,0.7)";
-  ctx.fillRect(260,0, canvas.width, canvas.height);
+  ctx.fillRect(260,0, canvas.width - 260, canvas.height);
 
-  let row = 2;
-  let column = 0;
-  let padding = 30;
-  let defaultWidth = 150;
   shapeHoles = [];
+  let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height);
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
-
-    if((row * defaultWidth + padding * 2) + padding >= canvas.width) {
-      row = 2;
-      column++;
-    }
-    let p = alterPos(shape, new Point((defaultWidth * row) + padding, (column * defaultWidth) + padding));
-    row++;
-    shape.draw(false); // Dibujamos la figura en su lugar de encastre
+    shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
+    shapeHolesContainer.addObject(shape);
     shapeHoles.push(new ShapeHole(shape));
-    restorePos(shape, p);
-    shape.draw(true); // Dibujamos la figura en la parte inferior para que luego se puedan encastrar
+    shape.draw(false); // Dibujamos la figura en su lugar de encastre
   }
-  checkWin();
+
+  //  checkWin();
 }
 
 function alterPos(shape, pos) {
@@ -63,14 +93,15 @@ function drawPlayboard() {
   let row = 0;
   let column = 0;
   let padding = 20;
-  for (var i = 0; i < 8; i++) {
-    if(column % 2 == 0 && column != 0) {
-      row++;
-      column = 0;
-    }
-    drawnShapes.push(getRandomShape(110 * column + padding, 110 * row + padding));
-    column++;
+  let shapesCount = 24;
+  let container = new ResponsiveContainer(0, 0, 260, canvas.height);
+
+  for (var i = 0; i < shapesCount; i++) {
+    let shape = getRandomShape(0, 0);
+    container.addObject(shape);
+    drawnShapes.push(shape);
   }
+
 }
 
 

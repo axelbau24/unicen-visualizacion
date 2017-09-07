@@ -5,6 +5,8 @@ body{
 .title{
   font-size: 30px;
   color: white;
+}
+.title, .canvas-bottom, .canvas-top, .card-header {
   text-shadow: 2px 2px 7px black;
 }
 .canvas-top{
@@ -12,12 +14,12 @@ body{
   position: relative;
 }
 .canvas-bottom, .canvas-top {
+  font-weight: bold;
   color: white;
   height: 27px;
   background-color: rgba(81,81,81, 0.7);
   position: relative;
 }
-
 .canvas-bottom{
   margin-top: -6px;
   border-radius: 0px 0px 5px 5px;
@@ -30,15 +32,15 @@ body{
 .card-header{
   padding: 3px 20px 3px 20px;
   background-color: rgba(160,160,160,0.4);
-  text-shadow: 2px 2px 7px black;
   color: white;
   font-size: 18px;
 }
 .card{
   background-color: rgba(160,160,160,0.5);
-
 }
 .card-block{
   padding-top: 5px;
-  padding-bottom: 5px;
+}
+.btn{
+  margin-bottom: 5px;
 }

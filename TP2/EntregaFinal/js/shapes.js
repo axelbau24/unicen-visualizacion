@@ -5,6 +5,11 @@ class Point {
   }
 }
 
+canvas.addEventListener("mousemove", function (e) {
+  let rect = canvas.getBoundingClientRect();
+//  console.log((e.clientX - rect.left) + " - " + (e.clientY - rect.top));
+});
+
 class ShapeHole {
   constructor(shape) {
     this.point = new Point(shape.x, shape.y);
@@ -83,8 +88,6 @@ class Draggable {
         this.blocked = true;
         shapeHoles[i].snap(this);
       }
-
-
       this.dragging = false;
     }
   }
@@ -99,6 +102,8 @@ class Circle extends Draggable {
     this.y = y + offset.Y;
     this.radius = radius;
     this.image = image;
+    this.defaultRadius = radius;
+    this.defaultOffset = offset;
   }
 
   draw(fill){
@@ -149,18 +154,31 @@ class Circle extends Draggable {
     return shape instanceof Circle;
   }
 
+  getWidth(){
+    return this.radius * 2;
+  }
+  scaleShape(factor){
+    this.offset = this.defaultOffset;
+    this.offset = new Point(this.offset.X * factor, this.offset.Y * factor);
+    this.radius = this.defaultRadius;
+    this.radius *= factor;
+  }
+
 }
 
 
 
 class Polygon extends Draggable {
-  constructor(x, y, offset) {
+  constructor(x, y, size, offset) {
     super();
     if(offset) this.offset = offset;
     else this.offset = new Point(0,0);
     this.x = x + this.offset.X;
     this.y = y + this.offset.Y;
     this.polygon = [];
+    this.size = size;
+    this.defaultSize = size;
+    this.defaultOffset = this.offset;
   }
 
   addPoint(point){
@@ -180,14 +198,24 @@ class Polygon extends Draggable {
     return inside;
   }
 
+  getWidth(){
+    return this.size;
+  }
+
+  scaleShape(factor){
+    this.offset = this.defaultOffset;
+    this.offset = new Point(this.offset.X * factor, this.offset.Y * factor);
+    this.size = this.defaultSize;
+    this.size *= factor;
+  }
+
 }
 
 
 
 class Triangle extends Polygon {
   constructor(x, y, size, offset){
-    super(x, y, offset);
-    this.size = size;
+    super(x, y, size, offset);
   }
 
   draw(fill){
@@ -219,8 +247,7 @@ class Triangle extends Polygon {
 
 class Square extends Polygon {
   constructor(x, y, size, offset){
-    super(x, y, offset);
-    this.size = size;
+    super(x, y, size, offset);
   }
 
   draw(fill){
@@ -255,8 +282,7 @@ class Square extends Polygon {
 
 class Diamond extends Polygon {
   constructor(x, y, size, offset){
-    super(x, y, offset);
-    this.size = size;
+    super(x, y, size, offset);
   }
 
   draw(fill){
@@ -284,13 +310,15 @@ class Diamond extends Polygon {
   equals(shape){
     return shape instanceof Diamond;
   }
+  getWidth(){
+    return this.size * 2;
+  }
 
 }
 
 class Hexagon extends Polygon {
   constructor(x, y, size, offset){
-    super(x, y, offset);
-    this.size = size;
+    super(x, y, size, offset);
   }
 
   draw(fill){
@@ -320,6 +348,9 @@ class Hexagon extends Polygon {
   }
   equals(shape){
     return shape instanceof Hexagon;
+  }
+  getWidth(){
+    return this.size * 2;
   }
 
 }
