@@ -13,44 +13,6 @@ function checkWin() {
   if(i == shapeHoles.length) alert("Ganaste!");
 }
 
-class ResponsiveContainer {
-  constructor(x, y, width, height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.baseWidth = 995;
-    this.baseHeight = 500;
-    this.padding = 15;
-    this.spacing = 15;
-    this.currentRow = 0;
-    this.currentColumn = 0;
-    this.occupiedWidth = 0;
-  }
-
-  addObject(obj){
-    this.reScale(obj);
-    let size = obj.getWidth() + this.spacing;
-    this.occupiedWidth += size;
-    if(this.occupiedWidth >= this.width) {
-      this.currentRow++;
-      this.currentColumn = 0;
-      this.occupiedWidth = size;
-    }
-    obj.x = size * this.currentColumn + obj.offset.X + this.padding + this.x;
-    obj.y = size * this.currentRow + obj.offset.Y + this.padding + this.y;
-    this.currentColumn++;
-  }
-
-
-  reScale(obj){
-    if(canvas.width < this.baseWidth){
-      let scaleFactor = canvas.width / this.baseWidth;
-      obj.scaleShape(scaleFactor);
-    }
-  }
-}
-
 
 function drawCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -65,20 +27,15 @@ function drawCanvas() {
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
-    shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
+    let originalPosition = new Point(shape.x, shape.y);
     shapeHolesContainer.addObject(shape);
     shapeHoles.push(new ShapeHole(shape));
     shape.draw(false); // Dibujamos la figura en su lugar de encastre
+    restorePos(shape, originalPosition);
+    shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
   }
 
-  //  checkWin();
-}
-
-function alterPos(shape, pos) {
-  let original = new Point(shape.x, shape.y);
-  shape.x = pos.X + shape.offset.X;
-  shape.y = pos.Y + shape.offset.Y;
-  return original;
+   checkWin();
 }
 
 function restorePos(shape, pos) {
@@ -90,9 +47,6 @@ drawPlayboard();
 drawCanvas();
 
 function drawPlayboard() {
-  let row = 0;
-  let column = 0;
-  let padding = 20;
   let shapesCount = 24;
   let container = new ResponsiveContainer(0, 0, 260, canvas.height);
 
@@ -101,7 +55,6 @@ function drawPlayboard() {
     container.addObject(shape);
     drawnShapes.push(shape);
   }
-
 }
 
 
