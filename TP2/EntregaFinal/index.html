@@ -11,48 +11,55 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-      <img src="images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      Rompecabezas infantil
-    </a>
-  </nav>
+
   <div class="container-fluid">
 
     <div class="row">
-
-      <div class="col-md-9">
-        <div class="text-center">
-
-          <div class="card-body card">
-            <canvas id="canvas" width="1150" height="500"  class="img-fluid"></canvas>
-          </div>
-          <!-- <div class="card-footer text-muted">
-            2 days ago
-          </div> -->
-        </div>
-
+      <div class="col text-center">
+        <img src="images/icon.png" width="45" height="45" class="d-inline-block align-top" alt="">
+        <span class="title">Rompecabezas infantil</span>
       </div>
-      <div class="col-md-3">
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-9">
+        <div class="canvas-top"> Dificultad actual: Fácil <span class="text-right">Tiempo transcurrido: <span id="timer">0:00</span></span></div>
+        <canvas id="canvas" width="1920" height="500" class="img-fluid"></canvas>
+        <div class="canvas-bottom">
+          <div class=" text-right">
+            Quedan X piezas por colocar
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
         <div class="card text-center">
           <div class="card-header">
-            Instrucciones de juego
+            Seleccionar dificultad
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
+          <div class="card-block">
+            <button type="button" class="btn btn-info">Fácil</button>
+            <button type="button" class="btn btn-info">Normal</button>
+            <button type="button" class="btn btn-info">Dificil</button>
+          </div>
+        </div>
+        <br>
+        <div class="card text-center">
+          <div class="card-block">
+            <button type="button" class="btn btn-info">Reiniciar juego</button>
+          </div>
         </div>
       </div>
-
-
     </div>
 
+
+
+
   </div>
-  <script type="text/javascript" src="js/libs/jquery-1.12.4.js"></script>
-  <script type="text/javascript" src="js/shapes.js"></script>
-  <script type="text/javascript" src="js/timer.js"></script>
-  <script type="text/javascript" src="js/canvas.js"></script>
+
+</div>
+<script type="text/javascript" src="js/libs/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/shapes.js"></script>
+<script type="text/javascript" src="js/timer.js"></script>
+<script type="text/javascript" src="js/canvas.js"></script>
 </body>
 </html>

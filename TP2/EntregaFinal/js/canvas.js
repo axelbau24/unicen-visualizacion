@@ -4,10 +4,6 @@ let ctx = canvas.getContext("2d");
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
-var my_gradient = ctx.createLinearGradient(250, 0, canvas.width, 0);
-my_gradient.addColorStop(0,"#ad5c11");
-my_gradient.addColorStop(.03,"#c9b480");
-
 let drawnShapes = [];
 let shapeHoles = [];
 
@@ -18,11 +14,12 @@ function checkWin() {
 }
 
 function drawCanvas() {
-
-  ctx.font = "18px Arial";
-  ctx.fillStyle = my_gradient;
-  ctx.fillRect(0,0, canvas.width, canvas.height);
-  displayTime();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.fillStyle = "rgba(117,76,36,0.7)";
+  ctx.fillRect(0,0, 260, canvas.height);
+  ctx.fillStyle = "rgba(160,160,160,0.7)";
+  ctx.fillRect(260,0, canvas.width, canvas.height);
 
   let row = 2;
   let column = 0;
@@ -71,7 +68,7 @@ function drawPlayboard() {
       row++;
       column = 0;
     }
-    drawnShapes.push(getRandomShape(110 * column + padding, 110 * row + padding + 15));
+    drawnShapes.push(getRandomShape(110 * column + padding, 110 * row + padding));
     column++;
   }
 }

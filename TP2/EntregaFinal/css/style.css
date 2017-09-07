@@ -2,35 +2,43 @@ body{
   background-image: url("../images/background.jpg");
   background-size:cover;
 }
-.card{
-  margin-top: 5px;
-  background-color: rgba(99, 99, 99, 0.5) !important;
+.title{
+  font-size: 30px;
   color: white;
+  text-shadow: 2px 2px 7px black;
 }
-.card-body{
-  padding: 5px ;
+.canvas-top{
+  border-radius: 5px 5px 0px 0px;
+  position: relative;
+}
+.canvas-bottom, .canvas-top {
+  color: white;
+  height: 27px;
+  background-color: rgba(81,81,81, 0.7);
+  position: relative;
+}
 
+.canvas-bottom{
+  margin-top: -6px;
+  border-radius: 0px 0px 5px 5px;
+  position: relative;
 }
-.bg-light {
-    background-color: #3f8fe0 !important;
-}
-.navbar-light .navbar-brand {
-    color: #ffffff;
-}
-.navbar-light .navbar-brand:hover {
-    color: #ffffff;
-}
-.col-md-3, .col-md-9{
-  padding: 5px;
+.text-right{
+  position: absolute;
+  right: 3px;
 }
 .card-header{
-  background-color: rgba(133, 85, 0, 0.6);
-  font-weight: bold;
+  padding: 3px 20px 3px 20px;
+  background-color: rgba(160,160,160,0.4);
+  text-shadow: 2px 2px 7px black;
+  color: white;
+  font-size: 18px;
 }
+.card{
+  background-color: rgba(160,160,160,0.5);
 
-.list-group-item{
-  background-color: rgba(153, 102, 0, 0.5);
 }
-.bg-light {
-  background-color: rgba(99, 99, 99, 0.5) !important;
+.card-block{
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

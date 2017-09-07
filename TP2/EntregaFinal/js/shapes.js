@@ -62,7 +62,6 @@ class Draggable {
     if(this.dragging){
       let point = this.getMousePosition(e);
       this.setPos(point.X, point.Y);
-      this.clear();
       drawCanvas();
     }
   }
@@ -90,10 +89,6 @@ class Draggable {
     }
   }
 
-  clear(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
 }
 
 class Circle extends Draggable {
@@ -110,13 +105,15 @@ class Circle extends Draggable {
     ctx.translate(this.x - this.radius, this.y - this.radius);
 
     if(this.image) ctx.fillStyle = this.getImagePattern();
-    else ctx.fillStyle = "yellow";
+    else ctx.fillStyle = "#005826";
     ctx.beginPath();
     ctx.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2);
     if(fill) {
       this.filled = true;
       ctx.fill();
+      ctx.strokeStyle="white";
     }
+    else ctx.strokeStyle="black";
     ctx.stroke();
     ctx.closePath();
 
@@ -195,7 +192,7 @@ class Triangle extends Polygon {
 
   draw(fill){
     this.polygon = [];
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#8a0b05";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
@@ -204,8 +201,10 @@ class Triangle extends Polygon {
     ctx.closePath();
     if(fill) {
       this.filled = true;
+      ctx.strokeStyle="white";
       ctx.fill();
     }
+    else ctx.strokeStyle="black";
     ctx.stroke();
   }
   setPos(x, y){
@@ -226,7 +225,7 @@ class Square extends Polygon {
 
   draw(fill){
     this.polygon = [];
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "#0202b7";
 
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
@@ -238,7 +237,9 @@ class Square extends Polygon {
     if(fill) {
       this.filled = true;
       ctx.fill();
+      ctx.strokeStyle="white";
     }
+    else ctx.strokeStyle="black";
     ctx.stroke();
   }
 
@@ -270,7 +271,9 @@ class Diamond extends Polygon {
     if(fill) {
       this.filled = true;
       ctx.fill();
+      ctx.strokeStyle="white";
     }
+    else ctx.strokeStyle="black";
     ctx.stroke();
   }
 
@@ -293,7 +296,7 @@ class Hexagon extends Polygon {
   draw(fill){
     let width = this.size * 0.1;
     this.polygon = [];
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "#b78a02";
     ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
@@ -305,7 +308,9 @@ class Hexagon extends Polygon {
     if(fill) {
       this.filled = true;
       ctx.fill();
+      ctx.strokeStyle="white";
     }
+    else ctx.strokeStyle="black";
     ctx.stroke();
   }
 

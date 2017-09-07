@@ -12,13 +12,9 @@ setInterval(function () {
 }, 1000);
 
 function displayTime(){
-  let timeText = "Tiempo: ";
-  ctx.fillStyle = my_gradient;
-  ctx.fillRect(0, 0, canvas.width, 25);
-  ctx.fillStyle = "black";
-  if(seconds < 10) timeText += minutes + ":0" + seconds + " segundos";
-  else timeText += minutes + ":" + seconds + " segundos";
+  let timeText = "";
+  if(seconds < 10) timeText += minutes + ":0" + seconds;
+  else timeText += minutes + ":" + seconds;
 
-  let textWidth = ctx.measureText(timeText).width;
-  ctx.fillText(timeText, canvas.width - textWidth - 5, 20);
+  document.getElementById("timer").innerHTML = timeText;
 }
