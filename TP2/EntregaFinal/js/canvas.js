@@ -19,7 +19,7 @@ function checkWin() {
  * Cuando una figura es insertada en alguna ranura, se llamara a este metodo,
  * obteniendo asi las figuras que todavia no estaban dibujadas en la pantalla.
  */
-function getNewShapes() {
+function getNewShapes(shape) {
   let container = new ResponsiveContainer(0, 0, 260, canvas.height);
   let remaining = 0;
   for (var i = 0; i < drawnShapes.length; i++) {
@@ -49,11 +49,8 @@ function drawCanvas() {
   ctx.lineTo(260, canvas.height);
   ctx.stroke();
 
-
   shapeHoles = [];
   let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height);
-
-
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
@@ -64,7 +61,6 @@ function drawCanvas() {
     restorePos(shape, originalPosition);
     shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
   }
-
 
    checkWin();
 }
@@ -92,6 +88,14 @@ function drawPlayboard(shapesAmount) {
 }
 
 function startGame(shapesAmount) {
+
+  // Clonamos el canvas para asi eliminar los eventos de drag actuales
+  let oldCanvas = canvas;
+  var newCanvas = oldCanvas.cloneNode(true);
+  oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
+  canvas = newCanvas;
+  ctx = newCanvas.getContext("2d");
+
   resetTimer();
   drawPlayboard(shapesAmount);
   drawCanvas();

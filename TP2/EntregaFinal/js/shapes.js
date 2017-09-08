@@ -25,7 +25,6 @@ class ShapeHole {
     return Math.abs(this.point.X - point.X) <= defaultRange && Math.abs(this.point.Y - point.Y) <= defaultRange;
   }
   snap(shape){
-    this.filled = true;
     shape.x = this.point.X;
     shape.y = this.point.Y;
     getNewShapes();
