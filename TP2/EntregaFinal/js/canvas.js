@@ -4,6 +4,8 @@ let ctx = canvas.getContext("2d");
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
+let padding = 0;
+let spacing = 0;
 let drawnShapes = [];
 let shapeHoles = [];
 
@@ -20,7 +22,7 @@ function checkWin() {
  * obteniendo asi las figuras que todavia no estaban dibujadas en la pantalla.
  */
 function getNewShapes(shape) {
-  let container = new ResponsiveContainer(0, 0, 260, canvas.height);
+  let container = new ResponsiveContainer(0, 0, 260, canvas.height, 15, 15);
   let remaining = 0;
   for (var i = 0; i < drawnShapes.length; i++) {
     if(!drawnShapes[i].blocked){
@@ -50,7 +52,7 @@ function drawCanvas() {
   ctx.stroke();
 
   shapeHoles = [];
-  let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height);
+  let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height, padding, spacing);
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
@@ -70,14 +72,14 @@ function restorePos(shape, pos) {
   shape.y = pos.Y;
 }
 
-startGame(24);
+startGame(6, 100, 100);
 /**
  * Metodo encargado de obtener figuras aleatorias y posicionarlas en el tablero
  * para que luego puedan ser movidas por el usuario.
  */
 function drawPlayboard(shapesAmount) {
   drawnShapes = [];
-  let container = new ResponsiveContainer(0, 0, 260, canvas.height);
+  let container = new ResponsiveContainer(0, 0, 260, canvas.height, 15, 15);
   document.getElementById('remaining').innerHTML = shapesAmount;
 
   for (var i = 0; i < shapesAmount; i++) {
@@ -87,8 +89,10 @@ function drawPlayboard(shapesAmount) {
   }
 }
 
-function startGame(shapesAmount) {
+function startGame(shapesAmount, _padding, _spacing) {
 
+  padding = _padding;
+  spacing = _spacing;
   // Clonamos el canvas para asi eliminar los eventos de drag actuales
   let oldCanvas = canvas;
   var newCanvas = oldCanvas.cloneNode(true);

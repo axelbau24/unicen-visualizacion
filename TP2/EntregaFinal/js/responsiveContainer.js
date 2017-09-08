@@ -1,13 +1,15 @@
 class ResponsiveContainer {
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, padding, spacing) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.baseWidth = 995;
     this.baseHeight = 500;
-    this.padding = 15;
-    this.spacing = 15;
+    this.padding = padding;
+    this.defaultPadding = this.padding;
+    this.spacing = spacing;
+    this.defaultSpacing = this.spacing;
     this.currentRow = 0;
     this.currentColumn = 0;
     this.occupiedWidth = 0;
@@ -46,6 +48,10 @@ class ResponsiveContainer {
   reScale(obj){
     if(canvas.width < this.baseWidth){
       let scaleFactor = canvas.width / this.baseWidth;
+      this.padding = this.defaultPadding;
+      this.spacing = this.defaultSpacing;
+      this.padding *= scaleFactor;
+      this.spacing *= scaleFactor;
       obj.scaleShape(scaleFactor);
     }
   }
