@@ -5,10 +5,10 @@ class Point {
   }
 }
 
-canvas.addEventListener("mousemove", function (e) {
-  let rect = canvas.getBoundingClientRect();
-//  console.log((e.clientX - rect.left) + " - " + (e.clientY - rect.top));
-});
+/**
+ * Clase utilizada para las ranuras de cada una de las figuras
+ * que comprobara si alguna pieza se inserto en el lugar.
+ */
 
 class ShapeHole {
   constructor(shape) {
@@ -28,9 +28,14 @@ class ShapeHole {
     this.filled = true;
     shape.x = this.point.X;
     shape.y = this.point.Y;
+    getNewShapes();
     drawCanvas();
   }
 }
+
+/**
+ * Clase utilizada por las figuras para permitir el movimiento con el mouse (dragging)
+ */
 
 class Draggable {
   constructor() {
@@ -165,7 +170,6 @@ class Circle extends Draggable {
   }
 
 }
-
 
 
 class Polygon extends Draggable {
