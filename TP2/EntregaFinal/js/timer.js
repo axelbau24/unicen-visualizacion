@@ -18,3 +18,7 @@ function displayTime(){
 
   document.getElementById("timer").innerHTML = timeText;
 }
+function resetTimer() {
+  minutes = 0;
+  seconds = -1;
+}

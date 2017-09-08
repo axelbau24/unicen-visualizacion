@@ -21,9 +21,14 @@ function checkWin() {
  */
 function getNewShapes() {
   let container = new ResponsiveContainer(0, 0, 260, canvas.height);
+  let remaining = 0;
   for (var i = 0; i < drawnShapes.length; i++) {
-    if(!drawnShapes[i].blocked) container.addObject(drawnShapes[i]);
+    if(!drawnShapes[i].blocked){
+       container.addObject(drawnShapes[i]);
+       remaining++;
+    }
   }
+  document.getElementById('remaining').innerHTML = remaining;
 }
 
 
@@ -38,9 +43,17 @@ function drawCanvas() {
   ctx.fillRect(0,0, 260, canvas.height);
   ctx.fillStyle = "rgba(160,160,160,0.7)";
   ctx.fillRect(260,0, canvas.width - 260, canvas.height);
+  ctx.strokeStyle = "white";
+  ctx.beginPath();
+  ctx.moveTo(260, 0);
+  ctx.lineTo(260, canvas.height);
+  ctx.stroke();
+
 
   shapeHoles = [];
   let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height);
+
+
 
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
@@ -52,6 +65,7 @@ function drawCanvas() {
     shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
   }
 
+
    checkWin();
 }
 
@@ -60,23 +74,27 @@ function restorePos(shape, pos) {
   shape.y = pos.Y;
 }
 
-drawPlayboard();
-drawCanvas();
-
-
+startGame(24);
 /**
  * Metodo encargado de obtener figuras aleatorias y posicionarlas en el tablero
  * para que luego puedan ser movidas por el usuario.
  */
-function drawPlayboard() {
-  let shapesCount = 24;
+function drawPlayboard(shapesAmount) {
+  drawnShapes = [];
   let container = new ResponsiveContainer(0, 0, 260, canvas.height);
+  document.getElementById('remaining').innerHTML = shapesAmount;
 
-  for (var i = 0; i < shapesCount; i++) {
+  for (var i = 0; i < shapesAmount; i++) {
     let shape = getRandomShape();
     container.addObject(shape);
     drawnShapes.push(shape);
   }
+}
+
+function startGame(shapesAmount) {
+  resetTimer();
+  drawPlayboard(shapesAmount);
+  drawCanvas();
 }
 
 
