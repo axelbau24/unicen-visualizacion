@@ -72,7 +72,7 @@ function restorePos(shape, pos) {
   shape.y = pos.Y;
 }
 
-startGame(6, 100, 100);
+
 /**
  * Metodo encargado de obtener figuras aleatorias y posicionarlas en el tablero
  * para que luego puedan ser movidas por el usuario.
@@ -107,13 +107,17 @@ function startGame(shapesAmount, _padding, _spacing) {
 
 
 function getRandomShape() {
-  let number = Math.floor(Math.random()* 5);
+  let number = randomNumber();
 
   switch (number) {
-    case 0: return new Triangle(0, 0, 100, new Point(0, 100));
-    case 1: return new Square(0, 0, 100);
-    case 2: return new Circle(0, 0, 50, new Point(50, 50));
-    case 3: return new Diamond(0, 0, 50, new Point(50, 0));
-    case 4: return new Hexagon(0, 0, 50, new Point(25, 0));
+    case 0: return new Triangle(0, 0, 100, new Point(0, 100), shapeImages[randomNumber()]);
+    case 1: return new Square(0, 0, 100, null, shapeImages[randomNumber()]);
+    case 2: return new Circle(0, 0, 50, new Point(50, 50), shapeImages[randomNumber()]);
+    case 3: return new Diamond(0, 0, 50, new Point(50, 0), shapeImages[randomNumber()]);
+    case 4: return new Hexagon(0, 0, 50, new Point(25, 0), shapeImages[randomNumber()]);
   }
+}
+
+function randomNumber() {
+  return Math.floor(Math.random()* 5);
 }

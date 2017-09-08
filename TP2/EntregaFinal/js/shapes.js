@@ -111,22 +111,24 @@ class Circle extends Draggable {
   }
 
   draw(fill){
-    ctx.translate(this.x - this.radius, this.y - this.radius);
 
-    if(this.image) ctx.fillStyle = this.getImagePattern();
-    else ctx.fillStyle = "#005826";
+    ctx.fillStyle = "#005826";
+    ctx.save();
     ctx.beginPath();
-    ctx.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
     if(fill) {
+      ctx.lineWidth = 2;
       this.filled = true;
       ctx.fill();
       ctx.strokeStyle="white";
+      ctx.drawImage(this.image, this.x - this.radius, this.y- this.radius, this.radius * 2 , this.radius * 2);
     }
     else ctx.strokeStyle="black";
     ctx.stroke();
-    ctx.closePath();
+    ctx.restore();
 
-    ctx.translate(-(this.x - this.radius), -(this.y - this.radius));
   }
 
   setPos(x, y){
@@ -135,16 +137,6 @@ class Circle extends Draggable {
     if(this.y <= y) this.y = y - this.draggingDistance.Y;
     else this.y = y + this.draggingDistance.Y;
   }
-
-  getImagePattern(){
-    let tempCanvas = document.createElement("canvas");
-    let tempCtx = tempCanvas.getContext("2d");
-    tempCanvas.width = this.radius * 2;
-    tempCanvas.height = this.radius * 2;
-    tempCtx.drawImage(this.image, 0, 0, this.radius * 2, this.radius * 2);
-    return ctx.createPattern(tempCanvas, "no-repeat");
-  }
-
 
   isPointInside(p){
     return this.getDistance(p.X, p.Y, this.x, this.y) <= this.radius;
@@ -172,7 +164,7 @@ class Circle extends Draggable {
 
 
 class Polygon extends Draggable {
-  constructor(x, y, size, offset) {
+  constructor(x, y, size, offset, image) {
     super();
     if(offset) this.offset = offset;
     else this.offset = new Point(0,0);
@@ -182,6 +174,7 @@ class Polygon extends Draggable {
     this.size = size;
     this.defaultSize = size;
     this.defaultOffset = this.offset;
+    this.image = image;
   }
 
   addPoint(point){
@@ -189,6 +182,24 @@ class Polygon extends Draggable {
     else ctx.lineTo(point.X, point.Y);
     this.polygon.push(point);
   }
+
+  draw(fill){
+    this.polygon = [];
+    ctx.save();
+    ctx.beginPath();
+    this.createPoints();
+    ctx.closePath();
+    ctx.clip();
+    if(fill) {
+      ctx.lineWidth=2;
+      this.filled = true;
+      ctx.strokeStyle="white";
+      ctx.fill();
+    }
+    else ctx.strokeStyle="black";
+  }
+
+  createPoints(){}
 
   isPointInside(p){
     let inside = false;
@@ -217,26 +228,23 @@ class Polygon extends Draggable {
 
 
 class Triangle extends Polygon {
-  constructor(x, y, size, offset){
-    super(x, y, size, offset);
+  constructor(x, y, size, offset, image){
+    super(x, y, size, offset, image);
   }
 
-  draw(fill){
-    this.polygon = [];
-    ctx.fillStyle = "#8a0b05";
-    ctx.beginPath();
+  createPoints(){
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
     this.addPoint(new Point(this.x + this.size / 2, this.y - this.size));
     this.addPoint(new Point(this.x, this.y));
-    ctx.closePath();
-    if(fill) {
-      this.filled = true;
-      ctx.strokeStyle="white";
-      ctx.fill();
-    }
-    else ctx.strokeStyle="black";
+  }
+
+  draw(fill){
+    ctx.fillStyle = "#8a0b05";
+    super.draw(fill);
+    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y + 10, this.size  , this.size);
     ctx.stroke();
+    ctx.restore();
   }
   setPos(x, y){
     this.x = x - this.draggingDistance.X;
@@ -249,28 +257,24 @@ class Triangle extends Polygon {
 }
 
 class Square extends Polygon {
-  constructor(x, y, size, offset){
-    super(x, y, size, offset);
+  constructor(x, y, size, offset, image){
+    super(x, y, size, offset, image);
   }
 
   draw(fill){
-    this.polygon = [];
     ctx.fillStyle = "#0202b7";
+    super.draw(fill);
+    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size , this.size);
+    ctx.stroke();
+    ctx.restore();
+  }
 
-    ctx.beginPath();
+  createPoints(){
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
     this.addPoint(new Point(this.x + this.size, this.y + this.size));
     this.addPoint(new Point(this.x, this.y + this.size));
     this.addPoint(new Point(this.x, this.y));
-    ctx.closePath();
-    if(fill) {
-      this.filled = true;
-      ctx.fill();
-      ctx.strokeStyle="white";
-    }
-    else ctx.strokeStyle="black";
-    ctx.stroke();
   }
 
   setPos(x, y){
@@ -284,26 +288,23 @@ class Square extends Polygon {
 }
 
 class Diamond extends Polygon {
-  constructor(x, y, size, offset){
-    super(x, y, size, offset);
+  constructor(x, y, size, offset, image){
+    super(x, y, size, offset, image);
   }
 
-  draw(fill){
-    this.polygon = [];
-    ctx.fillStyle = "purple";
-    ctx.beginPath();
+  createPoints(){
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y + this.size));
     this.addPoint(new Point(this.x, this.y + this.size * 2));
     this.addPoint(new Point(this.x - this.size, this.y + this.size));
-    ctx.closePath();
-    if(fill) {
-      this.filled = true;
-      ctx.fill();
-      ctx.strokeStyle="white";
-    }
-    else ctx.strokeStyle="black";
+  }
+
+  draw(fill){
+    ctx.fillStyle = "purple";
+    super.draw(fill);
+    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
     ctx.stroke();
+    ctx.restore();
   }
 
   setPos(x, y){
@@ -320,29 +321,26 @@ class Diamond extends Polygon {
 }
 
 class Hexagon extends Polygon {
-  constructor(x, y, size, offset){
-    super(x, y, size, offset);
+  constructor(x, y, size, offset, image){
+    super(x, y, size, offset, image);
   }
 
-  draw(fill){
+  createPoints(){
     let width = this.size * 0.1;
-    this.polygon = [];
-    ctx.fillStyle = "#b78a02";
-    ctx.beginPath();
     this.addPoint(new Point(this.x, this.y));
     this.addPoint(new Point(this.x + this.size, this.y));
     this.addPoint(new Point(this.x + this.size + this.size / 2 + width, this.y + this.size));
     this.addPoint(new Point(this.x + this.size, this.y  + this.size * 2));
     this.addPoint(new Point(this.x, this.y + this.size * 2));
     this.addPoint(new Point(this.x - this.size / 2 - width, this.y + this.size ));
-    ctx.closePath();
-    if(fill) {
-      this.filled = true;
-      ctx.fill();
-      ctx.strokeStyle="white";
-    }
-    else ctx.strokeStyle="black";
+  }
+
+  draw(fill){
+    ctx.fillStyle = "#b78a02";
+    super.draw(fill);
+    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
     ctx.stroke();
+    ctx.restore();
   }
 
   setPos(x, y){
