@@ -1,24 +1,36 @@
 let minutes = 0;
 let seconds = 0;
+let paused = false;
 
 setInterval(function () {
 
-  seconds++;
-  if(seconds >= 60){
-    minutes++;
-    seconds = 0;
+  if(!paused){
+    seconds++;
+    if(seconds >= 60){
+      minutes++;
+      seconds = 0;
+    }
+    displayTime();
   }
-  displayTime();
 }, 1000);
 
 function displayTime(){
+  document.getElementById("timer").innerHTML = getCurrentTime();
+}
+
+function pauseTimer() {
+  paused = true;
+}
+
+function getCurrentTime() {
   let timeText = "";
   if(seconds < 10) timeText += minutes + ":0" + seconds;
   else timeText += minutes + ":" + seconds;
-
-  document.getElementById("timer").innerHTML = timeText;
+  return timeText;
 }
+
 function resetTimer() {
+  paused = false;
   minutes = 0;
   seconds = -1;
 }

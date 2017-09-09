@@ -21,7 +21,7 @@ class ShapeHole {
   }
 
   inRange(point){
-    let defaultRange = 25;
+    let defaultRange = 30;
     return Math.abs(this.point.X - point.X) <= defaultRange && Math.abs(this.point.Y - point.Y) <= defaultRange;
   }
   snap(shape){
@@ -119,13 +119,18 @@ class Circle extends Draggable {
     ctx.closePath();
     ctx.clip();
     if(fill) {
+      ctx.shadowBlur=0;
       ctx.lineWidth = 2;
       this.filled = true;
       ctx.fill();
       ctx.strokeStyle="white";
       ctx.drawImage(this.image, this.x - this.radius, this.y- this.radius, this.radius * 2 , this.radius * 2);
     }
-    else ctx.strokeStyle="black";
+    else {
+      ctx.shadowColor="black";
+      ctx.shadowBlur=15;
+      ctx.strokeStyle="black";
+    }
     ctx.stroke();
     ctx.restore();
 
@@ -195,8 +200,13 @@ class Polygon extends Draggable {
       this.filled = true;
       ctx.strokeStyle="white";
       ctx.fill();
+      ctx.shadowBlur=0;
     }
-    else ctx.strokeStyle="black";
+    else{
+      ctx.shadowColor="black";
+      ctx.shadowBlur=15;
+      ctx.strokeStyle="black";
+    }
   }
 
   createPoints(){}

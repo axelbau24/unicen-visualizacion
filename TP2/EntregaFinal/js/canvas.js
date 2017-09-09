@@ -12,7 +12,20 @@ let shapeHoles = [];
 function checkWin() {
   let i = 0;
   while (i < drawnShapes.length && drawnShapes[i].blocked) i++;
-  if(i == shapeHoles.length) alert("Ganaste!");
+  if(i == shapeHoles.length) { // Win
+
+    let msg = new Panel(canvas.width / 2, canvas.height / 2, 350, 200);
+    msg.addText(new Text(msg.width / 2, 50, 30, "¡Ganaste!"));
+    msg.addText(new Text(msg.width / 2, 100, 20, "Tiempo: " + getCurrentTime()));
+    pauseTimer();
+
+    msg.draw();
+    let btn = new Button(canvas.width / 2, canvas.height / 2 + 50, "Volver a empezar", function () {
+      startGame(drawnShapes.length, padding, spacing);
+    });
+    btn.draw();
+
+  }
 }
 
 
@@ -34,13 +47,7 @@ function getNewShapes(shape) {
 }
 
 
-/**
- * Metodo llamado para re-dibujar el canvas al momento que se mueve
- * alguna figura
- */
-function drawCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+function drawBackground(){
   ctx.fillStyle = "rgba(117,76,36,0.7)";
   ctx.fillRect(0,0, 260, canvas.height);
   ctx.fillStyle = "rgba(160,160,160,0.7)";
@@ -50,6 +57,16 @@ function drawCanvas() {
   ctx.moveTo(260, 0);
   ctx.lineTo(260, canvas.height);
   ctx.stroke();
+}
+
+/**
+ * Metodo llamado para re-dibujar el canvas al momento que se mueve
+ * alguna figura
+ */
+function drawCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawBackground();
 
   shapeHoles = [];
   let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height, padding, spacing);
@@ -99,10 +116,27 @@ function startGame(shapesAmount, _padding, _spacing) {
   oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
   canvas = newCanvas;
   ctx = newCanvas.getContext("2d");
-
-  resetTimer();
+  pauseTimer();
   drawPlayboard(shapesAmount);
   drawCanvas();
+
+
+  let msg = new Panel(canvas.width / 2, canvas.height / 2, 350, 200);
+  msg.addText(new Text(msg.width / 2, 40, 30, "Instrucciones de juego"));
+  msg.addText(new Text(msg.width / 2, 75, 15, "Mueve las figuras ubicadas"));
+  msg.addText(new Text(msg.width / 2, 95, 15, "en el tablero de la izquierda"));
+  msg.addText(new Text(msg.width / 2, 115, 15, "hacia su posicion correspondiente"));
+  msg.addText(new Text(msg.width / 2, 135, 15, "en el tablero principal."));
+
+  msg.draw();
+  let btn = new Button(canvas.width / 2, canvas.height / 2 + 70, "Comenzar", function () {
+    drawCanvas();
+    resetTimer();
+  });
+  btn.draw();
+
+
+
 }
 
 
