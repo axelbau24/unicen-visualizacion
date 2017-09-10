@@ -6,9 +6,9 @@ class Point {
 }
 
 /**
- * Clase utilizada para las ranuras de cada una de las figuras
- * que comprobara si alguna pieza se inserto en el lugar.
- */
+* Clase utilizada para las ranuras de cada una de las figuras
+* que comprobara si alguna pieza se inserto en el lugar.
+*/
 
 class ShapeHole {
   constructor(shape) {
@@ -33,8 +33,8 @@ class ShapeHole {
 }
 
 /**
- * Clase utilizada por las figuras para permitir el movimiento con el mouse (dragging)
- */
+* Clase utilizada por las figuras para permitir el movimiento con el mouse (dragging)
+*/
 
 class Draggable {
   constructor() {
@@ -112,14 +112,15 @@ class Circle extends Draggable {
 
   draw(fill){
 
-    ctx.fillStyle = "#005826";
+    ctx.fillStyle = "#003D1B";
     ctx.save();
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
     if(fill) {
-      ctx.shadowBlur=0;
+      ctx.shadowBlur = 0;
+      ctx.shadowColor="white";
       ctx.lineWidth = 2;
       this.filled = true;
       ctx.fill();
@@ -128,9 +129,9 @@ class Circle extends Draggable {
     }
     else {
       ctx.shadowColor="black";
-      ctx.shadowBlur=15;
       ctx.strokeStyle="black";
     }
+    ctx.shadowBlur = 15;
     ctx.stroke();
     ctx.restore();
 
@@ -209,6 +210,11 @@ class Polygon extends Draggable {
     }
   }
 
+  addShadow(){
+    ctx.shadowColor="white";
+    ctx.shadowBlur=15;
+  }
+
   createPoints(){}
 
   isPointInside(p){
@@ -250,9 +256,12 @@ class Triangle extends Polygon {
   }
 
   draw(fill){
-    ctx.fillStyle = "#8a0b05";
+    ctx.fillStyle = "#640500";
     super.draw(fill);
-    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y + 10, this.size  , this.size);
+    if(fill) {
+      ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y + 10, this.size  , this.size);
+      this.addShadow();
+    }
     ctx.stroke();
     ctx.restore();
   }
@@ -272,9 +281,12 @@ class Square extends Polygon {
   }
 
   draw(fill){
-    ctx.fillStyle = "#0202b7";
+    ctx.fillStyle = "#020293";
     super.draw(fill);
-    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size , this.size);
+    if(fill) {
+      ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size , this.size);
+      this.addShadow();
+    }
     ctx.stroke();
     ctx.restore();
   }
@@ -310,9 +322,12 @@ class Diamond extends Polygon {
   }
 
   draw(fill){
-    ctx.fillStyle = "purple";
+    ctx.fillStyle = "#53006E";
     super.draw(fill);
-    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
+    if(fill){
+      ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
+      this.addShadow();
+    }
     ctx.stroke();
     ctx.restore();
   }
@@ -346,9 +361,12 @@ class Hexagon extends Polygon {
   }
 
   draw(fill){
-    ctx.fillStyle = "#b78a02";
+    ctx.fillStyle = "#694F00";
     super.draw(fill);
-    if(fill) ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
+    if(fill) {
+      ctx.drawImage(this.image, this.x - this.offset.X, this.y - this.offset.Y, this.size * 2 , this.size * 2);
+      this.addShadow();
+    }
     ctx.stroke();
     ctx.restore();
   }
