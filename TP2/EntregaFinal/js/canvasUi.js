@@ -63,7 +63,8 @@ class Button extends RoundedElement{
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
     if(x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height){
-      this.clickEvt();
+      if(this.clickEvt) this.clickEvt();
+      this.clickEvt = null;
     }
   }
 
