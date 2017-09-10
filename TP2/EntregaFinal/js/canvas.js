@@ -68,14 +68,11 @@ function drawCanvas() {
 
   drawBackground();
 
-  shapeHoles = [];
-  let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height, padding, spacing);
-
   for (var i = 0; i < drawnShapes.length; i++) {
     let shape = drawnShapes[i];
+    let shapeHole = shapeHoles[i];
     let originalPosition = new Point(shape.x, shape.y);
-    shapeHolesContainer.addObject(shape);
-    shapeHoles.push(new ShapeHole(shape));
+    restorePos(shape, shapeHole.point);
     shape.draw(false); // Dibujamos la figura en su lugar de encastre
     restorePos(shape, originalPosition);
     shape.draw(true); // Dibujamos la figura que se va a poder mover a su lugar de encastre
@@ -96,11 +93,15 @@ function restorePos(shape, pos) {
  */
 function drawPlayboard(shapesAmount) {
   drawnShapes = [];
+  shapeHoles = [];
   let container = new ResponsiveContainer(0, 0, 260, canvas.height, 15, 15);
+  let shapeHolesContainer = new ResponsiveContainer(260, 0, canvas.width - 260, canvas.height, padding, spacing);
   document.getElementById('remaining').innerHTML = shapesAmount;
 
   for (var i = 0; i < shapesAmount; i++) {
     let shape = getRandomShape();
+    shapeHolesContainer.addObject(shape);
+    shapeHoles.push(new ShapeHole(shape));
     container.addObject(shape);
     drawnShapes.push(shape);
   }
@@ -134,8 +135,6 @@ function startGame(shapesAmount, _padding, _spacing) {
     resetTimer();
   });
   btn.draw();
-
-
 
 }
 
