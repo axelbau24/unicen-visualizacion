@@ -6,7 +6,10 @@ body{
   font-size: 30px;
   color: white;
 }
-.title, .canvas-bottom, .canvas-top, .card-header {
+.row{
+  margin-bottom: 5px;
+}
+.title, .canvas-bottom, .canvas-top, .card-header, .footer {
   text-shadow: 2px 2px 7px black;
 }
 .canvas-top{
@@ -43,4 +46,9 @@ body{
 }
 .btn{
   margin-bottom: 5px;
+}
+.footer {
+    color: white;
+    font-style: italic;
+    text-align: right;
 }
