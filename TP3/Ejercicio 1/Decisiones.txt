@@ -1,0 +1,27 @@
+http://www.empleacantabria.com
+
+- Navbar de arriba de la pagina poco visible debido a sus colores y tamaño de la letra, 
+se ignora a primera vista, lo mismo para el buscador.
+- La navbar pareciera que fuera la que esta debajo del logo.
+
+- Muchos elementos en la página, poco amigable al usuario y dificil de encontrar algo,
+ el logo se podria simplificar, se podrian agrupar los elementos de una forma mas consistente y clara.
+ Algunos elementos redireccionan a otras webs cuando podria estar incluido en la misma.
+ 
+ - Ofertas de empleo poco amigable, involucra otras páginas.
+
+
+- Nuevo usuario, me dice detalles de algunos campos antes de mostrarlos.
+- El alta de usuario se podria simplificar en un formulario, y ahi mismo permitir cambiar el tipo.
+
+
+https://educacion.rionegro.gov.ar/
+
+- Carrousel poco atractivo, no se ve bien como el texto a que hace referencia
+- Seccion de videos podria estar ubicada en otro lado, ya que no es contenido de mucha importancia para el usuario.
+- Debajo de el carrusel hay unos "botones" de login que son imagenes pocos claras, 
+generalemente ignoradas por el usuario, podrian estar en la parte superior derecha de la página.
+- Debajo de la parte del login, hay otros "botones" para realizar otras acciones, 
+Se podria agrupar en diferentes secciones o columnas y agregar botones reales.
+- Titulo de noticias mal posicionado, parece un texto en medio que no dice nada, se podria
+agregar un fondo claro y letra mas grande, y meter las noticias junto al titulo
