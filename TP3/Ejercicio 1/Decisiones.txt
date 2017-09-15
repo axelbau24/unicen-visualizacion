@@ -21,7 +21,10 @@ https://educacion.rionegro.gov.ar/
 - Seccion de videos podria estar ubicada en otro lado, ya que no es contenido de mucha importancia para el usuario.
 - Debajo de el carrusel hay unos "botones" de login que son imagenes pocos claras, 
 generalemente ignoradas por el usuario, podrian estar en la parte superior derecha de la página.
-- Debajo de la parte del login, hay otros "botones" para realizar otras acciones, 
+- Menu "accesos" es lo mismo que las imagenes de login. Se podria sacar y meter todo adentro de la seccion de login
+- Debajo de la parte del login, hay otros "botones" para realizar otras acciones, las imagenes de inscripcion podrian ser
+una sola imagen.
+- Menu "Prensa" es lo mismo que las noticias que aparecen debajo de la pagina, se podria borrar.
 Se podria agrupar en diferentes secciones o columnas y agregar botones reales.
 - Titulo de noticias mal posicionado, parece un texto en medio que no dice nada, se podria
 agregar un fondo claro y letra mas grande, y meter las noticias junto al titulo
