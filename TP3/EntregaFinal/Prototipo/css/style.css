@@ -28,7 +28,7 @@
 .navbar-light .navbar-nav .nav-link:hover{
   color: #7b7b7b;
 }
-.nav-menu, .btn, .slide-text, .title{
+.nav-menu, .btn, .slide-text, .title, .product-name{
   font-family: "Amiko";
 }
 @font-face {
@@ -56,11 +56,11 @@
   border-radius: 0;
   color: white;
 }
-.carousel-control-next, .carousel-control-prev{
-  width: auto;
+.carousel {
+  padding: 0;
 }
 
-.separator, .btn-brown, .separator-2{
+.separator, .btn-brown, .separator-2, .add-to-cart{
   background-color: #785616;
 }
 .separator{
@@ -72,8 +72,12 @@
 .separator-2, .separator{
   width: 100%;
 }
-
-
+.add-icon{
+  color: white;
+  padding-top: 13%;
+  font-size: 50px;
+  text-shadow: 0px 0px 7px #000000;
+}
 .title{
   text-shadow: 0px 1px 1px #000000;
   color: black;
@@ -83,9 +87,31 @@
 .row1{
   background-color: #ececec;
 }
-.col-3{
-
+.product{
+  width: 100%;
+  height: 100%;
+  box-shadow: -1px -1px 20px 2px #000000;
 }
+
+.product-name {
+  color: white;
+  position: absolute;
+  font-size: 36px;
+  width: 100%;
+}
+
+.product-price {
+  bottom: 0;
+}
+
 .row-container{
   padding: 15px;
+}
+.add-to-cart{
+  width: 65px;
+  height: 65px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px 0px 0px 0px;
 }
