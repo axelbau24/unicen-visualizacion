@@ -21,15 +21,17 @@ body{
 }
 
 .zmdi{
+  color: white;
   font-size: 32px;
 }
+
 .navbar-light .navbar-nav .nav-link {
   text-shadow: 2px 2px 4px #000000;
   color: white;
   font-size: 24px;
 }
-.navbar-light .navbar-nav .nav-link:hover{
-  color: #7b7b7b;
+.navbar-light .navbar-nav .nav-link:hover, .zmdi:hover{
+  color: #cccccc;
 }
 body{
   font-family: "Amiko";
@@ -151,4 +153,8 @@ iframe{
 }
 .footer-2{
   margin-top: 15px;
+}
+.add-to-cart:hover, .btn-brown:hover{
+  color: white;
+  background-color: #9c7326;
 }
