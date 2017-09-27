@@ -1,3 +1,6 @@
+body{
+  background-color: #383838;
+}
 .navbar-brand, .logo{
   width: 195px;
   height: 60px;
@@ -28,7 +31,7 @@
 .navbar-light .navbar-nav .nav-link:hover{
   color: #7b7b7b;
 }
-.nav-menu, .btn, .slide-text, .title, .product-name{
+body{
   font-family: "Amiko";
 }
 @font-face {
@@ -73,7 +76,6 @@
   width: 100%;
 }
 .add-icon{
-  color: white;
   padding-top: 13%;
   font-size: 50px;
   text-shadow: 0px 0px 7px #000000;
@@ -94,7 +96,6 @@
 }
 
 .product-name {
-  color: white;
   position: absolute;
   font-size: 36px;
   width: 100%;
@@ -114,4 +115,40 @@
   right: 0;
   bottom: 0;
   border-radius: 5px 0px 0px 0px;
+}
+
+.side-text, .side-title, .product-name, .add-icon, .footer-text{
+  color: white;
+}
+
+.side-title{
+  font-size: 48px;
+}
+
+.side-title, .side-text{
+  text-shadow: 1px 1px 10px #000000;
+}
+
+.side-text{
+  font-size: 30px;
+}
+iframe{
+  margin-top: 5px;
+}
+
+.social{
+  width: 90px;
+  height: 90px;
+  margin-right: 30px;
+}
+.footer{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.zmdi-github{
+  vertical-align:middle;
+}
+.footer-2{
+  margin-top: 15px;
 }
