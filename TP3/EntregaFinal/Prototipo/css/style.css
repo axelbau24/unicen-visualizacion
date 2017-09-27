@@ -1,0 +1,91 @@
+.navbar-brand, .logo{
+  width: 195px;
+  height: 60px;
+}
+.navbar-brand{
+  height: 68px;
+  padding: 0;
+  padding-top: 2px;
+}
+
+.navbar{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-light {
+  background-color: #444444!important;
+}
+
+.zmdi{
+  font-size: 32px;
+}
+.navbar-light .navbar-nav .nav-link {
+  text-shadow: 2px 2px 4px #000000;
+  color: white;
+  font-size: 24px;
+}
+.navbar-light .navbar-nav .nav-link:hover{
+  color: #7b7b7b;
+}
+.nav-menu, .btn, .slide-text, .title{
+  font-family: "Amiko";
+}
+@font-face {
+  font-family: 'Amiko';
+  src: url('fonts/Amiko-Regular.ttf');
+}
+
+.slide-image{
+  width:100%;
+  height:100%;
+}
+.carousel-caption{
+  position: absolute;
+  top: 18%;
+  width: 70%;
+  left: 0;
+}
+.slide-header{
+  font-size: 60px;
+}
+.slide-description{
+  font-size: 50px;
+}
+.btn-brown{
+  border-radius: 0;
+  color: white;
+}
+.carousel-control-next, .carousel-control-prev{
+  width: auto;
+}
+
+.separator, .btn-brown, .separator-2{
+  background-color: #785616;
+}
+.separator{
+  height: 8px;
+}
+.separator-2{
+  height: 4px;
+}
+.separator-2, .separator{
+  width: 100%;
+}
+
+
+.title{
+  text-shadow: 0px 1px 1px #000000;
+  color: black;
+  font-size: 36px;
+}
+
+.row1{
+  background-color: #ececec;
+}
+.col-3{
+
+}
+.row-container{
+  padding: 15px;
+}
