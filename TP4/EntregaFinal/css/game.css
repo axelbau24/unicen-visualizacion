@@ -1,0 +1,24 @@
+body{
+  background: url("../images/background.png");
+  background-size:cover;
+}
+
+#player{
+  position: absolute;
+  bottom: 20%;
+  width: 160px;
+  height: 143px;
+  background: url("../images/player_run.png");
+  animation: player_run .5s steps(17) infinite;
+}
+
+@keyframes player_run {
+  100% { background-position: -2720px}
+}
+.floor{
+  position: absolute;
+  bottom: 15%;
+  width: 100%;
+  height: 50px;
+  background-color: grey;
+}
