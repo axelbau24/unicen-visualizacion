@@ -29,15 +29,14 @@ class Point {
 }
 
 class GameObject {
-  constructor(element, staticObject) {
+  constructor(element, staticObject = false) {
     this.element = element;
-    if(staticObject) this.staticObject = staticObject;
-    else this.staticObject = false;
+    this.staticObject = staticObject;
     this.x = parseFloat(this.getCSSProperty("left"));
     this.y = parseFloat(this.getCSSProperty("top"));
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
-    this.velocity = new Point(0, 2);
+    this.velocity = new Point(0, 0);
   }
 
   getCSSProperty(propertyName){
@@ -83,51 +82,46 @@ class GameObject {
 class Player extends GameObject{
   constructor(element) {
     super(element);
-    this.currentEvent = null;
     this.holdingKey = false;
+    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false};
     let p = this;
-
     document.onkeydown = function (e) { p.keyDown(e) };
     document.onkeyup = function (e) {  p.keyUp(e)};
   }
 
-
   keyDown(e){
-    if(!this.holdingKey){
-      this.holdingKey = true;
-      e = e || window.event;
-      this.currentEvent = e;
+    e = e || window.event;
+    if (e.keyCode in this.pressedKeys) {
+      this.pressedKeys[e.keyCode] = true;
     }
   }
 
 
   keyUp(e){
+    if (e.keyCode in this.pressedKeys) {
+     this.pressedKeys[e.keyCode] = false;
+    }
     this.velocity = new Point(0,0);
-    this.holdingKey = false;
   }
 
   update(){
     super.update();
-    if(this.holdingKey){
-      this.colliding = false;
-      if(this.currentEvent.keyCode == 68 || this.currentEvent.keyCode == 39) {
-        this.velocity.x = 1;
-        this.element.style.transform = "scaleX(1)";
-      }
-      else if(this.currentEvent.keyCode == 65 || this.currentEvent.keyCode == 37){
-        this.velocity.x = -1;
-        this.element.style.transform = "scaleX(-1)";
-      }
-      this.element.style.left = this.x + "px";
+    if(this.pressedKeys[68] || this.pressedKeys[39]) {
+      this.velocity.x = 1;
+      this.element.style.transform = "scaleX(1)";
     }
+    else if(this.pressedKeys[65] || this.pressedKeys[37]){
+      this.velocity.x = -1;
+      this.element.style.transform = "scaleX(-1)";
+    }
+    this.element.style.left = this.x + "px";
+
     this.jump();
   }
 
   jump(){
-    if(this.holdingKey){
-      if(this.currentEvent.keyCode == 32) {
-        this.velocity.y = -3;
-      }
+    if(this.pressedKeys[32]) {
+      this.velocity.y = -3;
     }
   }
 }
