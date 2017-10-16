@@ -1,4 +1,5 @@
 class Game {
+
   constructor() {
     this.gameObjects = [];
     let game = this;
@@ -11,11 +12,19 @@ class Game {
         if(i != j) gameObject.checkCollision(this.gameObjects[j]);
       }
       gameObject.update();
-
     }
   }
   addObject(object){
     this.gameObjects.push(object);
+    Game.objectCount++;
+  }
+}
+Game.objectCount = 0;
+
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
   }
 }
 
@@ -28,7 +37,7 @@ class GameObject {
     this.y = parseFloat(this.getCSSProperty("top"));
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
-    this.colliding = false;
+    this.velocity = new Point(0, 2);
   }
 
   getCSSProperty(propertyName){
@@ -36,7 +45,9 @@ class GameObject {
     return style.getPropertyValue(propertyName);
   }
   update(){
-    if(!this.colliding && !this.staticObject) this.setPos(this.x, (this.y + 5.05));
+    if(!this.staticObject) {
+      this.velocity.y = 2;
+    }
   }
   setPos(x, y){
     this.x = x;
@@ -45,12 +56,24 @@ class GameObject {
     this.element.style.top = this.y + "px";
   }
   checkCollision(gameObject){
-    if(this.y + this.height > gameObject.y && this.x + this.width > gameObject.x &&
-       this.x < gameObject.x + gameObject.width && this.y < gameObject.y - gameObject.height){
+    if(!this.staticObject){
 
-      this.colliding = true;
+      this.y = this.y + this.velocity.y;
+      if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
+        this.y = this.y - this.velocity.y * (Game.objectCount - 1);
+      }
+
+      this.x = this.x + this.velocity.x;
+      if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
+        this.x = this.x - this.velocity.x * (Game.objectCount - 1);
+      }
+
+      this.setPos(this.x, this.y);
     }
-    else this.colliding = false;
+  }
+
+  areColliding(a, b){
+    return !(((a.y + a.height) < (b.y)) || (a.y > (b.y + b.height)) || ((a.x + a.width) < b.x) || (a.x > (b.x + b.width)));
   }
 
 }
@@ -79,61 +102,38 @@ class Player extends GameObject{
 
 
   keyUp(e){
+    this.velocity = new Point(0,0);
     this.holdingKey = false;
   }
 
   update(){
     super.update();
     if(this.holdingKey){
+      this.colliding = false;
       if(this.currentEvent.keyCode == 68 || this.currentEvent.keyCode == 39) {
-        this.x += 2.5;
+        this.velocity.x = 1;
         this.element.style.transform = "scaleX(1)";
       }
       else if(this.currentEvent.keyCode == 65 || this.currentEvent.keyCode == 37){
-          this.x -= 2.5;
-          this.element.style.transform = "scaleX(-1)";
-      }
-      else if(this.currentEvent.keyCode == 38){
-          this.y -= 10.5;
-          this.element.style.top = this.y + "px";
+        this.velocity.x = -1;
+        this.element.style.transform = "scaleX(-1)";
       }
       this.element.style.left = this.x + "px";
     }
+    this.jump();
   }
 
   jump(){
     if(this.holdingKey){
       if(this.currentEvent.keyCode == 32) {
-        this.y += 20;
+        this.velocity.y = -3;
       }
-    //  this.object.style.bottom = this.y + "%";
-    //  this.holdingKey = false;
     }
   }
 }
 
 let game = new Game();
 
-game.addObject(new GameObject(document.getElementById('cube')));
-game.addObject(new Player(document.getElementById('player')));
 game.addObject(new GameObject(document.getElementById('floor'), true));
-
-
-
-
-
-
-//let player = new Player(document.getElementById('player'));
-
-
-
-
-
-// function update() {
-//   // let style = window.getComputedStyle(player.object),
-//   // top = style.getPropertyValue('bottom');
-//   // console.log(top);
-//   //player.move();
-//   //player.jump();
-// }
-//
+game.addObject(new GameObject(document.getElementById('cube'), false));
+game.addObject(new Player(document.getElementById('player')));
