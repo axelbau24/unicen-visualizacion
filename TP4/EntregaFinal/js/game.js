@@ -37,6 +37,7 @@ class GameObject {
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
+    this.jumpStartY = 0;
   }
 
   getCSSProperty(propertyName){
@@ -106,6 +107,23 @@ class Player extends GameObject{
 
   update(){
     super.update();
+
+    if(this.velocity.x == 0) {
+      this.element.style.width = "135px";
+      this.element.style.height =  "148px";
+      this.element.style.background = "url('images/player_idle.png')";
+      this.element.style.animation = "player_idle 2s steps(25) infinite";
+    }
+    else{
+      this.element.style.width = "160px";
+      this.element.style.height =  "143px";
+      this.element.style.background = "url('images/player_run.png')";
+      this.element.style.animation = "player_run .6s steps(17) infinite";
+    }
+
+
+
+
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
       this.velocity.x = 1;
       this.element.style.transform = "scaleX(1)";

@@ -7,14 +7,15 @@ body{
   position: absolute;
   left: 0px;
   top: 100px;
-  width: 160px;
-  height: 143px;
-  background: url("../images/player_run.png");
-  animation: player_run .5s steps(17) infinite;
+  width: 135px;
+  height: 148px;
 }
 
+@keyframes player_idle {
+  100% { background-position: -3375px}
+}
 @keyframes player_run {
-  100% { background-position: -2720px}
+  100% { background-position: -2720px }
 }
 #floor{
   position: absolute;
