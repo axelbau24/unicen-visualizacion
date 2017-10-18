@@ -55,6 +55,23 @@ class GameObject {
     this.element.style.left = this.x + "px";
     this.element.style.top = this.y + "px";
   }
+
+  setAnimation(name, steps, length, iterations = "infinite"){
+    this.element.style.background = "url('images/" + name + ".png')";
+    this.element.style.animation = name + " " + length + "s steps(" + steps + ") " + iterations + "";
+  }
+
+  setSize(width, height){
+    this.width = width;
+    this.height = height;
+    this.element.style.width = this.width + "px";
+    this.element.style.height = this.height + "px";
+  }
+
+  setScale(x = 1, y = 1){
+    this.element.style.transform = "scale(" + x + ", " + y + ")";
+  }
+
   checkCollision(gameObject){
     if(!this.staticObject){
 
@@ -83,7 +100,6 @@ class GameObject {
 class Player extends GameObject{
   constructor(element) {
     super(element);
-    this.holdingKey = false;
     this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false};
     let p = this;
     document.onkeydown = function (e) { p.keyDown(e) };
@@ -100,7 +116,7 @@ class Player extends GameObject{
 
   keyUp(e){
     if (e.keyCode in this.pressedKeys) {
-     this.pressedKeys[e.keyCode] = false;
+      this.pressedKeys[e.keyCode] = false;
     }
     this.velocity = new Point(0,0);
   }
@@ -109,28 +125,21 @@ class Player extends GameObject{
     super.update();
 
     if(this.velocity.x == 0) {
-      this.element.style.width = "135px";
-      this.element.style.height =  "148px";
-      this.element.style.background = "url('images/player_idle.png')";
-      this.element.style.animation = "player_idle 2s steps(25) infinite";
+      this.setSize(135, 137);
+      this.setAnimation("player_idle", 27, 2);
     }
     else{
-      this.element.style.width = "160px";
-      this.element.style.height =  "143px";
-      this.element.style.background = "url('images/player_run.png')";
-      this.element.style.animation = "player_run .6s steps(17) infinite";
+      this.setSize(151, 137);
+      this.setAnimation("player_run", 18, .6);
     }
-
-
-
 
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
       this.velocity.x = 1;
-      this.element.style.transform = "scaleX(1)";
+      this.setScale(1);
     }
     else if(this.pressedKeys[65] || this.pressedKeys[37]){
       this.velocity.x = -1;
-      this.element.style.transform = "scaleX(-1)";
+      this.setScale(-1);
     }
     this.element.style.left = this.x + "px";
 

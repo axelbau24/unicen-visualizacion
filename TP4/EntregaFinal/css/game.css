@@ -7,15 +7,14 @@ body{
   position: absolute;
   left: 0px;
   top: 100px;
-  width: 135px;
-  height: 148px;
+  animation-fill-mode: forwards;
 }
 
 @keyframes player_idle {
-  100% { background-position: -3375px}
+  100% { background-position: -3510px}
 }
 @keyframes player_run {
-  100% { background-position: -2720px }
+  100% { background-position: -2718px }
 }
 #floor{
   position: absolute;
