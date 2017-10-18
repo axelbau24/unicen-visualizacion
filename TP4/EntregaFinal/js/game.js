@@ -3,15 +3,16 @@ class Game {
   constructor() {
     this.gameObjects = [];
     let game = this;
+
     setInterval(function () { game.update(); }, 0);
   }
   update() {
     for (var i = 0; i < this.gameObjects.length; i++) {
       let gameObject = this.gameObjects[i];
-      for (var j = 0; j < this.gameObjects.length; j++) {
-        if(i != j) gameObject.checkCollision(this.gameObjects[j]);
-      }
       gameObject.update();
+      for (var j = 0; j < this.gameObjects.length; j++) {
+        gameObject.checkCollision(this.gameObjects[j], j);
+      }
     }
   }
   addObject(object){
@@ -37,6 +38,7 @@ class GameObject {
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
+    this.collision = new Point(false, false);
   }
 
   getCSSProperty(propertyName){
@@ -45,15 +47,20 @@ class GameObject {
   }
   update(){
     if(!this.staticObject) {
-      this.velocity.y = 2;
+      this.velocity.y = 4;
     }
-    this.setPos(this.x + 0.2, this.y);
+
+    this.setPos(this.x + 0.2);
   }
   setPos(x, y){
-    this.x = x;
-    this.y = y;
-    this.element.style.left = this.x + "px";
-    this.element.style.top = this.y + "px";
+    if(x){
+      this.x = x;
+      this.element.style.left = this.x + "px";
+    }
+    if(y) {
+      this.y = y;
+      this.element.style.top = this.y + "px";
+    }
   }
 
   setAnimation(name, steps, length, iterations = "infinite"){
@@ -72,20 +79,28 @@ class GameObject {
     this.element.style.transform = "scale(" + x + ", " + y + ")";
   }
 
-  checkCollision(gameObject){
+  checkCollision(gameObject, pos){
 
-    if(!this.staticObject){
-      this.y = this.y + this.velocity.y;
-      if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
-        this.y = this.y - this.velocity.y * (Game.objectCount - 1);
+    if(!this.staticObject && gameObject != this){
+      if(!this.collision.y) {
+        this.y += this.velocity.y;
+        this.collision.y = true;
+      }
+      if(this.areColliding(this, gameObject)){
+        this.y = this.y - this.velocity.y;
       }
 
-      this.x = this.x + this.velocity.x;
-      if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
-        this.x = this.x - this.velocity.x * (Game.objectCount - 1);
+      if(!this.collision.x) {
+        this.x += this.velocity.x;
+        this.collision.x = true;
       }
 
-
+      if(this.areColliding(this, gameObject) ){
+        this.x = this.x - this.velocity.x;
+      }
+    }
+    if(pos == Game.objectCount - 1){
+      this.collision = new Point(false, false);
       this.setPos(this.x, this.y);
     }
   }
@@ -134,11 +149,11 @@ class Player extends GameObject{
     }
 
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
-      this.velocity.x = 1;
+      this.velocity.x = 2;
       this.setScale(1);
     }
     else if(this.pressedKeys[65] || this.pressedKeys[37]){
-      this.velocity.x = -1;
+      this.velocity.x = -2;
       this.setScale(-1);
     }
     this.jump();
@@ -155,6 +170,6 @@ let game = new Game();
 
 game.addObject(new GameObject(document.getElementById('floor'), true));
 game.addObject(new GameObject(document.getElementById('cube'), false));
+game.addObject(new Player(document.getElementById('player')));
 game.addObject(new GameObject(document.getElementById('cube2'), false));
 game.addObject(new GameObject(document.getElementById('cube3'), false));
-game.addObject(new Player(document.getElementById('player')));
