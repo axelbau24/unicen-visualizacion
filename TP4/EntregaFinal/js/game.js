@@ -37,7 +37,6 @@ class GameObject {
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
-    this.jumpStartY = 0;
   }
 
   getCSSProperty(propertyName){
@@ -48,6 +47,7 @@ class GameObject {
     if(!this.staticObject) {
       this.velocity.y = 2;
     }
+    this.setPos(this.x + 0.2, this.y);
   }
   setPos(x, y){
     this.x = x;
@@ -73,8 +73,8 @@ class GameObject {
   }
 
   checkCollision(gameObject){
-    if(!this.staticObject){
 
+    if(!this.staticObject){
       this.y = this.y + this.velocity.y;
       if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
         this.y = this.y - this.velocity.y * (Game.objectCount - 1);
@@ -84,6 +84,7 @@ class GameObject {
       if(this.areColliding(this, gameObject) && this.areColliding(gameObject, this)){
         this.x = this.x - this.velocity.x * (Game.objectCount - 1);
       }
+
 
       this.setPos(this.x, this.y);
     }
@@ -123,7 +124,6 @@ class Player extends GameObject{
 
   update(){
     super.update();
-
     if(this.velocity.x == 0) {
       this.setSize(135, 137);
       this.setAnimation("player_idle", 27, 2);
@@ -141,14 +141,12 @@ class Player extends GameObject{
       this.velocity.x = -1;
       this.setScale(-1);
     }
-    this.element.style.left = this.x + "px";
-
     this.jump();
   }
 
   jump(){
     if(this.pressedKeys[32]) {
-      this.velocity.y = -3;
+      this.velocity.y = -1;
     }
   }
 }
@@ -157,4 +155,6 @@ let game = new Game();
 
 game.addObject(new GameObject(document.getElementById('floor'), true));
 game.addObject(new GameObject(document.getElementById('cube'), false));
+game.addObject(new GameObject(document.getElementById('cube2'), false));
+game.addObject(new GameObject(document.getElementById('cube3'), false));
 game.addObject(new Player(document.getElementById('player')));
