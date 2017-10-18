@@ -2,9 +2,10 @@ class Game {
 
   constructor() {
     this.gameObjects = [];
-    let game = this;
+    this.enemies = [];
+    Game.instance = this;
 
-    setInterval(function () { game.update(); }, 0);
+    setInterval( () => { game.update(); }, 0);
   }
   update() {
     for (var i = 0; i < this.gameObjects.length; i++) {
@@ -14,13 +15,42 @@ class Game {
         gameObject.checkCollision(this.gameObjects[j], j);
       }
     }
+
+
   }
   addObject(object){
     this.gameObjects.push(object);
     Game.objectCount++;
   }
+  addEnemy(enemyObject){
+    this.enemies.push(enemyObject);
+    this.addObject(enemyObject);
+  }
+  destroy(obj){
+    for (var i = 0; i < this.gameObjects.length; i++) {
+      if(obj == this.gameObjects[i]){
+        document.body.removeChild(this.gameObjects[i].element);
+        this.gameObjects.splice(i, 1);
+        Game.objectCount--;
+      }
+    }
+    for (var i = 0; i < this.enemies.length; i++) {
+      if(obj == this.enemies[i]){
+        this.enemies.splice(i, 1);
+      }
+    }
+  }
+
+  findEnemy(player){
+    for (var i = 0; i < this.enemies.length; i++) {
+      if(Math.abs(player.x - this.enemies[i].x) <= 200){
+        return this.enemies[i];
+      }
+    }
+  }
 }
 Game.objectCount = 0;
+Game.instance = null;
 
 class Point {
   constructor(x, y) {
@@ -39,6 +69,7 @@ class GameObject {
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
     this.collision = new Point(false, false);
+
   }
 
   getCSSProperty(propertyName){
@@ -47,13 +78,14 @@ class GameObject {
   }
   update(){
     if(!this.staticObject) {
-      this.velocity.y = 4;
+      this.velocity.y = 3;
     }
 
-    this.setPos(this.x + 0.2);
+    //this.setPos(this.x + 0.55);
   }
   setPos(x, y){
     if(x){
+
       this.x = x;
       this.element.style.left = this.x + "px";
     }
@@ -82,6 +114,7 @@ class GameObject {
   checkCollision(gameObject, pos){
 
     if(!this.staticObject && gameObject != this){
+
       if(!this.collision.y) {
         this.y += this.velocity.y;
         this.collision.y = true;
@@ -95,7 +128,7 @@ class GameObject {
         this.collision.x = true;
       }
 
-      if(this.areColliding(this, gameObject) ){
+      if(this.areColliding(this, gameObject)){
         this.x = this.x - this.velocity.x;
       }
     }
@@ -110,16 +143,37 @@ class GameObject {
   }
 
 }
-
-
-
-class Player extends GameObject{
+// Player y enemigos
+class Entity extends GameObject{
   constructor(element) {
     super(element);
-    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false};
-    let p = this;
-    document.onkeydown = function (e) { p.keyDown(e) };
-    document.onkeyup = function (e) {  p.keyUp(e)};
+    this.health = 100;
+  }
+  update(){
+    super.update();
+  }
+
+  takeDamage(amount){
+    this.health -= amount;
+  }
+}
+
+class Player extends Entity{
+  constructor(element) {
+    super(element);
+    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false};
+    this.jumping = false;
+    this.falling = false;
+
+    document.addEventListener("keydown", (e) => { this.keyDown(e) });
+    document.addEventListener("keyup", (e) => { this.keyUp(e) });
+    this.element.addEventListener("animationend", () => {
+      if(this.falling) this.falling = false;
+      if(this.jumping) {
+        this.jumping = false;
+        this.falling = true;
+      }
+    });
   }
 
   keyDown(e){
@@ -139,6 +193,18 @@ class Player extends GameObject{
 
   update(){
     super.update();
+    if(this.velocity.x > 0) this.setScale(1);
+    else this.setScale(-1);
+
+    if(this.pressedKeys[70]){
+      let e = game.findEnemy(this);
+      if(e) e.takeDamage(1);
+    }
+    this.move();
+    this.jump();
+  }
+
+  move(){
     if(this.velocity.x == 0) {
       this.setSize(135, 137);
       this.setAnimation("player_idle", 27, 2);
@@ -150,26 +216,58 @@ class Player extends GameObject{
 
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
       this.velocity.x = 2;
-      this.setScale(1);
     }
     else if(this.pressedKeys[65] || this.pressedKeys[37]){
       this.velocity.x = -2;
-      this.setScale(-1);
     }
-    this.jump();
   }
 
   jump(){
-    if(this.pressedKeys[32]) {
-      this.velocity.y = -1;
+    if(this.jumping){
+      this.velocity.y = -2.5;
+      this.setSize(176, 137);
+      this.setAnimation("player_jump_start", 9, 0.4, 1);
+    }
+    if(this.falling) {
+      this.setSize(176, 137);
+      this.setAnimation("player_jump_end", 5, .4, 1);
+    }
+
+    if(this.pressedKeys[32] && !this.falling) {
+      this.jumping = true;
     }
   }
 }
 
+class Enemy extends Entity {
+  constructor(element) {
+    super(element);
+  }
+
+  update(){
+    super.update();
+    this.velocity.x = -0.5;
+    if(this.health <= 0) game.destroy(this);
+  }
+
+
+}
+
 let game = new Game();
 
-game.addObject(new GameObject(document.getElementById('floor'), true));
+
 game.addObject(new GameObject(document.getElementById('cube'), false));
 game.addObject(new Player(document.getElementById('player')));
 game.addObject(new GameObject(document.getElementById('cube2'), false));
 game.addObject(new GameObject(document.getElementById('cube3'), false));
+game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));
+
+for (var i = -1; i < 2; i++) {
+  let floor = document.createElement("div");
+  floor.className = "floor";
+  document.body.appendChild(floor);
+  let go = new GameObject(floor, true);
+  go.setPos(go.x + (go.width * i), go.y);
+
+  game.addObject(go);
+}
