@@ -1,7 +1,45 @@
+.layer-0 {
+  background:url('../images/parallax/layer_0.png');
+  animation: moving-images 100000s ease infinite;
+  z-index: -1000;
+}
+
+.layer-0, .layer-front, .layer-1, .layer-2, .layer-3{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+.layer-front {
+  background:url('../images/parallax/layer_front.png') repeat-x;
+  animation: moving-images 3000s ease infinite;
+  z-index: 1000;
+}
+
+.layer-1 {
+  background:url('../images/parallax/layer_1.png') repeat-x;
+  animation: moving-images 3000s ease infinite;
+  z-index: -800;
+}
+.layer-2 {
+  background:url('../images/parallax/layer_2.png') repeat-x;
+  animation: moving-images 4000s ease infinite;
+  z-index: -900;
+}
+.layer-3 {
+  background:url('../images/parallax/layer_3.png') repeat-x;
+  animation: moving-images 7000s ease infinite;
+  z-index: -950;
+}
+
 body{
-  background: url("../images/background.png");
-  background-size:cover;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+@keyframes moving-images {
+  0%   {left:-999999px;}
+  100%  {left:0px;}
 }
 
 #player{
@@ -9,6 +47,13 @@ body{
   left: 0px;
   top: 400px;
   animation-fill-mode: forwards;
+}
+
+
+@keyframes layer-0 {
+  0% { left: 0px}
+  50% { left: 1920px}
+  100% { left: 0px}
 }
 
 @keyframes player_idle {
@@ -38,10 +83,12 @@ body{
 .floor{
   position: absolute;
   top: 80%;
-  width: 700px;
+  width: 800px;
   left: 0;
-  height: 20px;
-  background-color: grey;
+  height: 420px;
+  background: url("../images/floor_segment.png");
+  margin-top: -120px;
+  z-index: -100;
 }
 #cube{
   position: absolute;

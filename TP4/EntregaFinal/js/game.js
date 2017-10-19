@@ -81,7 +81,7 @@ class GameObject {
       this.velocity.y = 3;
     }
 
-    //this.setPos(this.x + 0.55);
+    this.setPos(this.x + 0.70);
   }
   setPos(x, y){
     if(x){
@@ -96,7 +96,7 @@ class GameObject {
   }
 
   setAnimation(name, steps, length, iterations = "infinite"){
-    this.element.style.background = "url('images/" + name + ".png')";
+    this.element.style.background = "url('images/animations/" + name + ".png')";
     this.element.style.animation = name + " " + length + "s steps(" + steps + ") " + iterations + "";
   }
 
@@ -193,8 +193,6 @@ class Player extends Entity{
 
   update(){
     super.update();
-    if(this.velocity.x > 0) this.setScale(1);
-    else this.setScale(-1);
 
     if(this.pressedKeys[70]){
       let e = game.findEnemy(this);
@@ -216,9 +214,11 @@ class Player extends Entity{
 
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
       this.velocity.x = 2;
+      this.setScale(1);
     }
     else if(this.pressedKeys[65] || this.pressedKeys[37]){
       this.velocity.x = -2;
+      this.setScale(-1);
     }
   }
 
@@ -262,12 +262,13 @@ game.addObject(new GameObject(document.getElementById('cube2'), false));
 game.addObject(new GameObject(document.getElementById('cube3'), false));
 game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));
 
-for (var i = -1; i < 2; i++) {
+for (var i = -50; i < 5; i++) {
   let floor = document.createElement("div");
   floor.className = "floor";
   document.body.appendChild(floor);
   let go = new GameObject(floor, true);
-  go.setPos(go.x + (go.width * i), go.y);
+  go.x = 1000;
+  go.setPos(go.x + ((go.width - 100) * i), go.y);
 
   game.addObject(go);
 }
