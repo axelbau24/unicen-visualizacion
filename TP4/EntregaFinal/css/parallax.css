@@ -7,33 +7,33 @@
 }
 .layer-front {
   background:url('../images/parallax/layer_front.png') repeat-x;
-  animation: moving-images 3000s ease infinite;
+  animation: moving-images 6000s linear infinite;
   z-index: 1000;
 }
 
 .layer-0 {
   background:url('../images/parallax/layer_0.png');
-  animation: moving-images 100000s ease infinite;
+  animation: moving-images 100000s linear infinite;
   z-index: -1000;
 }
 .layer-1 {
   background:url('../images/parallax/layer_1.png') repeat-x;
-  animation: moving-images 3000s ease infinite;
+  animation: moving-images 6000s linear infinite;
   z-index: -800;
 }
 .layer-2 {
   background:url('../images/parallax/layer_2.png') repeat-x;
-  animation: moving-images 4000s ease infinite;
+  animation: moving-images 8000s linear infinite;
   z-index: -900;
 }
 .layer-3 {
   background:url('../images/parallax/layer_3.png') repeat-x;
-  animation: moving-images 7000s ease infinite;
+  animation: moving-images  10000s linear infinite;
   z-index: -950;
 }
 .layer-4 {
   background:url('../images/parallax/layer_4.png') repeat-x;
-  animation: moving-images 10000s ease infinite;
+  animation: moving-images 13000s linear infinite;
   z-index: -980;
 }
 
