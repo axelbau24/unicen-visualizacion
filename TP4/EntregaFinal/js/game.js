@@ -29,7 +29,7 @@ class Game {
   destroy(obj){
     for (var i = 0; i < this.gameObjects.length; i++) {
       if(obj == this.gameObjects[i]){
-        document.body.removeChild(this.gameObjects[i].element);
+        gameContainer.removeChild(this.gameObjects[i].element);
         this.gameObjects.splice(i, 1);
         Game.objectCount--;
       }
@@ -253,6 +253,9 @@ class Enemy extends Entity {
 
 }
 
+let scale = Math.min(1920 / window.innerWidth,  950 / window.innerHeight);
+
+let gameContainer = document.getElementById('game-container');
 let game = new Game();
 
 
@@ -265,7 +268,7 @@ game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));
 for (var i = -50; i < 5; i++) {
   let floor = document.createElement("div");
   floor.className = "floor";
-  document.body.appendChild(floor);
+  gameContainer.appendChild(floor);
   let go = new GameObject(floor, true);
   go.x = 1000;
   go.setPos(go.x + ((go.width - 100) * i), go.y);
