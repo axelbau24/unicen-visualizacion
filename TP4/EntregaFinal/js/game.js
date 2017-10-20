@@ -81,7 +81,7 @@ class GameObject {
       this.velocity.y = 3;
     }
 
-  //  this.setPos(this.x + 0.70);
+    this.setPos(this.x + 0.70);
   }
   setPos(x, y){
     if(x){
@@ -95,8 +95,11 @@ class GameObject {
   }
 
   setAnimation(name, steps, length, iterations = "infinite"){
-    this.element.style.background = "url('images/animations/" + name + ".png')";
-    this.element.style.animation = name + " " + length + "s steps(" + steps + ") " + iterations + "";
+    if(!name) this.element.style.animation = "none";
+    else {
+      this.element.style.background = "url('images/animations/" + name + ".png')";
+      this.element.style.animation = name + " " + length + "s steps(" + steps + ") " + iterations + "";
+    }
   }
 
   setSize(width, height, reactToCollisions = true){
@@ -155,7 +158,7 @@ class Entity extends GameObject{
   }
 
   takeDamage(amount){
-    this.health -= amount;
+    setTimeout(() => {this.health -= amount} , 100);
   }
 }
 
@@ -165,6 +168,7 @@ class Player extends Entity{
     this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false};
     this.jumping = false;
     this.falling = false;
+    this.attacking = false;
 
     document.addEventListener("keydown", (e) => { this.keyDown(e) });
     document.addEventListener("keyup", (e) => { this.keyUp(e) });
@@ -174,6 +178,8 @@ class Player extends Entity{
         this.jumping = false;
         this.falling = true;
       }
+      this.setAnimation(null);
+      this.attacking = false;
     });
   }
 
@@ -194,13 +200,23 @@ class Player extends Entity{
 
   update(){
     super.update();
-
-    if(this.pressedKeys[70]){
-      let e = game.findEnemy(this);
-      if(e) e.takeDamage(1);
+    if(!this.attacking){
+      this.move();
+      this.jump();
     }
-    this.move();
-    this.jump();
+    this.attack();
+  }
+
+  attack(){
+    if(this.pressedKeys[70] && !this.attacking){
+      this.attacking = true;
+      let e = game.findEnemy(this);
+      if(e) e.takeDamage(50);
+    }
+    if(this.attacking){
+      this.setSize(304, 146, false);
+      this.setAnimation("player_attack", 24, .75, 1);
+    }
   }
 
   move(){
@@ -261,7 +277,7 @@ let game = new Game();
 
 
 game.addObject(new GameObject(document.getElementById('cube'), false));
-game.addObject(new Player(document.getElementById('player-container')));
+game.addObject(new Player(document.getElementById('player')));
 game.addObject(new GameObject(document.getElementById('cube2'), false));
 game.addObject(new GameObject(document.getElementById('cube3'), false));
 game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));

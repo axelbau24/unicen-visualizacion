@@ -32,14 +32,22 @@ body{
 @keyframes player_jump_end {
   100% { background-position: -880px;  }
 }
+@keyframes player_attack {
+  100% { background-position: -7296px}
+}
+
+/*@keyframes enemy0_idle {
+  100% { background-position: -3538px}
+}*/
 
 .enemy{
   position: absolute;
   top: 80px;
   left: 1000px;
-  width: 20px;
-  height: 80px;
-  background-color: lightblue;
+  width: 122px;
+  height: 127px;
+  /*background: url("../images/animations/enemy0_idle.png");*/
+  animation: enemy0_idle 1s steps(29) infinite;
 }
 
 
