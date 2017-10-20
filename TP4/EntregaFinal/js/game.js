@@ -81,11 +81,10 @@ class GameObject {
       this.velocity.y = 3;
     }
 
-    this.setPos(this.x + 0.70);
+  //  this.setPos(this.x + 0.70);
   }
   setPos(x, y){
     if(x){
-
       this.x = x;
       this.element.style.left = this.x + "px";
     }
@@ -100,11 +99,13 @@ class GameObject {
     this.element.style.animation = name + " " + length + "s steps(" + steps + ") " + iterations + "";
   }
 
-  setSize(width, height){
-    this.width = width;
-    this.height = height;
-    this.element.style.width = this.width + "px";
-    this.element.style.height = this.height + "px";
+  setSize(width, height, reactToCollisions = true){
+    if(reactToCollisions){
+      this.width = width;
+      this.height = height;
+    }
+    this.element.style.width = width + "px";
+    this.element.style.height = height + "px";
   }
 
   setScale(x = 1, y = 1){
@@ -204,11 +205,11 @@ class Player extends Entity{
 
   move(){
     if(this.velocity.x == 0) {
-      this.setSize(135, 137);
+      this.setSize(135, 137, false);
       this.setAnimation("player_idle", 27, 2);
     }
     else{
-      this.setSize(151, 137);
+      this.setSize(151, 137, false);
       this.setAnimation("player_run", 18, .6);
     }
 
@@ -225,11 +226,11 @@ class Player extends Entity{
   jump(){
     if(this.jumping){
       this.velocity.y = -2.5;
-      this.setSize(176, 137);
+      this.setSize(176, 137, false);
       this.setAnimation("player_jump_start", 9, 0.4, 1);
     }
     if(this.falling) {
-      this.setSize(176, 137);
+      this.setSize(176, 137, false);
       this.setAnimation("player_jump_end", 5, .4, 1);
     }
 
@@ -260,7 +261,7 @@ let game = new Game();
 
 
 game.addObject(new GameObject(document.getElementById('cube'), false));
-game.addObject(new Player(document.getElementById('player')));
+game.addObject(new Player(document.getElementById('player-container')));
 game.addObject(new GameObject(document.getElementById('cube2'), false));
 game.addObject(new GameObject(document.getElementById('cube3'), false));
 game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));

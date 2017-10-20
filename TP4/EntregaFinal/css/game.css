@@ -5,7 +5,6 @@
   overflow:hidden;
 }
 
-
 body{
   margin: 0;
   overflow: hidden;
@@ -13,6 +12,8 @@ body{
 
 #player{
   position: absolute;
+  width: 135px;
+  height: 137px;
   left: 0px;
   top: 400px;
   animation-fill-mode: forwards;
@@ -26,8 +27,7 @@ body{
   100% { background-position: -2718px }
 }
 @keyframes player_jump_start {
-  0% {transform: translateX(20px);}
-  100% { background-position: -1584px; transform: translateX(20px); }
+  100% { background-position: -1584px; }
 }
 @keyframes player_jump_end {
   100% { background-position: -880px;  }
