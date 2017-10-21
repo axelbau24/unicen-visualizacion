@@ -4,11 +4,16 @@ class Game {
     this.gameObjects = [];
     this.enemies = [];
     Game.instance = this;
+    Game.deltaTime = 1;
+    this.lastUpdate = Date.now();
+
     Game.player = new Player(document.getElementById('player'));
     this.addObject(Game.player);
     setInterval( () => { game.update(); }, 0);
   }
   update() {
+    this.setDeltaTime();
+
     for (var i = 0; i < this.gameObjects.length; i++) {
       let gameObject = this.gameObjects[i];
       gameObject.update();
@@ -16,6 +21,11 @@ class Game {
         gameObject.checkCollision(this.gameObjects[j], j);
       }
     }
+  }
+  setDeltaTime(){
+    let now = Date.now();
+    Game.deltaTime = (now - this.lastUpdate) / 10;
+    this.lastUpdate = now;
   }
   addObject(object){
     this.gameObjects.push(object);
@@ -78,10 +88,9 @@ class GameObject {
   }
   update(){
     if(!this.staticObject) {
-      this.velocity.y = 3;
+      this.velocity.y = 7;
     }
-
-    this.setPos(this.x - 0.70);
+    this.setPos(this.x - 1.7 * Game.deltaTime);
   }
   setPos(x, y){
     if(x){
@@ -125,20 +134,20 @@ class GameObject {
     if(!this.staticObject && gameObject != this){
 
       if(!this.collision.y) {
-        this.y += this.velocity.y;
+        this.y += this.velocity.y * Game.deltaTime;
         this.collision.y = true;
       }
       if(this.areColliding(this, gameObject)){
-        this.y = this.y - this.velocity.y;
+        this.y = this.y - this.velocity.y * Game.deltaTime;
       }
 
       if(!this.collision.x) {
-        this.x += this.velocity.x;
+        this.x += this.velocity.x * Game.deltaTime;
         this.collision.x = true;
       }
 
       if(this.areColliding(this, gameObject)){
-        this.x = this.x - this.velocity.x;
+        this.x = this.x - this.velocity.x * Game.deltaTime;
       }
     }
     if(pos == Game.objectCount - 1){
@@ -237,18 +246,18 @@ class Player extends Entity{
     }
 
     if(this.pressedKeys[68] || this.pressedKeys[39]) {
-      this.velocity.x = 2;
+      this.velocity.x = 4.5;
       this.setScale(1);
     }
     else if(this.pressedKeys[65] || this.pressedKeys[37]){
-      this.velocity.x = -2;
+      this.velocity.x = -4.5;
       this.setScale(-1);
     }
   }
 
   jump(){
     if(this.jumping){
-      this.velocity.y = -2.5;
+      this.velocity.y = -5.5;
       this.setSize(176, 137, false);
       this.setAnimation("player_jump_start", 9, 0.4, 1);
     }
@@ -292,12 +301,12 @@ class Enemy extends Entity {
     this.setSize(131, 135, false);
     this.setAnimation("enemy_0_run", 17, 0.9);
     if(playerDistance < 0){
-      this.velocity.x = 0.5;
+      this.velocity.x = 2.2;
       this.setScale(-1);
     }
     else {
       this.setScale(1);
-      this.velocity.x = -0.5;
+      this.velocity.x = -2.2;
     }
   }
 
