@@ -290,7 +290,7 @@ class Enemy extends Entity {
   move(playerDistance){
     this.setSize(131, 135, false);
     this.setAnimation("enemy_0_run", 17, 0.9);
-    if(playerDistanced < 0){
+    if(playerDistance < 0){
       this.velocity.x = 0.5;
       this.setScale(-1);
     }
