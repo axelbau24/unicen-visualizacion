@@ -218,7 +218,7 @@ class Player extends Entity{
     if(this.pressedKeys[70] && !this.attacking){
       this.attacking = true;
       let e = game.findEnemy(this);
-      if(e) e.takeDamage(20);
+      if(e) e.takeDamage(50);
     }
     if(this.attacking){
       this.setSize(304, 146, false);
@@ -306,7 +306,7 @@ class Enemy extends Entity {
     this.setAnimation("enemy_0_attack", 21, 0.9, 1);
     this.setOffset(0, -30);
     this.attacking = true;
-    Game.player.takeDamage(50);
+    Game.player.takeDamage(20);
   }
 
 
