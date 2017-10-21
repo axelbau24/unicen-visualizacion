@@ -1,20 +1,26 @@
 #game-container{
-  height: 950px;
+  height: 1080px;
   width: 1920px;
   position: relative;
   overflow:hidden;
+  transform-origin: top left;
+  border: 7px double #4d7756;
+  border-radius: 15px;
 }
 
 body{
-  margin: 0;
-  overflow: hidden;
+  background: url("../images/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
 }
 
 #player{
   position: absolute;
   width: 135px;
   height: 137px;
-  left: 0px;
+  left: 250px;
   top: 400px;
   animation-fill-mode: forwards;
 }

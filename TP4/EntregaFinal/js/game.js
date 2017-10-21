@@ -192,6 +192,7 @@ class Player extends Entity{
   keyDown(e){
     e = e || window.event;
     if (e.keyCode in this.pressedKeys) {
+      e.preventDefault();
       this.pressedKeys[e.keyCode] = true;
     }
   }
@@ -217,7 +218,7 @@ class Player extends Entity{
     if(this.pressedKeys[70] && !this.attacking){
       this.attacking = true;
       let e = game.findEnemy(this);
-      if(e) e.takeDamage(50);
+      if(e) e.takeDamage(20);
     }
     if(this.attacking){
       this.setSize(304, 146, false);
@@ -311,9 +312,10 @@ class Enemy extends Entity {
 
 }
 
-let scale = Math.min(1920 / window.innerWidth,  950 / window.innerHeight);
-
+let defaultScale = .75;
 let gameContainer = document.getElementById('game-container');
+let scale = window.innerWidth / 1920;
+gameContainer.style.transform = "scale(" + defaultScale * scale + ")";
 let game = new Game();
 
 
