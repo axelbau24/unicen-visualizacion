@@ -4,7 +4,8 @@ class Game {
     this.gameObjects = [];
     this.enemies = [];
     Game.instance = this;
-
+    Game.player = new Player(document.getElementById('player'));
+    this.addObject(Game.player);
     setInterval( () => { game.update(); }, 0);
   }
   update() {
@@ -15,8 +16,6 @@ class Game {
         gameObject.checkCollision(this.gameObjects[j], j);
       }
     }
-
-
   }
   addObject(object){
     this.gameObjects.push(object);
@@ -69,6 +68,7 @@ class GameObject {
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
     this.collision = new Point(false, false);
+    this.scale = 1;
 
   }
 
@@ -81,7 +81,7 @@ class GameObject {
       this.velocity.y = 3;
     }
 
-    this.setPos(this.x + 0.70);
+    this.setPos(this.x - 0.70);
   }
   setPos(x, y){
     if(x){
@@ -111,8 +111,13 @@ class GameObject {
     this.element.style.height = height + "px";
   }
 
-  setScale(x = 1, y = 1){
-    this.element.style.transform = "scale(" + x + ", " + y + ")";
+  setScale(scale){
+    this.scale = scale;
+    this.element.style.transform = "scale(" + scale + ", 1)";
+  }
+
+  setOffset(x, y){
+    this.element.style.transform = "scale(" + this.scale + ", 1) translate(" + x + "px, " + y + "px)";
   }
 
   checkCollision(gameObject, pos){
@@ -155,6 +160,7 @@ class Entity extends GameObject{
   }
   update(){
     super.update();
+    if(this.health <= 0) game.destroy(this);
   }
 
   takeDamage(amount){
@@ -259,12 +265,47 @@ class Player extends Entity{
 class Enemy extends Entity {
   constructor(element) {
     super(element);
+    this.attacking = false;
+
+    this.element.addEventListener("animationend", () => {
+      this.attacking = false;
+    });
   }
 
   update(){
     super.update();
-    this.velocity.x = -0.5;
-    if(this.health <= 0) game.destroy(this);
+
+    let distance = this.x - Game.player.x;
+
+    if(!this.attacking){
+      this.setSize(117, 127, false);
+      this.setAnimation("enemy_0_idle", 23, 0.9);
+      if(Math.abs(distance) <= 200 ) this.attack();
+      else if(Math.abs(distance) <= 600) this.move(distance);
+      else this.velocity.x = 0;
+    }
+
+  }
+
+  move(playerDistance){
+    this.setSize(131, 135, false);
+    this.setAnimation("enemy_0_run", 17, 0.9);
+    if(playerDistanced < 0){
+      this.velocity.x = 0.5;
+      this.setScale(-1);
+    }
+    else {
+      this.setScale(1);
+      this.velocity.x = -0.5;
+    }
+  }
+
+  attack(){
+    this.setSize(235, 162, false);
+    this.setAnimation("enemy_0_attack", 21, 0.9, 1);
+    this.setOffset(0, -30);
+    this.attacking = true;
+    Game.player.takeDamage(50);
   }
 
 
@@ -276,13 +317,9 @@ let gameContainer = document.getElementById('game-container');
 let game = new Game();
 
 
-game.addObject(new GameObject(document.getElementById('cube'), false));
-game.addObject(new Player(document.getElementById('player')));
-game.addObject(new GameObject(document.getElementById('cube2'), false));
-game.addObject(new GameObject(document.getElementById('cube3'), false));
 game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));
 
-for (var i = -50; i < 5; i++) {
+for (var i = -5; i < 50; i++) {
   let floor = document.createElement("div");
   floor.className = "floor";
   gameContainer.appendChild(floor);

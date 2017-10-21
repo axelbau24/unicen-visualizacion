@@ -36,18 +36,26 @@ body{
   100% { background-position: -7296px}
 }
 
-/*@keyframes enemy0_idle {
-  100% { background-position: -3538px}
-}*/
+@keyframes enemy_0_idle {
+  100% { background-position: -2691px}
+}
+@keyframes enemy_0_run {
+  100% { background-position: -2227px}
+}
+@keyframes enemy_0_attack {
+
+  100% { background-position: -4935px }
+}
+
 
 .enemy{
   position: absolute;
   top: 80px;
   left: 1000px;
-  width: 122px;
+  width: 117px;
   height: 127px;
-  /*background: url("../images/animations/enemy0_idle.png");*/
-  animation: enemy0_idle 1s steps(29) infinite;
+  /*background: url("../images/animations/enemy_0_run.png");
+  animation: enemy_0_run 0.9s steps(17) infinite;*/
 }
 
 
