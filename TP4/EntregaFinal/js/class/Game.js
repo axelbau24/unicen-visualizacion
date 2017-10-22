@@ -15,7 +15,7 @@ class Game {
     setInterval( () => { game.update(); }, 0);
   }
   update() {
-    Game.score += Game.deltaTime / 100;
+    Game.score += (Game.deltaTime / 100) * 2;
     this.screenScore.innerHTML = Math.floor(Game.score);
     this.worldGeneration.update();
     this.setDeltaTime();
@@ -68,7 +68,8 @@ class Game {
 
   findEnemy(player){
     for (var i = 0; i < this.enemies.length; i++) {
-      if(Math.abs(player.x - this.enemies[i].x) <= 200){
+      let distance = Math.sqrt(Math.pow(this.enemies[i].x - player.x, 2) + Math.pow(this.enemies[i].y - player.y, 2));
+      if(distance <= 200){
         return this.enemies[i];
       }
     }

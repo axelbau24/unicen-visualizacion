@@ -19,7 +19,7 @@ body{
 
 #player{
   position: absolute;
-  width: 135px;
+  width: 100px;
   height: 137px;
   left: 250px;
   top: 400px;
@@ -53,24 +53,39 @@ body{
   100% { background-position: -4935px }
 }
 
+
+@keyframes text_feedback {
+  0% {margin-top: 0px; opacity: 1}
+  100% { margin-top: -100px; opacity: 0}
+}
+
+.text-feedback{
+  font-weight: bold;
+  font-size: 22px;
+  position: absolute;
+  animation: text_feedback 1.2s 1;
+}
+
 .health-bar-container{
-    width: 317px;
-  	height: 35px;  /* Can be anything */
+    width: 475px;
+  	height: 52px;
   	position: relative;
   	background: url("../images/health_empty.png");
+    background-size: cover;
 
 }
 .health-bar-container > span {
   display: block;
   height: 100%;
   background: url("../images/health_full.png");
+  background-size: cover;
   position: relative;
   overflow: hidden;
 }
 
 .enemy{
   position: absolute;
-  width: 70px;
+  width: 85px;
   height: 127px;
 }
 .healthUp , .damageUp, .scoreUp{

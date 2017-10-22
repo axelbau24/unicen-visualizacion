@@ -1,7 +1,7 @@
 class Player extends Entity{
   constructor(element) {
     super(element);
-    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false};
+    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false, 38: false};
     this.jumping = false;
     this.falling = false;
     this.attacking = false;
@@ -29,6 +29,13 @@ class Player extends Entity{
     }
   }
 
+  addHealth(health){
+    if(this.health + health >= 100){
+      this.health = 100;
+    }
+    else this.health += health;
+  }
+
 
   keyUp(e){
     if (e.keyCode in this.pressedKeys) {
@@ -51,7 +58,9 @@ class Player extends Entity{
     if(this.pressedKeys[70] && !this.attacking){
       this.attacking = true;
       let e = game.findEnemy(this);
-      if(e) e.takeDamage(this.damage);
+      if(e) {
+        e.takeDamage(this.damage);
+      }
     }
     if(this.attacking){
       this.setSize(304, 146, false);
@@ -90,7 +99,7 @@ class Player extends Entity{
       this.setAnimation("player_jump_end", 5, .4, 1);
     }
 
-    if(this.pressedKeys[32] && !this.falling) {
+    if((this.pressedKeys[32] || this.pressedKeys[38]) && !this.falling) {
       this.jumping = true;
     }
   }

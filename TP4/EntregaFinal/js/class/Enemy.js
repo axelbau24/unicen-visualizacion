@@ -7,6 +7,8 @@ class Enemy extends Entity {
     });
   }
 
+
+
   update(){
     super.update();
 
@@ -19,6 +21,11 @@ class Enemy extends Entity {
         this.setSize(117, 127, false);
         this.setAnimation("enemy_0_idle", 23, 0.9);
       }
+    }
+    if(this.health <= 0) {
+      let reward = 200;
+      Game.player.createFeedback("+" + reward + " puntos", 0);
+      Game.score += reward;
     }
 
   }

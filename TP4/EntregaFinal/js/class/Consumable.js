@@ -19,7 +19,9 @@ class HealthConsumable extends Consumable{
     super(element, className);
   }
   activate(){
-    Game.player.health += 25;
+    let health = 50;
+    Game.player.createFeedback("+" + health + " de vida");
+    Game.player.addHealth(health);
   }
 }
 class DamageConsumable extends Consumable{
@@ -27,7 +29,9 @@ class DamageConsumable extends Consumable{
     super(element, className);
   }
   activate(){
-    Game.player.damage += 25;
+    let dmg = 20;
+    Game.player.createFeedback("+" + dmg + " de daño");
+    Game.player.damage += dmg;
   }
 }
 class ScoreConsumable extends Consumable{
@@ -35,6 +39,8 @@ class ScoreConsumable extends Consumable{
     super(element, className);
   }
   activate(){
-    Game.score += 25;
+    let sc = 50;
+    Game.player.createFeedback("+" + sc + " puntos");
+    Game.score += sc;
   }
 }
