@@ -6,12 +6,14 @@ class Game {
     Game.instance = this;
     Game.deltaTime = 1;
     this.lastUpdate = Date.now();
+    this.worldGeneration = new WorldGeneration(this);
 
     Game.player = new Player(document.getElementById('player'));
     this.addObject(Game.player);
     setInterval( () => { game.update(); }, 0);
   }
   update() {
+    this.worldGeneration.update();
     this.setDeltaTime();
 
     for (var i = 0; i < this.gameObjects.length; i++) {
@@ -90,7 +92,7 @@ class GameObject {
     if(!this.staticObject) {
       this.velocity.y = 7;
     }
-    // this.setPos(this.x - 1.7 * Game.deltaTime);
+    this.setPos(this.x - 1.7 * Game.deltaTime);
   }
   setPos(x, y){
     if(x){
@@ -259,7 +261,7 @@ class Player extends Entity{
 
   jump(){
     if(this.jumping){
-      this.velocity.y = -5.5;
+      this.velocity.y = -6;
       this.setSize(176, 137, false);
       this.setAnimation("player_jump_start", 9, 0.4, 1);
     }
@@ -285,10 +287,11 @@ class Enemy extends Entity {
 
   update(){
     super.update();
-    let distance = this.x - Game.player.x;
+
+    let distance = Math.sqrt(Math.pow(this.x - Game.player.x, 2) + Math.pow(this.y - Game.player.y, 2));
     if(!this.attacking){
-      if(Math.abs(distance) <= 200 ) this.attack();
-      else if(Math.abs(distance) <= 600) this.move(distance);
+      if(Math.abs(distance) <= 200) this.attack();
+      else if(Math.abs(distance) <= 600) this.move();
       else {
         this.velocity.x = 0;
         this.setSize(117, 127, false);
@@ -298,10 +301,10 @@ class Enemy extends Entity {
 
   }
 
-  move(playerDistance){
+  move(){
     this.setSize(131, 135, false);
     this.setAnimation("enemy_0_run", 17, 0.9);
-    if(playerDistance < 0){
+    if(this.x - Game.player.x < 0){
       this.velocity.x = 2.2;
       this.setScale(-1);
     }
@@ -322,22 +325,62 @@ class Enemy extends Entity {
 
 }
 
+class WorldGeneration {
+  constructor(game) {
+    this.baseElement = null;
+    this.game = game;
+    this.platformHeights = [660, 450];
+    for (var i = -3; i < 3; i++) {
+      this.baseElement = this.createObject("floor");
+      this.baseElement.setPos((this.baseElement.width - 100) * i, this.baseElement.y);
+      game.addObject(this.baseElement);
+    }
+  }
+
+  update(){
+    if(this.baseElement.x + this.baseElement.width <= 1920 * 2){
+      let newObj = this.createObject("floor");
+      newObj.setPos(this.baseElement.x + this.baseElement.width - 100, this.baseElement.y);
+      this.baseElement = newObj;
+      this.game.addObject(this.baseElement);
+
+      this.spawnPlatforms();
+      this.spawnEnemy(this.baseElement);
+
+    }
+  }
+
+  spawnEnemy(platform){
+      let el = document.createElement("div");
+      el.className = "enemy";
+      gameContainer.appendChild(el);
+      let enemy = new Enemy(el);
+      enemy.setPos(platform.x + 20, platform.y - 200);
+      this.game.addEnemy(enemy);
+  }
+
+  spawnPlatforms(){
+    let platformsPosition = (Math.floor(Math.random() * 1000) + 1920);
+    let platforms = Math.random() * 5;
+    let platformsHeight = Math.floor(Math.random() * this.platformHeights.length);
+    for (var i = 0; i <= platforms; i++) {
+      let platform = this.createObject("platform");
+      platform.setPos(platformsPosition + (platform.width - 5) * i, this.platformHeights[platformsHeight]);
+      this.game.addObject(platform);
+      if(Math.random() * 100 <= 30) this.spawnEnemy(platform);
+    }
+  }
+
+  createObject(name){
+    let element = document.createElement("div");
+    element.className = name;
+    gameContainer.appendChild(element);
+    return new GameObject(element, true);
+  }
+}
+
 let defaultScale = .75;
 let gameContainer = document.getElementById('game-container');
 let scale = window.innerWidth / 1920;
 gameContainer.style.transform = "scale(" + defaultScale * scale + ")";
 let game = new Game();
-
-
-game.addEnemy(new Enemy(document.getElementsByClassName('enemy')[0], false));
-
-for (var i = -5; i < 50; i++) {
-  let floor = document.createElement("div");
-  floor.className = "floor";
-  gameContainer.appendChild(floor);
-  let go = new GameObject(floor, true);
-  go.x = 1000;
-  go.setPos(go.x + ((go.width - 100) * i), go.y);
-
-  game.addObject(go);
-}

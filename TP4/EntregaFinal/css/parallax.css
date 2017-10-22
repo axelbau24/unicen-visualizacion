@@ -39,5 +39,5 @@
 
 @keyframes moving-images {
   0%  {left:0px;}
-  /*100%   {left:-999999px;}*/
+  100%   {left:-999999px;}
 }
