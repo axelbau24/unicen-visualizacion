@@ -70,8 +70,15 @@ body{
 
 .enemy{
   position: absolute;
-  width: 117px;
+  width: 70px;
   height: 127px;
+}
+
+.hp-flask{
+  width: 70px;
+  height: 70px;
+  position: relative;
+  background: url("../images/hp_flask.png");
 }
 
 .floor{
