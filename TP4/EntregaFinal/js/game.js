@@ -90,7 +90,7 @@ class GameObject {
     if(!this.staticObject) {
       this.velocity.y = 7;
     }
-    this.setPos(this.x - 1.7 * Game.deltaTime);
+    // this.setPos(this.x - 1.7 * Game.deltaTime);
   }
   setPos(x, y){
     if(x){
@@ -184,6 +184,7 @@ class Player extends Entity{
     this.jumping = false;
     this.falling = false;
     this.attacking = false;
+    this.healthBar = document.getElementById("health-bar");
 
     document.addEventListener("keydown", (e) => { this.keyDown(e) });
     document.addEventListener("keyup", (e) => { this.keyUp(e) });
@@ -216,6 +217,7 @@ class Player extends Entity{
 
   update(){
     super.update();
+    this.healthBar.style.width = this.health + "%";
     if(!this.attacking){
       this.move();
       this.jump();
@@ -275,24 +277,23 @@ class Player extends Entity{
 class Enemy extends Entity {
   constructor(element) {
     super(element);
-    this.attacking = false;
 
-    this.element.addEventListener("animationend", () => {
+    this.element.addEventListener("animationiteration", () => {
       this.attacking = false;
     });
   }
 
   update(){
     super.update();
-
     let distance = this.x - Game.player.x;
-
     if(!this.attacking){
-      this.setSize(117, 127, false);
-      this.setAnimation("enemy_0_idle", 23, 0.9);
       if(Math.abs(distance) <= 200 ) this.attack();
       else if(Math.abs(distance) <= 600) this.move(distance);
-      else this.velocity.x = 0;
+      else {
+        this.velocity.x = 0;
+        this.setSize(117, 127, false);
+        this.setAnimation("enemy_0_idle", 23, 0.9);
+      }
     }
 
   }
@@ -312,7 +313,7 @@ class Enemy extends Entity {
 
   attack(){
     this.setSize(235, 162, false);
-    this.setAnimation("enemy_0_attack", 21, 0.9, 1);
+    this.setAnimation("enemy_0_attack", 21, 0.9);
     this.setOffset(0, -30);
     this.attacking = true;
     Game.player.takeDamage(20);

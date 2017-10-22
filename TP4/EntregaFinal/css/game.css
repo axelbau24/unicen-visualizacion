@@ -50,10 +50,23 @@ body{
   100% { background-position: -2227px}
 }
 @keyframes enemy_0_attack {
-
   100% { background-position: -4935px }
 }
 
+.health-bar-container{
+    width: 317px;
+  	height: 35px;  /* Can be anything */
+  	position: relative;
+  	background: url("../images/health_empty.png");
+
+}
+.health-bar-container > span {
+  display: block;
+  height: 100%;
+  background: url("../images/health_full.png");
+  position: relative;
+  overflow: hidden;
+}
 
 .enemy{
   position: absolute;
@@ -61,10 +74,7 @@ body{
   left: 1000px;
   width: 117px;
   height: 127px;
-  /*background: url("../images/animations/enemy_0_run.png");
-  animation: enemy_0_run 0.9s steps(17) infinite;*/
 }
-
 
 .floor{
   position: absolute;
@@ -83,20 +93,4 @@ body{
   left:1200px;
   height: 100px;
   background-color: red;
-}
-#cube2{
-  position: absolute;
-  width: 50px;
-  top: 0px;
-  left:-100%;
-  height: 100px;
-  background-color: blue;
-}
-#cube3{
-  position: absolute;
-  width: 50px;
-  top: 0px;
-  left:300px;
-  height: 100px;
-  background-color: blue;
 }
