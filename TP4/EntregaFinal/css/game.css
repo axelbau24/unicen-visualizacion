@@ -70,8 +70,6 @@ body{
 
 .enemy{
   position: absolute;
-  /*top: 80px;
-  left: 1000px;*/
   width: 117px;
   height: 127px;
 }
@@ -94,11 +92,11 @@ body{
   background: url("../images/platform.png");
 }
 
-#cube{
+.cube{
   position: absolute;
   width: 50px;
   top: 0px;
   left:1200px;
-  height: 100px;
+  height: 500px;
   background-color: red;
 }

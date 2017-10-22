@@ -79,7 +79,6 @@ class GameObject {
     this.width = parseFloat(this.getCSSProperty("width"));
     this.height = parseFloat(this.getCSSProperty("height"));
     this.velocity = new Point(0, 0);
-    this.collision = new Point(false, false);
     this.scale = 1;
 
   }
@@ -132,34 +131,32 @@ class GameObject {
   }
 
   checkCollision(gameObject, pos){
+    if(pos == 0){
+      this.y += this.velocity.y * Game.deltaTime;
+      this.x += this.velocity.x * Game.deltaTime;
+    }
 
     if(!this.staticObject && gameObject != this){
 
-      if(!this.collision.y) {
-        this.y += this.velocity.y * Game.deltaTime;
-        this.collision.y = true;
-      }
-      if(this.areColliding(this, gameObject)){
-        this.y = this.y - this.velocity.y * Game.deltaTime;
-      }
+      let vX = (this.x + (this.width / 2)) - (gameObject.x + (gameObject.width / 2));
+      let vY = (this.y + (this.height / 2)) - (gameObject.y + (gameObject.height / 2));
+      let hWidths = (this.width / 2) + (gameObject.width / 2);
+      let hHeights = (this.height / 2) + (gameObject.height / 2);
 
-      if(!this.collision.x) {
-        this.x += this.velocity.x * Game.deltaTime;
-        this.collision.x = true;
+      if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+        let oX = hWidths - Math.abs(vX);
+        let oY = hHeights - Math.abs(vY);
+        if (oX >= oY) {
+          if (vY > 0) this.y += oY;
+          else this.y -= oY;
+        }
+        else {
+          if (vX > 0) this.x += oX;
+          else this.x -= oX;
+        }
       }
-
-      if(this.areColliding(this, gameObject)){
-        this.x = this.x - this.velocity.x * Game.deltaTime;
-      }
+      if(pos == Game.objectCount - 1) this.setPos(this.x, this.y);
     }
-    if(pos == Game.objectCount - 1){
-      this.collision = new Point(false, false);
-      this.setPos(this.x, this.y);
-    }
-  }
-
-  areColliding(a, b){
-    return !(((a.y + a.height) < (b.y)) || (a.y > (b.y + b.height)) || ((a.x + a.width) < b.x) || (a.x > (b.x + b.width)));
   }
 
 }
@@ -319,7 +316,7 @@ class Enemy extends Entity {
     this.setAnimation("enemy_0_attack", 21, 0.9);
     this.setOffset(0, -30);
     this.attacking = true;
-    Game.player.takeDamage(20);
+    Game.player.takeDamage(10);
   }
 
 
@@ -351,12 +348,12 @@ class WorldGeneration {
   }
 
   spawnEnemy(platform){
-      let el = document.createElement("div");
-      el.className = "enemy";
-      gameContainer.appendChild(el);
-      let enemy = new Enemy(el);
-      enemy.setPos(platform.x + 20, platform.y - 200);
-      this.game.addEnemy(enemy);
+    let el = document.createElement("div");
+    el.className = "enemy";
+    gameContainer.appendChild(el);
+    let enemy = new Enemy(el);
+    enemy.setPos(platform.x + 20, platform.y - 200);
+    this.game.addEnemy(enemy);
   }
 
   spawnPlatforms(){
