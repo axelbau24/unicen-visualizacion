@@ -73,12 +73,19 @@ body{
   width: 70px;
   height: 127px;
 }
-
-.hp-flask{
+.healthUp , .damageUp, .scoreUp{
   width: 70px;
   height: 70px;
-  position: relative;
-  background: url("../images/hp_flask.png");
+  position: absolute;
+}
+.healthUp{
+  background: url("../images/consumables/hp_flask.png");
+}
+.damageUp{
+  background: url("../images/consumables/damage.png");
+}
+.scoreUp{
+  background: url("../images/consumables/score.png");
 }
 
 .floor{
@@ -94,16 +101,17 @@ body{
 
 .platform{
   position: absolute;
-  width: 122px;
+  width: 0px;
   height: 40px;
-  background: url("../images/platform.png");
+  background: url("../images/platform.png") round 0 0;
 }
-
-.cube{
+.score-container{
   position: absolute;
-  width: 50px;
-  top: 0px;
-  left:1200px;
-  height: 500px;
-  background-color: red;
+  right: 0;
+  top: 0;
+  font-size: 30px;
+  width: 250px;
+  text-align: right;
+  height: 35px;
+  padding: 10px 10px;
 }

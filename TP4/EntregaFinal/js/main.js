@@ -1,13 +1,6 @@
 let defaultScale = .75;
+let defaultWidth = 1920;
 let gameContainer = document.getElementById('game-container');
-let scale = window.innerWidth / 1920;
+let scale = window.innerWidth / defaultWidth;
 gameContainer.style.transform = "scale(" + defaultScale * scale + ")";
 let game = new Game();
-
-
-let element = document.createElement("div");
-element.className = "hp-flask";
-gameContainer.appendChild(element);
-go = new GameObject(element, true);
-game.addObject(go);
-go.setPos(700, 100);

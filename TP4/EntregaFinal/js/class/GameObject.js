@@ -1,6 +1,7 @@
 class GameObject {
-  constructor(element, staticObject = false) {
+  constructor(element, staticObject = false, reactToCollisions = true) {
     this.element = element;
+    this.reactToCollisions = reactToCollisions;
     this.staticObject = staticObject;
     this.x = parseFloat(this.getCSSProperty("left"));
     this.y = parseFloat(this.getCSSProperty("top"));
@@ -60,28 +61,30 @@ class GameObject {
   }
 
   checkCollision(gameObject, pos){
-    if(pos == 0){
-      this.y += this.velocity.y * Game.deltaTime;
-      this.x += this.velocity.x * Game.deltaTime;
-    }
+    if(this.reactToCollisions && !this.staticObject){
+      if(pos == 0){
+        this.y += this.velocity.y * Game.deltaTime;
+        this.x += this.velocity.x * Game.deltaTime;
+      }
 
-    if(!this.staticObject && gameObject != this){
+      if(gameObject != this && gameObject.reactToCollisions){
 
-      let vX = (this.x + (this.width / 2)) - (gameObject.x + (gameObject.width / 2));
-      let vY = (this.y + (this.height / 2)) - (gameObject.y + (gameObject.height / 2));
-      let hWidths = (this.width / 2) + (gameObject.width / 2);
-      let hHeights = (this.height / 2) + (gameObject.height / 2);
+        let vX = (this.x + (this.width / 2)) - (gameObject.x + (gameObject.width / 2));
+        let vY = (this.y + (this.height / 2)) - (gameObject.y + (gameObject.height / 2));
+        let hWidths = (this.width / 2) + (gameObject.width / 2);
+        let hHeights = (this.height / 2) + (gameObject.height / 2);
 
-      if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
-        let oX = hWidths - Math.abs(vX);
-        let oY = hHeights - Math.abs(vY);
-        if (oX >= oY) {
-          if (vY > 0) this.y += oY;
-          else this.y -= oY;
-        }
-        else {
-          if (vX > 0) this.x += oX;
-          else this.x -= oX;
+        if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+          let oX = hWidths - Math.abs(vX);
+          let oY = hHeights - Math.abs(vY);
+          if (oX >= oY) {
+            if (vY > 0) this.y += oY;
+            else this.y -= oY;
+          }
+          else {
+            if (vX > 0) this.x += oX;
+            else this.x -= oX;
+          }
         }
       }
       if(pos == Game.objectCount - 1) this.setPos(this.x, this.y);

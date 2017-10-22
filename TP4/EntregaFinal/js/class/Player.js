@@ -5,6 +5,7 @@ class Player extends Entity{
     this.jumping = false;
     this.falling = false;
     this.attacking = false;
+    this.damage = 50;
     this.healthBar = document.getElementById("health-bar");
 
     document.addEventListener("keydown", (e) => { this.keyDown(e) });
@@ -50,7 +51,7 @@ class Player extends Entity{
     if(this.pressedKeys[70] && !this.attacking){
       this.attacking = true;
       let e = game.findEnemy(this);
-      if(e) e.takeDamage(50);
+      if(e) e.takeDamage(this.damage);
     }
     if(this.attacking){
       this.setSize(304, 146, false);

@@ -3,16 +3,20 @@ class Game {
   constructor() {
     this.gameObjects = [];
     this.enemies = [];
-    Game.instance = this;
+    Game.objectCount = 0;
     Game.deltaTime = 1;
+    Game.player = new Player(document.getElementById('player'));
+    this.screenScore = document.getElementById('score');
+    Game.score = 0;
     this.lastUpdate = Date.now();
     this.worldGeneration = new WorldGeneration(this);
 
-    Game.player = new Player(document.getElementById('player'));
     this.addObject(Game.player);
     setInterval( () => { game.update(); }, 0);
   }
   update() {
+    Game.score += Game.deltaTime / 100;
+    this.screenScore.innerHTML = Math.floor(Game.score);
     this.worldGeneration.update();
     this.setDeltaTime();
 
@@ -70,5 +74,3 @@ class Game {
     }
   }
 }
-Game.objectCount = 0;
-Game.instance = null;
