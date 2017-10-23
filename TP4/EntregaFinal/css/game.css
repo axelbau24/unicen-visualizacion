@@ -155,5 +155,13 @@ img{
   background-color: rgba(163, 163, 163, 0.5);
   right: 0;
   margin-right: 1%;
-  top: 81px;
+  top: 86px;
+}
+.side-logo{
+  width: 70px;
+
+  vertical-align: middle;
+}
+h1, .controls-title, h3{
+  text-shadow: 2px 2px 7px black;
 }
