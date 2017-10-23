@@ -130,3 +130,30 @@ body{
   height: 35px;
   padding: 10px 10px;
 }
+
+img{
+  width: 50%;
+}
+
+.controls-title{
+  height: 25px;
+  width: 100%;
+  background-color: rgba(200, 200, 200, 0.2);
+  font-size: 24px;
+  padding: 10px 0 10px;
+  border-radius: 10px 10px 0 0;
+
+}
+.controls-body{
+  padding-bottom: 10px;
+}
+
+.controls{
+  border-radius: 10px;
+  position: absolute;
+  width: 22%;
+  background-color: rgba(163, 163, 163, 0.5);
+  right: 0;
+  margin-right: 1%;
+  top: 81px;
+}

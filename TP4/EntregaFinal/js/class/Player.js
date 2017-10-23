@@ -1,7 +1,7 @@
 class Player extends Entity{
   constructor(element) {
     super(element);
-    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false, 38: false};
+    this.pressedKeys = {68: false, 39: false, 65: false, 37: false, 32: false, 70: false, 38: false, 13: false};
     this.jumping = false;
     this.falling = false;
     this.attacking = false;
@@ -55,7 +55,7 @@ class Player extends Entity{
   }
 
   attack(){
-    if(this.pressedKeys[70] && !this.attacking){
+    if((this.pressedKeys[70] || this.pressedKeys[13]) && !this.attacking){
       this.attacking = true;
       let e = game.findEnemy(this);
       if(e) {
