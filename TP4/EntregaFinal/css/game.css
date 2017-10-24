@@ -16,7 +16,10 @@
   background-color: rgba(122,122,122, 0.4);
   z-index: 1500;
 }
-
+#start-background, #gameover{
+  display: flex;
+  align-items: center; 
+}
 
 #gameover{
   opacity: 0;
@@ -163,7 +166,7 @@ img{
   background-color: rgba(200, 200, 200, 0.2);
   font-size: 24px;
   padding: 10px 0 10px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 5px 5px 0 0;
 
 }
 .controls-body{
@@ -171,12 +174,7 @@ img{
 }
 
 .controls{
-  border-radius: 10px;
-  position: absolute;
-  width: 22%;
-  background-color: rgba(163, 163, 163, 0.5);
-  right: 0;
-  margin-right: 1%;
+  
   top: 86px;
 }
 .side-logo{
@@ -184,7 +182,7 @@ img{
 
   vertical-align: middle;
 }
-h1, .controls-title, h3, .score-container{
+h1, .controls-title, h3, .score-container, h2{
   text-shadow: 2px 2px 7px black;
 }
 .btn{
@@ -205,8 +203,28 @@ h1, .controls-title, h3, .score-container{
   background-color: #c1c1c1;
 }
 .message-container{
+  width: 100%;
+}
+
+.panel{
+  margin-bottom: 10px;
+  background-color: rgba(163, 163, 163, 0.5);
+  border-radius: 5px;  
+}
+
+.right-column{
+  margin-right: 1%;
+  top: 86px;
+  right: 0;
+  width: 22%;
   position: absolute;
-  bottom: 0;
-  left: 42%;
-  margin-bottom: 25%;
+}
+
+.restartPanel{
+  margin-right: 1%;
+  padding: 10px 0 10px 0;
+  top: 60%;
+}
+.restartPanel .btn {
+  font-size: 18px;
 }

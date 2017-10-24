@@ -12,6 +12,7 @@ class Game {
     this.screenScore = document.getElementById('score');
     Game.score = 0;
     Game.finished = false;
+    this.startTime = 0;
     this.lastUpdate = 0;
     this.worldGeneration = new WorldGeneration(this);
     this.started = false;
@@ -33,23 +34,29 @@ class Game {
         }
       }
     }
-    else this.stopGame()
+    else this.stopGame();
   }
 
   stopGame(){
      clearInterval(this.gameLoop);
-     gameoverScreen.className = "gameover-background";
-     gameoverScreen.style.opacity = 1;
+     if(this.finished){
+       gameoverScreen.className = "gameover-background";
+       gameoverScreen.style.opacity = 1;
+     }
      setTimeout(() => {
        for (var i = 0; i < this.gameObjects.length; i++) {
            this.clearElement(this.gameObjects[i].element);
        }
-     }, 1000);
+       this.gameObjects = [];
+     }, this.finished ? 1000 : 0);
   }
 
   setDeltaTime(){
     let now = Date.now();
-    if(this.lastUpdate == 0) this.lastUpdate = now;
+    if(this.lastUpdate == 0) {
+      this.lastUpdate = now;
+      this.startTime = now;
+    }
     Game.deltaTime = (now - this.lastUpdate) / 10;
     this.lastUpdate = now;
   }

@@ -5,6 +5,8 @@ class Enemy extends Entity {
     this.element.addEventListener("animationiteration", () => {
       this.attacking = false;
     });
+    this.multiplier = 1 + (Date.now() - game.startTime) / 100000;
+    this.health *= this.multiplier;
   }
 
 
@@ -23,7 +25,7 @@ class Enemy extends Entity {
       }
     }
     if(this.health <= 0) {
-      let reward = 200;
+      let reward = Math.floor(200 * this.multiplier);
       Game.player.createFeedback("+" + reward + " puntos", 0);
       Game.score += reward;
     }
@@ -49,6 +51,6 @@ class Enemy extends Entity {
     this.setOffset(0, -30);
     this.attacking = true;
     this.velocity.x = 0;
-    Game.player.takeDamage(5);
+    Game.player.takeDamage(5 * this.multiplier);
   }
 }

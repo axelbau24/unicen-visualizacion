@@ -1,7 +1,7 @@
 let defaultScale = .75;
 let defaultWidth = 1920;
 let startBtn = document.getElementById("start-btn");
-let restartBtn = document.getElementById("restart");
+let restartBtns = document.getElementsByClassName("restart");
 let gameoverScreen = document.getElementById("gameover");
 let gameContainer = document.getElementById('game-container');
 let parallaxLayers = document.querySelectorAll('.layer');
@@ -19,12 +19,16 @@ startBtn.onclick = function () {
   }
 }
 
-restartBtn.onclick = function () {
-  for (var i = 0; i < parallaxLayers.length; i++) {
-    parallaxLayers[i].style.webkitAnimationPlayState = 'paused';
-  }
-  gameoverScreen.className = null;
-  gameoverScreen.style.opacity = 0;
-  startScreenContainer.style.opacity = 1;
-  game = new Game();
+for (var i = 0; i < restartBtns.length; i++) {
+  restartBtns[i].onclick = function () {
+    game.stopGame();
+    for (var i = 0; i < parallaxLayers.length; i++) {
+      parallaxLayers[i].style.webkitAnimationPlayState = 'paused';
+    }
+    gameoverScreen.className = null;
+    gameoverScreen.style.opacity = 0;
+    startScreenContainer.style.opacity = 1;
+    game = new Game();
+  };
+  
 }
