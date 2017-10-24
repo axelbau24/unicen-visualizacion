@@ -6,32 +6,7 @@
   border-radius: 15px;
 }
 
-#start-background, #game-container, .gameover-background{
-  height: 1080px;
-  width: 1920px;
-}
-#start-background{
-  top: 0;
-  position: absolute;
-  background-color: rgba(122,122,122, 0.4);
-  z-index: 1500;
-}
-#start-background, #gameover{
-  display: flex;
-  align-items: center; 
-}
 
-#gameover{
-  opacity: 0;
-}
-
-.gameover-background {
-  position: absolute;
-  top: 0;
-  background-color: black;
-  transition: all 1s;
-  z-index: 50000;
-}
 
 body{
   background: url("../images/background.jpg") no-repeat center center fixed;
@@ -49,6 +24,7 @@ body{
   left: 250px;
   top: 726px;
   animation-fill-mode: forwards;
+  z-index: 100;
 }
 
 
@@ -110,7 +86,8 @@ body{
 
 .enemy{
   position: absolute;
-  width: 85px;
+  width: 150px;
+  margin-left: 60px;
   height: 127px;
 }
 .healthUp , .damageUp, .scoreUp{
@@ -150,81 +127,12 @@ body{
   right: 0;
   top: 0;
   font-size: 30px;
-  width: 250px;
+  width: 500px;
   text-align: right;
   height: 35px;
   padding: 10px 10px;
 }
 
-img{
-  width: 50%;
-}
-
-.controls-title{
-  height: 25px;
-  width: 100%;
-  background-color: rgba(200, 200, 200, 0.2);
-  font-size: 24px;
-  padding: 10px 0 10px;
-  border-radius: 5px 5px 0 0;
-
-}
-.controls-body{
-  padding-bottom: 10px;
-}
-
-.controls{
-  
-  top: 86px;
-}
-.side-logo{
-  width: 70px;
-
-  vertical-align: middle;
-}
 h1, .controls-title, h3, .score-container, h2{
   text-shadow: 2px 2px 7px black;
-}
-.btn{
-  z-index: 5640;
-  position: relative;
-}
-.btn {
-  font-size: 24px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: white;
-  border: none;
-}
-.btn:hover {
-  background-color: #e5e5e5;
-}
-.btn:active {
-  background-color: #c1c1c1;
-}
-.message-container{
-  width: 100%;
-}
-
-.panel{
-  margin-bottom: 10px;
-  background-color: rgba(163, 163, 163, 0.5);
-  border-radius: 5px;  
-}
-
-.right-column{
-  margin-right: 1%;
-  top: 86px;
-  right: 0;
-  width: 22%;
-  position: absolute;
-}
-
-.restartPanel{
-  margin-right: 1%;
-  padding: 10px 0 10px 0;
-  top: 60%;
-}
-.restartPanel .btn {
-  font-size: 18px;
 }

@@ -39,7 +39,7 @@ class ScoreConsumable extends Consumable{
     super(element, className);
   }
   activate(){
-    let sc = 50;
+    let sc = 100;
     Game.player.createFeedback("+" + sc + " puntos");
     Game.score += sc;
   }

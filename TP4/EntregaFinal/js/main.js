@@ -28,7 +28,7 @@ for (var i = 0; i < restartBtns.length; i++) {
     gameoverScreen.className = null;
     gameoverScreen.style.opacity = 0;
     startScreenContainer.style.opacity = 1;
-    game = new Game();
+    game = new Game(game.highscore);
   };
   
 }

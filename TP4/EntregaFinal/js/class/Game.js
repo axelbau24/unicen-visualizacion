@@ -1,6 +1,6 @@
 class Game {
 
-  constructor() {
+  constructor(highscore = 0) {
     this.gameObjects = [];
     this.enemies = [];
     Game.objectCount = 0;
@@ -10,7 +10,9 @@ class Game {
     player.id = "player";
     Game.player = new Player(player);
     this.screenScore = document.getElementById('score');
+    this.screenHighscore = document.getElementById('record');
     Game.score = 0;
+    this.highscore = highscore;
     Game.finished = false;
     this.startTime = 0;
     this.lastUpdate = 0;
@@ -22,8 +24,7 @@ class Game {
   update() {
     if(!this.finished){
       this.setDeltaTime();
-      Game.score += (Game.deltaTime / 100) * 2;
-      this.screenScore.innerHTML = Math.floor(Game.score);
+      this.updateScore();
       this.worldGeneration.update();
 
       for (var i = 0; i < this.gameObjects.length; i++) {
@@ -35,6 +36,15 @@ class Game {
       }
     }
     else this.stopGame();
+  }
+
+  updateScore(){
+    Game.score += (Game.deltaTime / 100) * 2;
+    this.screenScore.innerHTML = Math.floor(Game.score);
+    if(Game.score >= this.highscore) {
+      this.highscore = Game.score;
+      this.screenHighscore.innerHTML = Math.floor(this.highscore);
+    }
   }
 
   stopGame(){
@@ -90,8 +100,8 @@ class Game {
 
   findEnemy(player){
     for (var i = 0; i < this.enemies.length; i++) {
-      let distance = Math.sqrt(Math.pow(this.enemies[i].x - player.x, 2) + Math.pow(this.enemies[i].y - player.y, 2));
-      if(distance <= 200){
+      let distance = Math.sqrt(Math.pow(this.enemies[i].x - player.x, 2) + Math.pow(this.enemies[i].y - this.enemies[i].height - player.y, 2));
+      if(distance <= 250){
         return this.enemies[i];
       }
     }
