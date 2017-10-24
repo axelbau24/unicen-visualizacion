@@ -1,10 +1,3 @@
-.layer-0, .layer-front, .layer-1, .layer-2, .layer-3, .layer-4{
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-}
 .layer-front {
   background:url('../images/parallax/layer_front.png') repeat-x;
   animation: moving-images 6000s linear infinite;
@@ -40,4 +33,13 @@
 @keyframes moving-images {
   0%  {left:0px;}
   100%   {left:-999999px;}
+}
+
+.layer-0, .layer-front, .layer-1, .layer-2, .layer-3, .layer-4{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  animation-play-state: paused;
 }

@@ -2,6 +2,8 @@ window.onload = function () {
   setTimeout(function () {
     let loader = document.getElementById('loader');
     loader.className = "loaded";
-    //document.body.removeChild(loader);
-  },1500);
+    setTimeout(function () {
+      document.body.removeChild(loader);
+    }, 1200);
+  },500);
 }

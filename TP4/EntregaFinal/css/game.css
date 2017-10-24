@@ -1,11 +1,20 @@
 #game-container{
-  height: 1080px;
-  width: 1920px;
   position: relative;
   overflow:hidden;
   transform-origin: top left;
   border: 7px double #4d7756;
   border-radius: 15px;
+}
+
+#start-background, #game-container{
+  height: 1080px;
+  width: 1920px;
+}
+#start-background{
+  top: 0;
+  position: absolute;
+  background-color: rgba(122,122,122, 0.4);
+  z-index: 1500;
 }
 
 body{
@@ -162,6 +171,24 @@ img{
 
   vertical-align: middle;
 }
-h1, .controls-title, h3{
+h1, .controls-title, h3, .score-container{
   text-shadow: 2px 2px 7px black;
+}
+.btn{
+  z-index: 5640;
+  position: relative;
+}
+#start-btn {
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  border: none;
+  margin-top: 25%;
+}
+#start-btn:hover {
+  background-color: #e5e5e5;
+}
+#start-btn:active {
+  background-color: #c1c1c1;
 }

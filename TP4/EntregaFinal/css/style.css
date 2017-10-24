@@ -5,7 +5,7 @@
   top: 0;
   overflow: hidden;
   position: absolute;
-  z-index: 5000;
+  z-index: 50000;
   background-color: black;
 }
 @keyframes spin {
@@ -28,10 +28,7 @@
   animation: spin .7s linear infinite;
 }
 .loaded {
-  -webkit-transform: translateY(-100%);
-  -ms-transform: translateY(-100%);
-  transform: translateY(-100%);
-
-  -webkit-transition: all 0.5s 1s ease-out;
-  transition: all 0.5s 1s ease-out;
+  opacity: 0;
+  -webkit-transition: all 0.2s 1s ease-out;
+  transition: all 0.2s 1s ease-out;
 }

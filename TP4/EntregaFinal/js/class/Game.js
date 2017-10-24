@@ -8,28 +8,32 @@ class Game {
     Game.player = new Player(document.getElementById('player'));
     this.screenScore = document.getElementById('score');
     Game.score = 0;
-    this.lastUpdate = Date.now();
+    this.lastUpdate = 0;
     this.worldGeneration = new WorldGeneration(this);
+    this.started = false;
 
     this.addObject(Game.player);
     setInterval( () => { game.update(); }, 0);
   }
   update() {
-    Game.score += (Game.deltaTime / 100) * 2;
-    this.screenScore.innerHTML = Math.floor(Game.score);
-    this.worldGeneration.update();
-    this.setDeltaTime();
+    if(this.started){
+      this.setDeltaTime();
+      Game.score += (Game.deltaTime / 100) * 2;
+      this.screenScore.innerHTML = Math.floor(Game.score);
+      this.worldGeneration.update();
 
-    for (var i = 0; i < this.gameObjects.length; i++) {
-      let gameObject = this.gameObjects[i];
-      gameObject.update();
-      for (var j = 0; j < this.gameObjects.length; j++) {
-        gameObject.checkCollision(this.gameObjects[j], j);
+      for (var i = 0; i < this.gameObjects.length; i++) {
+        let gameObject = this.gameObjects[i];
+        gameObject.update();
+        for (var j = 0; j < this.gameObjects.length; j++) {
+          gameObject.checkCollision(this.gameObjects[j], j);
+        }
       }
     }
   }
   setDeltaTime(){
     let now = Date.now();
+    if(this.lastUpdate == 0) this.lastUpdate = now;
     Game.deltaTime = (now - this.lastUpdate) / 10;
     this.lastUpdate = now;
   }

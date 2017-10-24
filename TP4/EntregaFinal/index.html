@@ -11,19 +11,22 @@
     <div id="loader">
       <div class="loading-icon"></div>
     </div>
-    <div>
       <h1><img class="side-logo"src="images/side_logo.png" alt="">Juego side-scroller</h1>
         <div id="game-container">
-          <div class="layer-0"></div>
-          <div class="layer-1"></div>
-          <div class="layer-2"></div>
-          <div class="layer-3"></div>
-          <div class="layer-4"></div>
-          <div class="layer-front"></div>
+          <div class="layer layer-0"></div>
+          <div class="layer layer-1"></div>
+          <div class="layer layer-2"></div>
+          <div class="layer layer-3"></div>
+          <div class="layer layer-4"></div>
+          <div class="layer layer-front"></div>
           <div id="player"></div>
           <div class="health-bar-container"><span id="health-bar"></span></div>
           <div class="score-container">Puntaje: <span id="score">0</span></div>
-          <div class="platform"></div>
+
+          <div id="start-background">
+            <button class="btn" id="start-btn" type="button" name="button">Iniciar juego</button>
+          </div>
+
         </div>
         <div class="controls">
           <div class="controls-title">
@@ -37,8 +40,6 @@
 
           </div>
         </div>
-    </div>
-
     <script type="text/javascript" src="js/pageLoad.js"></script>
     <script type="text/javascript" src="js/class/GameObject.js"></script>
     <script type="text/javascript" src="js/class/Entity.js"></script>
