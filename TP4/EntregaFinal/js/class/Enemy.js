@@ -48,6 +48,7 @@ class Enemy extends Entity {
     this.setAnimation("enemy_0_attack", 21, 0.9);
     this.setOffset(0, -30);
     this.attacking = true;
-    Game.player.takeDamage(10);
+    this.velocity.x = 0;
+    Game.player.takeDamage(5);
   }
 }

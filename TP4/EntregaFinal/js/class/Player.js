@@ -7,7 +7,6 @@ class Player extends Entity{
     this.attacking = false;
     this.damage = 50;
     this.healthBar = document.getElementById("health-bar");
-
     document.addEventListener("keydown", (e) => { this.keyDown(e) });
     document.addEventListener("keyup", (e) => { this.keyUp(e) });
     this.element.addEventListener("animationend", () => {
@@ -19,6 +18,7 @@ class Player extends Entity{
       this.setAnimation(null);
       this.attacking = false;
     });
+    this.update();
   }
 
   keyDown(e){
@@ -46,6 +46,7 @@ class Player extends Entity{
 
   update(){
     super.update();
+    if(this.health <= 0 || this.x + this.width < 0) game.finished = true;
     this.healthBar.style.width = this.health + "%";
     if(!this.attacking){
       this.move();

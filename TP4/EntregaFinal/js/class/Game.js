@@ -5,18 +5,21 @@ class Game {
     this.enemies = [];
     Game.objectCount = 0;
     Game.deltaTime = 1;
-    Game.player = new Player(document.getElementById('player'));
+    let player = document.createElement("div");
+    gameContainer.appendChild(player);
+    player.id = "player";
+    Game.player = new Player(player);
     this.screenScore = document.getElementById('score');
     Game.score = 0;
+    Game.finished = false;
     this.lastUpdate = 0;
     this.worldGeneration = new WorldGeneration(this);
     this.started = false;
-
     this.addObject(Game.player);
-    setInterval( () => { game.update(); }, 0);
+    this.gameLoop = setInterval( () => { if(this.started) this.update(); }, 0);
   }
   update() {
-    if(this.started){
+    if(!this.finished){
       this.setDeltaTime();
       Game.score += (Game.deltaTime / 100) * 2;
       this.screenScore.innerHTML = Math.floor(Game.score);
@@ -30,7 +33,20 @@ class Game {
         }
       }
     }
+    else this.stopGame()
   }
+
+  stopGame(){
+     clearInterval(this.gameLoop);
+     gameoverScreen.className = "gameover-background";
+     gameoverScreen.style.opacity = 1;
+     setTimeout(() => {
+       for (var i = 0; i < this.gameObjects.length; i++) {
+           this.clearElement(this.gameObjects[i].element);
+       }
+     }, 1000);
+  }
+
   setDeltaTime(){
     let now = Date.now();
     if(this.lastUpdate == 0) this.lastUpdate = now;
@@ -50,10 +66,15 @@ class Game {
     this.enemies.push(enemyObject);
     this.addObject(enemyObject);
   }
+
+  clearElement(gameObject){
+    gameContainer.removeChild(gameObject);
+  }
+
   destroy(obj){
     for (var i = 0; i < this.gameObjects.length; i++) {
       if(obj == this.gameObjects[i]){
-        gameContainer.removeChild(this.gameObjects[i].element);
+        this.clearElement(this.gameObjects[i].element);
         this.gameObjects.splice(i, 1);
         Game.objectCount--;
       }

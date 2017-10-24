@@ -6,7 +6,7 @@
   border-radius: 15px;
 }
 
-#start-background, #game-container{
+#start-background, #game-container, .gameover-background{
   height: 1080px;
   width: 1920px;
 }
@@ -15,6 +15,19 @@
   position: absolute;
   background-color: rgba(122,122,122, 0.4);
   z-index: 1500;
+}
+
+
+#gameover{
+  opacity: 0;
+}
+
+.gameover-background {
+  position: absolute;
+  top: 0;
+  background-color: black;
+  transition: all 1s;
+  z-index: 50000;
 }
 
 body{
@@ -31,7 +44,7 @@ body{
   width: 100px;
   height: 137px;
   left: 250px;
-  top: 400px;
+  top: 726px;
   animation-fill-mode: forwards;
 }
 
@@ -178,17 +191,22 @@ h1, .controls-title, h3, .score-container{
   z-index: 5640;
   position: relative;
 }
-#start-btn {
+.btn {
   font-size: 24px;
   padding: 10px;
   border-radius: 5px;
   background-color: white;
   border: none;
-  margin-top: 25%;
 }
-#start-btn:hover {
+.btn:hover {
   background-color: #e5e5e5;
 }
-#start-btn:active {
+.btn:active {
   background-color: #c1c1c1;
+}
+.message-container{
+  position: absolute;
+  bottom: 0;
+  left: 42%;
+  margin-bottom: 25%;
 }
