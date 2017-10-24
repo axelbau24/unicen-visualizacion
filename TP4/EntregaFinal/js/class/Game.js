@@ -88,10 +88,6 @@ class Game {
     }
   }
 
-  areColliding(a, b){
-     return !(((a.y + a.height) < (b.y)) || (a.y > (b.y + b.height)) || ((a.x + a.width) < b.x) || (a.x > (b.x + b.width)));
-  }
-
   findEnemy(player){
     for (var i = 0; i < this.enemies.length; i++) {
       let distance = Math.sqrt(Math.pow(this.enemies[i].x - player.x, 2) + Math.pow(this.enemies[i].y - player.y, 2));

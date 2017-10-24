@@ -64,6 +64,7 @@ class Player extends Entity{
       }
     }
     if(this.attacking){
+      if(this.scale < 0) this.setOffset(135,0);
       this.setSize(304, 146, false);
       this.setAnimation("player_attack", 24, .75, 1);
     }
@@ -71,6 +72,7 @@ class Player extends Entity{
 
   move(){
     if(this.velocity.x == 0) {
+      this.setOffset(0,0);
       this.setSize(135, 137, false);
       this.setAnimation("player_idle", 27, 2);
     }
@@ -90,6 +92,7 @@ class Player extends Entity{
   }
 
   jump(){
+    if((this.jumping || this.falling) && this.scale < 0) this.setOffset(60,0);
     if(this.jumping){
       this.velocity.y = -6;
       this.setSize(176, 137, false);

@@ -27,8 +27,8 @@ class WorldGeneration {
   }
 
   spawnRandom(element){
-    if(Math.random() * 100 <= 70) this.spawnEnemy(element);
-    if(Math.random() * 100 <= 70) this.spawnConsumable(element);
+    if(Math.random() * 100 <= 75) this.spawnEnemy(element);
+    if(Math.random() * 100 <= 75) this.spawnConsumable(element);
   }
 
   spawnConsumable(platform){

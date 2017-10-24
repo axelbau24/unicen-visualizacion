@@ -48,7 +48,8 @@ class Enemy extends Entity {
   attack(){
     this.setSize(235, 162, false);
     this.setAnimation("enemy_0_attack", 21, 0.9);
-    this.setOffset(0, -30);
+    if(this.scale > 0) this.setOffset(-100, -30);
+    else this.setOffset(0, -30);
     this.attacking = true;
     this.velocity.x = 0;
     Game.player.takeDamage(5 * this.multiplier);
