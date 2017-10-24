@@ -100,9 +100,10 @@ class Game {
 
   findEnemy(player){
     for (var i = 0; i < this.enemies.length; i++) {
-      let distance = Math.sqrt(Math.pow(this.enemies[i].x - player.x, 2) + Math.pow(this.enemies[i].y - this.enemies[i].height - player.y, 2));
-      if(distance <= 250){
-        return this.enemies[i];
+      let enemy = this.enemies[i];
+      let distance = Math.sqrt(Math.pow((enemy.x + enemy.width / 2) - (player.x + player.width / 2), 2) + Math.pow((enemy.y + enemy.height / 2) - (player.y + player.height / 2), 2));
+      if(distance <= 190){
+        return enemy;
       }
     }
   }

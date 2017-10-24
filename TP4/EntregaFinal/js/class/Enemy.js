@@ -13,10 +13,10 @@ class Enemy extends Entity {
 
   update(){
     super.update();
-
-    let distance = Math.sqrt(Math.pow(this.x - Game.player.x, 2) + Math.pow(this.y - Game.player.y, 2));
+    
+    let distance = Math.sqrt(Math.pow((this.x + this.width / 2) - (Game.player.x + Game.player.width / 2), 2) + Math.pow((this.y + this.height / 2) - (Game.player.y + Game.player.height / 2), 2));
     if(!this.attacking){
-      if(Math.abs(distance) <= 200) this.attack();
+      if(Math.abs(distance) <= 190) this.attack();
       else if(Math.abs(distance) <= 600) this.move();
       else {
         this.velocity.x = 0;

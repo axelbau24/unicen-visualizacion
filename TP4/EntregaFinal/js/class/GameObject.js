@@ -20,7 +20,7 @@ class GameObject {
     if(!this.staticObject) {
       this.velocity.y = 7;
     }
-    if(this.x + this.width < 0) game.destroy(this);
+    if(this.x + this.width + 200 < 0) game.destroy(this);
     this.setPos(this.x - 1.7 * Game.deltaTime);
   }
   setPos(x, y){

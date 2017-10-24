@@ -46,7 +46,7 @@ class Player extends Entity{
 
   update(){
     super.update();
-    if(this.health <= 0 || this.x + this.width < 0) game.finished = true;
+    if(this.health <= 0 || this.x + this.width + 100 < 0) game.finished = true;
     this.healthBar.style.width = this.health + "%";
     if(!this.attacking){
       this.move();

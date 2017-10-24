@@ -87,7 +87,7 @@ body{
 .enemy{
   position: absolute;
   width: 150px;
-  margin-left: 60px;
+  margin-left: 45px;
   height: 127px;
 }
 .healthUp , .damageUp, .scoreUp{
