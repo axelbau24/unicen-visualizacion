@@ -61,13 +61,8 @@ class Game {
     this.lastUpdate = now;
   }
   addObject(object){
-    let i = 0;
-    while(i < this.gameObjects.length && !this.areColliding(object, this.gameObjects[i])) i++;
-
-    if(i == this.gameObjects.length){
       this.gameObjects.push(object);
       Game.objectCount++;
-    }
   }
   addEnemy(enemyObject){
     this.enemies.push(enemyObject);
@@ -94,7 +89,6 @@ class Game {
   }
 
   areColliding(a, b){
-     if(a.staticObject || b.staticObject) return false;
      return !(((a.y + a.height) < (b.y)) || (a.y > (b.y + b.height)) || ((a.x + a.width) < b.x) || (a.x > (b.x + b.width)));
   }
 

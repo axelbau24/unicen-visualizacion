@@ -131,7 +131,7 @@ body{
 .floor{
   position: absolute;
   top: 80%;
-  width: 800px;
+  width: 1920px;
   left: 0;
   height: 420px;
   background: url("../images/floor_segment.png");
