@@ -2,18 +2,46 @@
   color: #00a4d3;
 }
 
-.fa-search{
-  border: 0;
-        background: none;
-        /** belows styles are working good */
-        padding: 2px 5px;
-        margin-top: 2px;
-        position: relative;
-        left: -28px;
-        /* IE7-8 doesn't have border-radius, so don't indent the padding */
-        margin-bottom: 0;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
+body{
+  background-color: #252830;
+  color: #d6d6d6;
+}
 
+.btn-search:hover{
+  background-color: #00799b;
+}
+
+.btn-search{
+  background-color: #00a4d3;
+  padding-top: 0;
+  border: none;
+  border-radius: 15px;
+  font-size: 24px;
+  
+}
+
+.btn-search:focus{
+  box-shadow: 0 0 0 0 rgba(0,123,255,0);
+}
+
+.input-search:focus{
+  box-shadow: 0 0 0 0 rgba(0,123,255,0);
+  border-color: #00a4d3;
+  background-color: #515563;
+}
+.input-search{
+  border-radius: 15px;
+  font-size: 24px;
+  background-color: #434857;
+}
+
+.input-search, .input-search:focus{
+  color: #9aa3ad;
+}
+.home{
+  margin-top: 12%;
+}
+.home-description{
+  font-size: 18px;
+  
 }

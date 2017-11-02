@@ -8,10 +8,22 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <h1><i class="fa fa-twitter" aria-hidden="true"></i>Twitter Images</h1>
-    <p>Buscador de imagenes en Twitter</p>
-    <input type="text" name="name" placeholder="Escribe un #hashtag">
-    <i class="fa fa-search" aria-hidden="true"></i>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center text-center home">
+          <div class="col-5">
+              <h1><i class="fa fa-twitter" aria-hidden="true"></i> Twitter Images</h1>
+              <p class="home-description">Buscador de imagenes en Twitter</p>
+              <div class="input-group">
+                <input type="search" class="form-control input-search border-right-0" placeholder="Escribe un #hashtag">
+                <span class="input-group-btn "><button class="btn btn-primary btn-search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    
+
     <script src="js/bootstrap.min.js" charset="utf-8"></script>
     <script src="js/codebird.js" charset="utf-8"></script>
     <script src="js/main.js" charset="utf-8"></script>
