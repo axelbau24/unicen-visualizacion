@@ -93,4 +93,5 @@ body{
 .linea{
   background-color: #d6d6d6;
   height: 5px;
+  border-radius: 5px;
 }
