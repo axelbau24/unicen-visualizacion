@@ -2,10 +2,6 @@
   color: #00a4d3;
 }
 
-.likes{
-  font-size: 20px;
-}
-
 .fa-heart-o{
   color: red;
 }
@@ -90,15 +86,17 @@ body{
   font-size: 35px;
   padding-left: 7px;
 }
+.fa-th-list:hover, .navbar-light .navbar-brand:hover{
+  color: #878787;
+}
 
 .linea{
   background-color: #d6d6d6;
   height: 5px;
   border-radius: 5px;
 }
-.image-row{
-  margin: 0 25px 0 25px;
-}
+
+/*******************************Layouts***************************/
 
 .grid {
   margin: 0 auto;
@@ -145,13 +143,9 @@ body{
   height: auto;
 }
 .big-image{
-  width: auto;
+  max-width: 50%;
 }
-.layout-2-container{
-  background-color: rgba(180, 180, 180, 0.21);
-  border-radius: 5px;
-  padding: 10px;
-}
+
 .dropdown {
   position: relative;
 }
@@ -175,4 +169,16 @@ body{
 }
 .list-group-item:hover{
   border-radius: 5px;
+}
+.like-box{
+  position: absolute;
+  height: 30px;
+  color: white;
+  border-top: 1px solid rgba(255, 255, 255, .42);
+  background-color:rgba(0, 0, 0, .42);
+  width: 100%;
+  bottom: 0;
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 5px;
 }
