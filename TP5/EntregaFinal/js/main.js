@@ -17,7 +17,6 @@ function llamado(hash,type){
       "search_tweets",
       params,
       function (reply) {
-        console.log(reply);
         for (var i = 0; i < reply.statuses.length; i++) {
           let tweet = reply.statuses[i];
           if(tweet.extended_entities && tweet.extended_entities.media[0].type == "photo"){
@@ -54,7 +53,7 @@ function mostrarImagenes(){
 llamado("#messi","popular");
 
 var $layout = $(".grid").masonry({
-  itemSelector: ".grid__item_layout_1",
+  itemSelector: ".grid__item_layout_" + layout,
   columnWidth: ".grid__sizer",
   gutter: 15,
   transitionDuration: 0,
@@ -62,3 +61,26 @@ var $layout = $(".grid").masonry({
  });
 
  
+$(".dropdown").on("click", function () {
+  $(".dropdown-content").toggleClass("d-none");
+});
+
+$(".layout-option").on("click", function () {
+  layout = $(this).data("id");
+
+  switch (layout) {
+    case 1:
+      $(".big-image-container").addClass("d-none");
+      $(".layout-grid").removeClass("col-4").addClass("col");
+      $(".grid__item_layout_2").removeClass("grid__item_layout_2").addClass("grid__item_layout_1");
+      break;
+  
+    case 2:
+      $(".big-image-container").removeClass("d-none");
+      $(".layout-grid").removeClass("col").addClass("col-4");
+      $(".grid__item_layout_1").removeClass("grid__item_layout_1").addClass("grid__item_layout_2");
+      
+      break;
+  }
+  $layout.masonry();
+});

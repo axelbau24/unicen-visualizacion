@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Twitter images</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -23,7 +23,18 @@
             </button>
           </span>
         </div>
-        <i class="fa fa-th-list" aria-hidden="true"></i>
+
+        <div class="dropdown">
+          <i class="fa fa-th-list" aria-hidden="true"></i>
+          <div class="dropdown-content d-none">
+            <div class="list-group">
+              <h3 class="text-center">Diseño</h3>
+              <a href="#" data-id="1" class="list-group-item list-group-item-action text-center layout-option">Grilla</a>
+              <a href="#" data-id="2" class="list-group-item list-group-item-action text-center layout-option">Individual</a>
+            </div>
+          </div>
+        </div>
+
       </form>
     </nav>
     <div class="row">
@@ -37,68 +48,76 @@
       </div>
     </div>
 
-
+    <!-- Estructura del layout -->
     <div class="row images-container justify-content-md-center">
-        <div class="col">
-            <section class="gallery bg-faded">
-              <div class="grid">
-                <a href="#" class="grid__sizer"></a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-                <a href="#" class="grid__item_layout_1 img-container">
-                  <div class="item__overlay"> </div>
-                  <img src="images/default.png" class="image" />
-                </a>
-              </div>
-            </section>
+      <!-- Parte del layout 2 -->
+      <div class="col-8 img-container big-image-container d-none">
+        <div class=" layout-2-container">
+          <img src="images/default.png" class="image img-fluid big-image mx-auto d-block" />
+        </div>
+      </div>
+      <!-- Fin parte del layout 2 -->
+      <div class="col layout-grid">
+        <section class="gallery bg-faded">
+          <div class="grid">
+            <a href="#" class="grid__sizer"></a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
+            <a href="#" class="grid__item_layout_1 img-container">
+              <div class="item__overlay"> </div>
+              <img src="images/default.png" class="image" />
+            </a>
           </div>
+        </section>
+      </div>
     </div>
+    <!-- Fin estructura del layout -->
 
   </div>
 
