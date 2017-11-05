@@ -50,7 +50,7 @@ function mostrarImagenes(){
   });
 }
 
-llamado("#messi","popular");
+llamado("#space","popular");
 
 var $layout = $(".grid").masonry({
   itemSelector: ".grid__item_layout_" + layout,
