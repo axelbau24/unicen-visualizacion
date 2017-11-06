@@ -144,7 +144,6 @@ body{
 }
 .big-image{
   max-width: 50%;
-  transition: all 1s;
 }
 
 .dropdown {
@@ -190,8 +189,13 @@ body{
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
-  transition: all 1s;;
 }
+.big-image-container, .big-image{
+  transition: background-image 1s,
+              width 1s,
+              height 1s;
+}
+
 
 .big-image-container, .grid__item_layout_2, .grid__item_layout_1{
   border-radius: 0.25rem;
