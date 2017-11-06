@@ -144,6 +144,7 @@ body{
 }
 .big-image{
   max-width: 50%;
+  transition: all 1s;
 }
 
 .dropdown {
@@ -185,10 +186,11 @@ body{
 
 .big-image-container{
   position: relative;
-  background-color: black;
   border: 1px solid #00a4d3;
-  width:100%;
   overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 1s;;
 }
 
 .big-image-container, .grid__item_layout_2, .grid__item_layout_1{
