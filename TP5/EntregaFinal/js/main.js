@@ -45,6 +45,8 @@ function mostrarImagenes() {
     $(this).find(".image").attr("src", imagenes[contador++].url)
   });
 
+  $(".selected-image").attr("src", getRandomImage());
+  
   layout.imagesLoaded().progress(function () {
     layout.masonry();
   });
@@ -76,11 +78,15 @@ $(".dropdown").on("click", function () {
   $(".dropdown-content").toggleClass("d-none");
 });
 
-
+function getRandomImage(){
+  let img = Math.floor(Math.random() * imagenes.length);
+  return imagenes[img].url;
+}
 
 $(".layout-option").on("click", function () {
   currentLayout = $(this).data("id");
   updateLayout();
+  
   switch (currentLayout) {
     case 1:
       $(".big-image").addClass("d-none");
@@ -95,4 +101,12 @@ $(".layout-option").on("click", function () {
   }
   layout.masonry();
    
+});
+
+$(".img-container").on("click", function () {
+  if(currentLayout == 2){
+    let image = $(this).find(".image").attr("src");
+    $(".selected-image").attr("src", image);
+    layout.masonry();
+  }
 });

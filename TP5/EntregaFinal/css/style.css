@@ -124,7 +124,6 @@ body{
   width: 200px;
   min-width: 16.25rem;
   margin-bottom: .9375rem;
-  border-radius: 0.25rem;
   overflow: hidden;
 }
 
@@ -133,14 +132,15 @@ body{
   width: 150px;
   min-width: 8.25rem;
   margin-bottom: .3375rem;
-  border-radius: 0.25rem;
   overflow: hidden;
+}
+.image, .selected-image{
+  width: 100%;
+  height: auto;
 }
 
 .image {
-  width: 100%;
   max-width: 100%;
-  height: auto;
 }
 .big-image{
   max-width: 50%;
@@ -181,4 +181,16 @@ body{
   font-size: 20px;
   text-align: center;
   padding-bottom: 5px;
+}
+
+.big-image-container{
+  position: relative;
+  background-color: black;
+  border: 1px solid #00a4d3;
+  width:100%;
+  overflow: hidden;
+}
+
+.big-image-container, .grid__item_layout_2, .grid__item_layout_1{
+  border-radius: 0.25rem;
 }
