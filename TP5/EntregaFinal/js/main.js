@@ -24,7 +24,9 @@ function llamado(hash, type) {
             url: tweet.extended_entities.media[0].media_url,
             likes: tweet.favorite_count
           };
+          if(!contains(imagenes,info)){
           imagenes.push(info);
+          }
         }
       }
       if (!finalizado) {
@@ -33,9 +35,20 @@ function llamado(hash, type) {
       }
       else {
         mostrarImagenes();
+        finalizado = false;
       }
     }
   );
+}
+
+function contains(a, obj) {
+    var i = a.length;
+    while (i--) {
+       if (a[i].url === obj.url) {
+           return true;
+       }
+    }
+    return false;
 }
 
 function mostrarImagenes() {
