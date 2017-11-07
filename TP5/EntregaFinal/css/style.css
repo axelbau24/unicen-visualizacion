@@ -190,11 +190,6 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
 }
-.big-image-container, .big-image{
-  transition: background-image 1s,
-              width 1s,
-              height 1s;
-}
 
 .img-container:hover{
   cursor: pointer;
@@ -202,4 +197,46 @@ body{
 
 .big-image-container, .grid__item_layout_2, .grid__item_layout_1{
   border-radius: 0.25rem;
+}
+
+/** Animaciones/transiciones **/
+
+.big-image-container, .big-image{
+  transition: background-image .5s linear,
+              width .5s linear,
+              height .5s linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.loading-icon{
+  margin: auto;
+  margin-top: 10%;
+  border: 15px solid #f3f3f3;
+  border-top: 15px solid #555;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  -webkit-animation: spin .5s linear infinite;
+  animation: spin .5s linear infinite;
+  transition: width .5s, height .5s;
+  visibility: hidden;
+}
+.fade-loading{
+  visibility: visible;
+  width: 100px;
+  height: 100px;
+}
+.small-loading-icon{
+  visibility: visible;
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #555;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
 }

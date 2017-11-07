@@ -40,15 +40,30 @@ function llamado(hash, type) {
 
 function mostrarImagenes() {
   $('.img-container').each(function () {
-
-    $(this).find(".like-count").html(imagenes[contador].likes);
-    $(this).find(".image").attr("src", imagenes[contador++].url)
+    if(imagenes[contador]){
+      $(this).find(".like-count").html(imagenes[contador].likes);
+      $(this).find(".image").attr("src", imagenes[contador++].url)
+    }
   });
 
   layout.imagesLoaded().progress(function () {
+    $(".home").addClass("d-none");
+    $(".gallery").removeClass("d-none");
+    $(".small-loading-icon").addClass("d-none");
+    $(".input-search").val("");
     layout.masonry();
   });
+
+
+  layout.masonry();
 }
 
-llamado("#landscape", "popular");
 
+
+$(".search-bar").on("submit", function (ev) {
+  ev.preventDefault();
+  let searchData = $(this).serializeArray()[0].value;
+  $(".loading-icon").addClass("fade-loading");
+  $(".small-loading-icon").removeClass("d-none");
+  llamado(searchData, "popular");
+});
