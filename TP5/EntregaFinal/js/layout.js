@@ -31,13 +31,13 @@ function getRandomImage(){
 $(".layout-option").on("click", function () {
   currentLayout = $(this).data("id");
   updateLayout();
-  
+
   switch (currentLayout) {
     case 1:
       $(".big-image").addClass("d-none");
       $(".grid__item_layout_2").removeClass("grid__item_layout_2").addClass("grid__item_layout_1");
       break;
-      
+
       case 2:
       $(".big-image").removeClass("d-none");
       $(".layout").width("auto");
@@ -46,6 +46,5 @@ $(".layout-option").on("click", function () {
       break;
   }
   layout.masonry();
-   
-});
 
+});

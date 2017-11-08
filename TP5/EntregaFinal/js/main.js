@@ -53,10 +53,14 @@ function contains(a, obj) {
 
 function mostrarImagenes() {
   $('.img-container').each(function () {
-    if(imagenes[contador]){
-      $(this).find(".like-count").html(imagenes[contador].likes);
-      $(this).find(".image").attr("src", imagenes[contador++].url)
-    }
+    $.get('../templates/imagen.mst', function(template) {
+    var rendered = Mustache.render(template, {imagenes: imagenes});
+    $('.layout').append(rendered);
+  });
+    // if(imagenes[contador]){
+    //   $(this).find(".like-count").html(imagenes[contador].likes);
+    //   $(this).find(".image").attr("src", imagenes[contador++].url)
+    // }
   });
 
   layout.imagesLoaded().progress(function () {

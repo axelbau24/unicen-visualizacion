@@ -240,3 +240,45 @@ body{
   width: 30px;
   height: 30px;
 }
+
+@keyframes beat {
+  0% { transform: scale(1); }
+  70% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.fa-heart-o-1{
+  animation: beat .5s ease infinite;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+.fa-heart-o-2{
+  animation: jump .5s ease infinite;
+}
+
+@keyframes zigzag {
+  0% { transform: translate(0px,0px); }
+  10% { transform: translate(-5px,-5px); }
+  20% { transform: translate(-10px,5px); }
+  30% { transform: translate(-15px,-5px); }
+  40% { transform: translate(-20px,5px); }
+  50% { transform: translate(-25px,-5px); }
+  60% { transform: translate(-20px,5px); }
+  70% { transform: translate(-15px,-5px); }
+  80% { transform: translate(-10px,5px); }
+  90% { transform: translate(-5px,-5px); }
+  100% { transform: translate(0px,0px); }
+}
+
+.fa-heart-o-3{
+  animation: zigzag 2s ease infinite;
+}
+
+.img-container{
+  transition: left 1s, top 1s ;
+}
