@@ -57,10 +57,6 @@ function mostrarImagenes() {
     var rendered = Mustache.render(template, {imagenes: imagenes});
     $('.layout').append(rendered);
   });
-    // if(imagenes[contador]){
-    //   $(this).find(".like-count").html(imagenes[contador].likes);
-    //   $(this).find(".image").attr("src", imagenes[contador++].url)
-    // }
   });
 
   layout.imagesLoaded().progress(function () {
@@ -77,10 +73,10 @@ function mostrarImagenes() {
 
 
 
-$(".search-bar").on("submit", function (ev) {
-  ev.preventDefault();
-  let searchData = $(this).serializeArray()[0].value;
-  $(".loading-icon").addClass("fade-loading");
-  $(".small-loading-icon").removeClass("d-none");
-  llamado(searchData, "popular");
-});
+// $(".search-bar").on("submit", function (ev) {
+//   ev.preventDefault();
+//   let searchData = $(this).serializeArray()[0].value;
+//   $(".loading-icon").addClass("fade-loading");
+//   $(".small-loading-icon").removeClass("d-none");
+//   llamado(searchData, "popular");
+// });

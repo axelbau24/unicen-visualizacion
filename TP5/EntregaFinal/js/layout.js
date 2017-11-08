@@ -35,6 +35,8 @@ $(".layout-option").on("click", function () {
   switch (currentLayout) {
     case 1:
       $(".big-image").addClass("d-none");
+      $(".big-image").width("auto");
+      $(".big-image").height("auto");
       $(".grid__item_layout_2").removeClass("grid__item_layout_2").addClass("grid__item_layout_1");
       break;
 
