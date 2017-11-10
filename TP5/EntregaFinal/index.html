@@ -18,7 +18,7 @@
         <p class="home-description">Buscador de imagenes en Twitter</p>
         <form action="imagenes.html" class="search-bar">
           <div class="input-group">
-            <input type="text" name="search" class="form-control input-search border-right-0" placeholder="Escribe un #hashtag">
+            <input required type="text" name="search" class="form-control input-search border-right-0" placeholder="Escribe un #hashtag">
             <span class="input-group-btn ">
               <button class="btn btn-primary btn-search" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -41,7 +41,7 @@
         <form class="form-inline search-bar">
           <div class="loading-icon small-loading-icon d-none"></div>
           <div class="input-group">
-            <input type="text" name="search" class="form-control input-search border-right-0" placeholder="Escribe un #hashtag">
+            <input required type="text" name="search" class="form-control input-search border-right-0" placeholder="Escribe un #hashtag">
             <span class="input-group-btn ">
               <button class="btn btn-primary btn-search" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -88,113 +88,7 @@
 
         <div class="col ">
           <section class="bg-faded">
-            <div class="grid layout">
-              <a class="grid__sizer"></a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-              <a class="grid__item_layout_1 img-container">
-                <div class="like-box">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <span class="like-count">0</span>
-                </div>
-                <div class="item__overlay"> </div>
-                <img src="images/default.png" class="image" />
-              </a>
-            </div>
+            <div class="grid layout"></div>
           </section>
         </div>
       </div>
@@ -202,7 +96,7 @@
     </div> 
   </div>
 
-<script src="js/libs/mustache.js"></script>
+  <script src="js/libs/mustache.js"></script>
   <script src="js/libs/jquery-3.2.1.min.js"></script>
   <script src="js/libs/popper.min.js"></script>
   <script src="js/libs/bootstrap.min.js" charset="utf-8"></script>

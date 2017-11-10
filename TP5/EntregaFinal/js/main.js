@@ -6,6 +6,7 @@ cb.setConsumerKey("iOd7FdG7T3dE1asEHOFxLmdKr", "VdkGM4SSycjpkKrALkwbrO7aQiz696d6
 cb.setToken("1368012535-kTk798jfE3ySB8ObnlWCzqNJ8uydUqvFEfkTyAk", "NkBbB1mistXTu7JWC77gdCC1WMmRnNQVQarg6HHOijCca");
 let finalizado = false;
 
+//cb.setProxy("https://cb-proxy.herokuapp.com/");
 
 function llamado(hash, type) {
   var params = {
@@ -17,6 +18,7 @@ function llamado(hash, type) {
     "search_tweets",
     params,
     function (reply) {
+      imagenes = [];
       for (var i = 0; i < reply.statuses.length; i++) {
         let tweet = reply.statuses[i];
         if (tweet.extended_entities && tweet.extended_entities.media[0].type == "photo") {
@@ -25,7 +27,7 @@ function llamado(hash, type) {
             likes: tweet.favorite_count
           };
           if(!contains(imagenes,info)){
-          imagenes.push(info);
+            imagenes.push(info);
           }
         }
       }
@@ -52,31 +54,32 @@ function contains(a, obj) {
 }
 
 function mostrarImagenes() {
-  $('.img-container').each(function () {
-    $.get('../templates/imagen.mst', function(template) {
-    var rendered = Mustache.render(template, {imagenes: imagenes});
-    $('.layout').append(rendered);
-  });
-  });
+  
+  $(".grid").html(""); // Limpiamos las imagenes que estan en el html
+  layout.masonry('reloadItems');
 
-  layout.imagesLoaded().progress(function () {
-    $(".home").addClass("d-none");
-    $(".gallery").removeClass("d-none");
-    $(".small-loading-icon").addClass("d-none");
-    $(".input-search").val("");
-    layout.masonry();
-  });
+  $.get('templates/imagen.mst', function(template) {
+    let rendered = $(Mustache.render(template, {imagenes: imagenes}));
+    layout.append(rendered).masonry( 'appended', rendered);
 
+    layout.imagesLoaded().progress(function () {
+      $(".home").addClass("d-none");
+      $(".gallery").removeClass("d-none");
+      $(".small-loading-icon").addClass("d-none");
+      $(".input-search").val("");
+      layout.masonry();
+    });
+  });
 
   layout.masonry();
 }
 
 
 
-// $(".search-bar").on("submit", function (ev) {
-//   ev.preventDefault();
-//   let searchData = $(this).serializeArray()[0].value;
-//   $(".loading-icon").addClass("fade-loading");
-//   $(".small-loading-icon").removeClass("d-none");
-//   llamado(searchData, "popular");
-// });
+$(".search-bar").on("submit", function (ev) {
+  ev.preventDefault();
+  let searchData = $(this).serializeArray()[0].value;
+  $(".loading-icon").addClass("fade-loading");
+  $(".small-loading-icon").removeClass("d-none");
+  llamado(searchData, "popular");
+});

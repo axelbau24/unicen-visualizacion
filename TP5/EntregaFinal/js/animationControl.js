@@ -1,13 +1,13 @@
 
-$(".big-image, .big-image-container").on("transitionend", function () {
+$(document).on("transitionend", ".big-image, .big-image-container", function () {
     layout.masonry();
   });
   
-  $(".img-container").on("click", function () {
+$(document).on("click", ".img-container", function () {
     if(currentLayout == 2){
         setImage($(this).find(".image").attr("src"));
     }
-  });
+});
 
   /**
    * Cambia la imagen principal en el layout 2, se hacen una serie de operaciones
