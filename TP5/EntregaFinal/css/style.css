@@ -199,6 +199,15 @@ body{
   border-radius: 0.25rem;
 }
 
+.selected{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(225, 225, 225,0.45);
+}
+
 /** Animaciones/transiciones **/
 
 .big-image-container, .big-image{

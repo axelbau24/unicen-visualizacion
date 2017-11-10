@@ -18,13 +18,13 @@ function llamado(hash, type) {
     "search_tweets",
     params,
     function (reply) {
-      imagenes = [];
       for (var i = 0; i < reply.statuses.length; i++) {
         let tweet = reply.statuses[i];
         if (tweet.extended_entities && tweet.extended_entities.media[0].type == "photo") {
           var info = {
             url: tweet.extended_entities.media[0].media_url,
-            likes: tweet.favorite_count
+            likes: tweet.favorite_count,
+            classLike: Math.floor(Math.random()*3)+1
           };
           if(!contains(imagenes,info)){
             imagenes.push(info);
@@ -54,7 +54,7 @@ function contains(a, obj) {
 }
 
 function mostrarImagenes() {
-  
+
   $(".grid").html(""); // Limpiamos las imagenes que estan en el html
   layout.masonry('reloadItems');
 
@@ -78,6 +78,7 @@ function mostrarImagenes() {
 
 $(".search-bar").on("submit", function (ev) {
   ev.preventDefault();
+  imagenes = [];
   let searchData = $(this).serializeArray()[0].value;
   $(".loading-icon").addClass("fade-loading");
   $(".small-loading-icon").removeClass("d-none");

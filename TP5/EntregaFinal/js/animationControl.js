@@ -1,10 +1,19 @@
-
+let last = null;
 $(document).on("transitionend", ".big-image, .big-image-container", function () {
     layout.masonry();
   });
-  
+
 $(document).on("click", ".img-container", function () {
     if(currentLayout == 2){
+      if (last != null){
+        last.removeClass("selected");
+      }
+        let likes = $(this).find("fa").attr("class");
+        let likeCount = $(this).find("like-count").html();
+        $(".big-image-container").find("fa").attr("class",likes);
+        $(".big-image-container").find("like-count").html(likeCount);
+        last = $(this).find(".item__overlay");
+        last.addClass("selected");
         setImage($(this).find(".image").attr("src"));
     }
 });
@@ -16,11 +25,11 @@ $(document).on("click", ".img-container", function () {
 function setImage(url){
     var theImage = new Image();
     theImage.src = url;
-    
+
     let previousWidth = $(".big-image").width();
     $(".big-image").width("auto");
     $(".selected-image").attr("src", theImage.src);
-    
+
     let height = 0;
     let width = $(".selected-image").width();
     $(".big-image").width(previousWidth);
