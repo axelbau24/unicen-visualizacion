@@ -208,6 +208,15 @@ body{
   background-color: rgba(225, 225, 225,0.45);
 }
 
+@font-face {
+    font-family: "My Custom Font";
+    src: url('../fonts/Ubuntu-Regular.ttf') format("truetype");
+}
+
+.logo{
+  font-family: "My Custom Font", Verdana, Tahoma;
+}
+
 /** Animaciones/transiciones **/
 
 .big-image-container, .big-image{
