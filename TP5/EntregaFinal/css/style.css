@@ -1,14 +1,14 @@
-.fa-twitter, .fa-arrow-circle-right, .fa-arrow-circle-left{
-  color: #00a4d3;
-}
-
 .fa-heart-o{
   color: red;
 }
 
-body{
+body, .fa-arrow-circle-right{
   background-color: #252830;
   color: #d6d6d6;
+}
+
+.fa-twitter, .fa-arrow-circle-right, .fa-arrow-circle-left, h3{
+  color: #00a4d3;
 }
 
 .btn-search:hover{
@@ -54,10 +54,6 @@ body{
 
 .image-grid{
   margin-bottom: 10px;
-}
-
-.images-container{
-  margin-top: 20px;
 }
 
 .no-width-adjust{
@@ -113,9 +109,7 @@ body{
 .item__overlay:focus, .item__overlay:hover {
   background-color: rgba(17, 17, 17, 0.45);
 }
-.grid__sizer{
-  width: 0;
-}
+
 .grid__item_layout_1, .grid__item_layout_2{
   border: 1px solid #d6d6d6;
 }
@@ -125,12 +119,13 @@ body{
   min-width: 16.25rem;
   margin-bottom: .9375rem;
   overflow: hidden;
+  display: block;
 }
 
 .grid__item_layout_2 {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   min-width: 8.25rem;
   margin-bottom: .3375rem;
   overflow: hidden;
@@ -144,12 +139,32 @@ body{
   max-width: 100%;
 }
 
+.fa-arrow-circle-left, .fa-arrow-circle-right{
+  font-size: 70px;
+  margin-top: -1px;
+  padding-top: 40px;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-arrow-circle-left{
+  left: 0;
+  margin-left: -100px;
+}
+
+.fa-arrow-circle-right {
+  padding-right: 50px;
+  right: -200px;
+  width: 200px;
+  height: 151px;
+}
+
 .grid__item_layout_2 .image{
   max-width: none;
   width: auto;
   object-position: center;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
 }
 

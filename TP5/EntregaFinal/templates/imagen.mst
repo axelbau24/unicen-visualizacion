@@ -1,4 +1,5 @@
-<a class="grid__sizer"></a>
+<i class="fa fa-arrow-circle-left arrow d-none" aria-hidden="true"></i>
+
 {{#imagenes}}
 
 <a class="grid__item_layout_1 img-container">
@@ -11,3 +12,5 @@
 </a>
 
 {{/imagenes}}
+
+<i class="fa fa-arrow-circle-right arrow d-none" aria-hidden="true"></i>

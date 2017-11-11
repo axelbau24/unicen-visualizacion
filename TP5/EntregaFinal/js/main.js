@@ -84,3 +84,29 @@ $(".search-bar").on("submit", function (ev) {
   $(".small-loading-icon").removeClass("d-none");
   llamado(searchData, "popular");
 });
+
+$(document).on("click", ".arrow", function () {
+
+  let elements = [];
+  $(".grid__item_layout_2").each(function () {
+    if($(this).css("display") != "none") elements.push($(this));
+  })
+
+
+
+  if($(this).hasClass("fa-arrow-circle-right")){
+    let next = elements[elements.length - 1].next(".img-container");
+    if(next.length > 0){
+      next.css("display", "initial");
+      elements[0].css("display", "none");
+    }
+  }
+  else {
+    let previous = elements[0].prev(".img-container");
+    if(previous.length > 0){
+      previous.css("display", "initial");
+      elements[elements.length - 1].css("display", "none");
+    }
+  }
+  layout.masonry();
+});
