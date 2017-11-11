@@ -83,6 +83,7 @@ $(".search-bar").on("submit", function (ev) {
   $(".loading-icon").addClass("fade-loading");
   $(".small-loading-icon").removeClass("d-none");
   llamado(searchData, "popular");
+  $("#hashtag").html(searchData);
 });
 
 $(document).on("click", ".arrow", function () {
@@ -91,8 +92,6 @@ $(document).on("click", ".arrow", function () {
   $(".grid__item_layout_2").each(function () {
     if($(this).css("display") != "none") elements.push($(this));
   })
-
-
 
   if($(this).hasClass("fa-arrow-circle-right")){
     let next = elements[elements.length - 1].next(".img-container");
