@@ -23,23 +23,17 @@ $(document).on("click", ".img-container", function () {
    * para que la animacion CSS funcione correctametne
    */
 function setImage(url){
+  
+    let maxHeight = $(window).height() * .6;
+    $(".big-image").css("max-height", maxHeight);
     var theImage = new Image();
     theImage.src = url;
-
-    let previousWidth = $(".big-image").width();
-    $(".big-image").width("auto");
-    $(".selected-image").attr("src", theImage.src);
-
     let height = 0;
-    let width = $(".selected-image").width();
-    $(".big-image").width(previousWidth);
-    $(".selected-image").attr("src", "");
-
-    if(theImage.width < width) height = (theImage.width / width) * theImage.height;
-    else height = (width / theImage.width) * theImage.height;
-
-    $(".big-image").width(width);
-    $(".big-image").height(height);
-    $(".big-image-container").height(height);
+    if(theImage.height >= maxHeight) height = maxHeight;
+    else height = theImage.height;
+    
+    let width = (height / theImage.height) * theImage.width;
     $(".big-image-container").css("background-image", "url("+ theImage.src +")");
+    $(".big-image").height(height);
+    $(".big-image-container").width(width);
 }

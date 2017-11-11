@@ -129,7 +129,8 @@ body{
 
 .grid__item_layout_2 {
   position: relative;
-  width: 150px;
+  width: 200px;
+  height: 200px;
   min-width: 8.25rem;
   margin-bottom: .3375rem;
   overflow: hidden;
@@ -142,8 +143,14 @@ body{
 .image {
   max-width: 100%;
 }
-.big-image{
-  max-width: 50%;
+
+.grid__item_layout_2 .image{
+  max-width: none;
+  width: auto;
+  object-position: center;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
 .dropdown {
@@ -184,15 +191,22 @@ body{
 }
 
 .big-image-container{
+  margin: auto;
+  height: inherit;
   position: relative;
   border: 1px solid #00a4d3;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 .img-container:hover{
   cursor: pointer;
+}
+
+.layout {
+  margin-top: 25px;
 }
 
 .big-image-container, .grid__item_layout_2, .grid__item_layout_1{
@@ -209,12 +223,12 @@ body{
 }
 
 @font-face {
-    font-family: "My Custom Font";
+    font-family: "Ubuntu";
     src: url('../fonts/Ubuntu-Regular.ttf') format("truetype");
 }
 
 .logo{
-  font-family: "My Custom Font", Verdana, Tahoma;
+  font-family: "Ubuntu", Verdana, Tahoma;
 }
 
 /** Animaciones/transiciones **/
