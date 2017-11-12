@@ -21,7 +21,7 @@ function updateLayout() {
 
 
 $(".dropdown").on("click", function () {
-  $(".dropdown-content").toggleClass("d-none");
+  $(".dropdown-content").toggleClass("dropdown-content-active");
 });
 
 function getRandomImage() {
@@ -29,7 +29,9 @@ function getRandomImage() {
   return imagenes[img].url;
 }
 
-$(".layout-option").on("click", function () {
+$(".layout-option").on("click", function (ev) {
+  $(".layout-option").removeClass("disabled-link");
+  $(this).addClass("disabled-link");
   currentLayout = $(this).data("id");
   updateLayout();
 

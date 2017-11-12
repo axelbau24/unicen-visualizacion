@@ -1,5 +1,6 @@
-<i class="fa fa-arrow-circle-left arrow d-none" aria-hidden="true"></i>
-
+<div class="previous-item arrow  d-none">
+  <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+</div>
 {{#imagenes}}
 
 <a class="grid__item_layout_1 img-container">
@@ -13,4 +14,6 @@
 
 {{/imagenes}}
 
-<i class="fa fa-arrow-circle-right arrow d-none" aria-hidden="true"></i>
+<div class="next-item arrow d-none">
+  <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+</div>

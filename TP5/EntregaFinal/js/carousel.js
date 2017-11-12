@@ -1,6 +1,6 @@
 
 let carouselElements = [];
-$(document).on("click", ".arrow", function () {
+$(document).on("click", ".arrow .fa", function () {
 
     carouselElements = [];
     fillCarouselArray();

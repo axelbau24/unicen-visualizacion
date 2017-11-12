@@ -2,13 +2,22 @@
   color: red;
 }
 
-body, .fa-arrow-circle-right{
+body, .next-item{
   background-color: #252830;
   color: #d6d6d6;
 }
 
 .fa-twitter, .fa-arrow-circle-right, .fa-arrow-circle-left, h3{
   color: #00a4d3;
+}
+
+.fa-arrow-circle-left:hover, .fa-arrow-circle-right:hover{
+  color: #00799b;
+  cursor: pointer;
+}
+
+.fa-arrow-circle-left:active, .fa-arrow-circle-right:active{
+  color: #0062cc;
 }
 
 .btn-search:hover{
@@ -144,24 +153,27 @@ body, .fa-arrow-circle-right{
   max-width: 100%;
 }
 
-.fa-arrow-circle-left, .fa-arrow-circle-right{
-  font-size: 70px;
-  margin-top: -1px;
-  padding-top: 40px;
-  position: absolute;
-  text-align: center;
-}
-
-.fa-arrow-circle-left{
-  left: 0;
-  margin-left: -100px;
-}
-
-.fa-arrow-circle-right {
-  padding-right: 50px;
+.next-item {
+  background-color: #252830;
+  padding-left: 40px;
   right: -200px;
   width: 200px;
   height: 151px;
+}
+
+.previous-item , .next-item{
+  position: absolute;
+  margin-top: -1px;
+  padding-top: 40px;
+}
+
+.previous-item {
+  left: -100px;
+}
+
+.fa-arrow-circle-left, .fa-arrow-circle-right{
+  font-size: 70px;
+  text-align: center;
 }
 
 .grid__item_layout_2 .image{
@@ -179,15 +191,26 @@ body, .fa-arrow-circle-right{
 
 .dropdown-content {
   width: 300px;
+  max-height: 0;
   position: absolute;
   background-color: #0F1525;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 0 0 5px 5px;
-  padding: 12px 16px;
+  padding: 0 16px 0 16px;
   margin-top: 7px;
   right: -17px;
   z-index: 1;
+  overflow: hidden;
+  transition: max-height .5s, padding .5s;
+  
 }
+.dropdown-content-active{
+  max-height: 600px;
+  padding: 12px 16px 12px 16px;
+}
+
+
+
 .list-group-item{
   background-color: #0F1525;
   color: #d6d6d6;
@@ -245,6 +268,14 @@ body, .fa-arrow-circle-right{
 
 .logo{
   font-family: "Ubuntu", Verdana, Tahoma;
+}
+
+.disabled-link{
+  border-radius: 5px;
+  pointer-events: none;
+  color: #495057;
+  text-decoration: none;
+  background-color: #c0c0c0;
 }
 
 /** Animaciones/transiciones **/
