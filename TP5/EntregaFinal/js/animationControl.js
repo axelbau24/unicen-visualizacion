@@ -5,7 +5,7 @@ $(document).on("transitionend", ".big-image, .big-image-container", function () 
 
 $(document).on("click", ".img-container", function () {
   if (currentLayout == 2) {
-    currentImage = $(this).index();
+    currentImage = $(this).index() - 1;
     if (last != null) last.removeClass("selected");
     let likes = $(this).find(".fa").attr("class");
     let likeCount = $(this).find(".like-count").html();
