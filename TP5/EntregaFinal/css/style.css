@@ -110,6 +110,11 @@ body, .fa-arrow-circle-right{
   background-color: rgba(17, 17, 17, 0.45);
 }
 
+.img-container:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
 .grid__item_layout_1, .grid__item_layout_2{
   border: 1px solid #d6d6d6;
 }
@@ -214,10 +219,6 @@ body, .fa-arrow-circle-right{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-}
-
-.img-container:hover{
-  cursor: pointer;
 }
 
 .layout {
@@ -327,5 +328,5 @@ body, .fa-arrow-circle-right{
 }
 
 .img-container{
-  transition: left 1s, top 1s ;
+  transition: left 1s, top 1s, transform .3s;
 }

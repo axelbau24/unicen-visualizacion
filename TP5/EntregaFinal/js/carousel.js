@@ -23,17 +23,21 @@ $(document).on("click", ".arrow", function () {
 });
 
 // Cambios de imagenes automatico en carousel
-let currentImage = 0;
+let currentImage = 1;
+let foward = true;
 setInterval(function () {
     if (currentLayout == 2) {
         if (carouselElements.length == 0) fillCarouselArray();
-        carouselElements[currentImage++].eq(0).click();
-        if (currentImage == carouselElements.length) {
-            currentImage = 0;
-            for (var i = 0; i < carouselElements.length; i++) {
-                $(".fa-arrow-circle-right").eq(0).click();
-            }
-        }
+        if(foward) $(".fa-arrow-circle-right").eq(0).click();
+        else $(".fa-arrow-circle-left").eq(0).click();
+        $(".img-container").eq(currentImage).click();
+
+        if(currentImage == $(".img-container").length - 1) foward = false;
+        else if(currentImage == 0) foward = true;
+
+        if(foward) currentImage++;
+        else currentImage--;
+
     }
 
 }, 5000);
