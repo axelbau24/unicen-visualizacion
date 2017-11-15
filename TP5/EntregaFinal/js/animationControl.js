@@ -27,9 +27,7 @@ function setImage(url) {
   $(".big-image").css("max-height", maxHeight);
   var theImage = new Image();
   theImage.src = url;
-  let height = 0;
-  if (theImage.height >= maxHeight) height = maxHeight;
-  else height = theImage.height;
+  let height = maxHeight;
 
   let width = (height / theImage.height) * theImage.width;
   $(".big-image-container").css("background-image", "url(" + theImage.src + ")");

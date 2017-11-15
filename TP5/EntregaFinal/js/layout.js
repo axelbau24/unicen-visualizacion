@@ -15,7 +15,7 @@ function createLayout() {
 function updateLayout() {
   layout.masonry({
     itemSelector: ".grid__item_layout_" + currentLayout,
-    columnWidth: currentLayout == 1 ? 260 : 150,
+    columnWidth: currentLayout == 1 ? 260 : 100,
   });
 }
 
@@ -63,10 +63,9 @@ function changeLayout(element) {
 
 
 function carousel(){
-
-  $(".grid__item_layout_1").each(function () {
-    if($(this).css("top") != '0px'){
-      $(this).css("display", "none");
-    }
+  let count = 0;
+  $(".grid__item_layout_1").each(function (index) {
+    if($(this).css("top") == '0px') count++;
+    else if(index >= count + 2) $(this).css("display", "none");
   });
 }

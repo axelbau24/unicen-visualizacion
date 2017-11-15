@@ -36,8 +36,7 @@ function llamado(hash, type) {
         llamado(hash, "recent");
       }
       else {
-        $("#hashtag").html(hash);
-        mostrarImagenes();
+        mostrarImagenes(hash);
         finalizado = false;
       }
     }
@@ -54,12 +53,12 @@ function contains(a, obj) {
     return false;
 }
 
-function mostrarImagenes() {
+function mostrarImagenes(hash) {
 
   if($(".list-group-item").data("id") == 1) {
       changeLayout($(".list-group-item").eq(0));
   }
-
+  $(".mensajeError, #hashtag").html("");
 
   $.get('templates/imagen.mst', function(template) {
     $(".grid").html(""); // Limpiamos las imagenes que estan en el html
@@ -67,16 +66,24 @@ function mostrarImagenes() {
     let rendered = $(Mustache.render(template, {imagenes: imagenes}));
     layout.append(rendered).masonry( 'appended', rendered);
 
+    if (imagenes.length !=0){
     layout.imagesLoaded().progress(function () {
       $(".home").addClass("d-none");
       $(".gallery").removeClass("d-none");
-      $(".small-loading-icon").addClass("d-none");
       $(".input-search").val("");
       layout.masonry();
     });
+  }
+  else {
+    $(".mensajeError, #hashtag").html("No se encontraron resultados con " + hash);
+    $(".mensajeError").removeClass("d-none");
+
+  }
+    $(".loading-icon, .small-loading-icon").addClass("d-none");
   });
 
   layout.masonry();
+  $("#hashtag").html(hash);
 }
 
 
@@ -85,7 +92,8 @@ $(".search-bar").on("submit", function (ev) {
   ev.preventDefault();
   imagenes = [];
   let searchData = $(this).serializeArray()[0].value;
+  $(".loading-icon, .small-loading-icon").removeClass("d-none");
+  $(".mensajeError").addClass("d-none");
   $(".loading-icon").addClass("fade-loading");
-  $(".small-loading-icon").removeClass("d-none");
   llamado(searchData, "popular");
 });

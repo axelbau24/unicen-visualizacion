@@ -29,7 +29,7 @@ setInterval(function () {
     if (currentLayout == 2) {
         if(currentImage == $(".img-container").length - 1) foward = false;
         else if(currentImage == 0) foward = true;
-        
+
         if(foward) currentImage++;
         else currentImage--;
 
