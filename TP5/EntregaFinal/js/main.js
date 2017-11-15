@@ -97,3 +97,7 @@ $(".search-bar").on("submit", function (ev) {
   $(".loading-icon").addClass("fade-loading");
   llamado(searchData, "popular");
 });
+
+$(".close").on("click", function(){
+  $(".clicked-image").css("display", "none");
+});

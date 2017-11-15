@@ -4,6 +4,7 @@ $(document).on("transitionend", ".big-image, .big-image-container", function () 
 });
 
 $(document).on("click", ".img-container", function () {
+  let imageSrc = $(this).find(".image").attr("src");
   if (currentLayout == 2) {
     currentImage = $(this).index() - 1;
     if (last != null) last.removeClass("selected");
@@ -13,8 +14,12 @@ $(document).on("click", ".img-container", function () {
     $(".big-image-container").find(".like-count").html(likeCount);
     last = $(this).find(".item__overlay");
     last.addClass("selected");
-    setImage($(this).find(".image").attr("src"));
+    setImage(imageSrc);
   }
+  else{
+    $(".clicked-image img").attr("src", imageSrc).parent().css("display", "block");
+  }
+
 });
 
 /**
@@ -33,7 +38,7 @@ function setImage(url) {
   $(".big-image-container").css("background-image", "url(" + theImage.src + ")");
   $(".big-image").height(height);
   let random = Math.floor(Math.random() * 3);
-
+  // Se realiza una animacion random al momento de cambiar una imagen en el carousel
     switch (random) {
       case 0:
         $(".big-image-container").width(0);
