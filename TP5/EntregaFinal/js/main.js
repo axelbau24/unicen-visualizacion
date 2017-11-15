@@ -60,10 +60,10 @@ function mostrarImagenes() {
       changeLayout($(".list-group-item").eq(0));
   }
 
-  $(".grid").html(""); // Limpiamos las imagenes que estan en el html
-  layout.masonry('reloadItems');
 
   $.get('templates/imagen.mst', function(template) {
+    $(".grid").html(""); // Limpiamos las imagenes que estan en el html
+    layout.masonry('reloadItems');
     let rendered = $(Mustache.render(template, {imagenes: imagenes}));
     layout.append(rendered).masonry( 'appended', rendered);
 
