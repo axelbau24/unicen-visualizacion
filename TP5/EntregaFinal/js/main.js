@@ -36,7 +36,7 @@ function llamado(hash, type) {
         llamado(hash, "recent");
       }
       else {
-        $("#hashtag").html(hash);    
+        $("#hashtag").html(hash);
         mostrarImagenes();
         finalizado = false;
       }
@@ -55,6 +55,10 @@ function contains(a, obj) {
 }
 
 function mostrarImagenes() {
+
+  if($(".list-group-item").data("id") == 1) {
+      changeLayout($(".list-group-item").eq(0));
+  }
 
   $(".grid").html(""); // Limpiamos las imagenes que estan en el html
   layout.masonry('reloadItems');
@@ -85,4 +89,3 @@ $(".search-bar").on("submit", function (ev) {
   $(".small-loading-icon").removeClass("d-none");
   llamado(searchData, "popular");
 });
-

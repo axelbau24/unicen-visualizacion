@@ -2,7 +2,7 @@ let layout = createLayout();
 
 
 function createLayout() {
-  
+
   return $(".grid").masonry({
     itemSelector: ".grid__item_layout_" + currentLayout,
     columnWidth: 260,
@@ -30,9 +30,13 @@ function getRandomImage() {
 }
 
 $(".layout-option").on("click", function (ev) {
+  changeLayout($(this));
+});
+
+function changeLayout(element) {
   $(".layout-option").removeClass("disabled-link");
-  $(this).addClass("disabled-link");
-  currentLayout = $(this).data("id");
+  element.addClass("disabled-link");
+  currentLayout = element.data("id");
   updateLayout();
 
   switch (currentLayout) {
@@ -55,8 +59,8 @@ $(".layout-option").on("click", function (ev) {
       break;
   }
   layout.masonry();
+}
 
-});
 
 function carousel(){
 
